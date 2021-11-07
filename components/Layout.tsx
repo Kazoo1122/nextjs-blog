@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Layout = (props: any) => {
   const { pageTitle, pageUrl, pageDescription, children } = props;
@@ -53,9 +54,10 @@ const Layout = (props: any) => {
           </ul>
         </nav>
       </header>
+      <div className='dot-background'></div>
 
       <main>
-        {pageTitle ? <h2 className='page-title'>{title}</h2> : ``}
+        {pageTitle ? <h2 className='page-title'>{pageTitle}</h2> : ``}
         <div className='page-main'>{children}</div>
       </main>
 
