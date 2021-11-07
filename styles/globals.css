@@ -2,8 +2,20 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+h1 {
+  top: 40px;
+  left: 128px;
+  width: 680px;
+  height: 58px;
+  text-align: left;
+  font: normal normal normal 40px/58px RocknRoll One;
+  letter-spacing: 0px;
+  color: #109aff;
+  opacity: 1;
 }
 
 a {
