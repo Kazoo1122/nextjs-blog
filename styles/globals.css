@@ -6,16 +6,46 @@ body {
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+header {
+  position: relative;
+  max-width: 1200px;
+  height: 196px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.titleBox {
+  float: left;
+}
+
 h1 {
-  top: 40px;
-  left: 128px;
-  width: 680px;
-  height: 58px;
-  text-align: left;
-  font: normal normal normal 40px/58px RocknRoll One;
-  letter-spacing: 0px;
+  font: 36px RocknRoll One;
   color: #109aff;
-  opacity: 1;
+  width: 680px;
+}
+
+p.subTitle {
+  font: 24px Yusei Magic;
+  color: #707070;
+  width: 380px;
+}
+
+nav {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  float: right;
+}
+
+nav ul li {
+  font: 22px Spartan;
+  display: inline-block;
+  margin-left: 20px;
+  color: #35a7ea;
 }
 
 a {

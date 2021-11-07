@@ -35,23 +35,23 @@ const Layout = (props: any) => {
       </Head>
 
       <header>
-        <div className='headerBox'>
+        <div className='titleBox'>
           <h1>レジ打ちからエンジニアになりました</h1>
-          <p className='subHeddings'>〜中途エンジニアの開発日誌〜</p>
-          <nav>
-            <ul>
-              <li>
-                <Link href='/index'>BLOG</Link>
-              </li>
-              <li>
-                <Link href='/profile'>PROFILE</Link>
-              </li>
-              <li>
-                <Link href='/contact'>CONTACT</Link>
-              </li>
-            </ul>
-          </nav>
+          <p className='subTitle'>〜中途エンジニアの開発日誌〜</p>
         </div>
+        <nav>
+          <ul>
+            <li>
+              <Link href='/index'>BLOG</Link>
+            </li>
+            <li>
+              <Link href='/profile'>PROFILE</Link>
+            </li>
+            <li>
+              <Link href='/contact'>CONTACT</Link>
+            </li>
+          </ul>
+        </nav>
       </header>
 
       <main>
