@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const Layout = (props: any) => {
     const { pageTitle, pageUrl, pageDescription, children } = props;
@@ -53,7 +52,6 @@ const Layout = (props: any) => {
                         </ul>
                     </nav>
                 </div>
-                <Image src='/images/dot_background.png' alt='header background' />
             </header>
 
             <main>
@@ -65,3 +63,5 @@ const Layout = (props: any) => {
         </div>
     );
 };
+
+export default Layout;
