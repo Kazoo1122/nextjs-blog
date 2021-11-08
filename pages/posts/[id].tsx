@@ -18,7 +18,8 @@ export default function Post(params: any) {
 export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
   const { id } = context.params as PathParams;
   const sql = `SELECT * FROM articles WHERE id=${id}`;
-  const articles = await db.query(sql);
+  const data = await db.query(sql);
+  const articles = JSON.parse(JSON.stringify(data));
   const article = articles[0];
   return {
     props: {
@@ -29,13 +30,14 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
 
 export const getStaticPaths: GetStaticPaths<PathParams> = async () => {
   const sql = `SELECT id FROM articles`;
-  const posts = db.query(sql).map((post: any) => {
-    params: {
-      id: post.id;
-    }
+  const posts = await db.query(sql);
+  console.log(posts);
+  const paths = posts.map((post: any) => {
+    return { params: { id: post.id.toString() } };
   });
+  console.log(paths);
   return {
-    paths: posts,
+    paths,
     fallback: false,
   };
 };

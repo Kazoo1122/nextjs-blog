@@ -29,7 +29,8 @@ export default function Home(props: any) {
 export const getStaticProps: GetStaticProps = async (context) => {
   const MAX_COUNT = 5;
   const sql = `SELECT * FROM articles`;
-  const posts = await db.query(sql);
+  const data = await db.query(sql);
+  const posts = JSON.parse(JSON.stringify(data));
   return {
     props: {
       posts: posts.slice(0, MAX_COUNT),
