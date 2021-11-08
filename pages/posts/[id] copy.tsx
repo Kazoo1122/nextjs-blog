@@ -2,22 +2,30 @@ import Layout from '../../components/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
 const db = require('../../db');
 
+type PathParams = {
+  id: number;
+};
+
+type PageProps = {
+  title: string;
+  content: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
 export default function Post(params: any) {
   return (
     <Layout pageTitle={params.title}>
       <div className='post-meta'>
-        <span>投稿日：{params.created_at}</span>
-        <span>更新日：{params.updated_at}</span>
-        <span>{params.title}</span>
+        <span>{params.published}</span>
       </div>
       <div className='post-body' dangerouslySetInnerHTML={{ __html: params.content }} />
     </Layout>
   );
 }
 
-export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
-  const { id } = context.params as PathParams;
-  const sql = `SELECT * FROM articles WHERE id=${id}`;
+export async function getStaticProps({ params }: any) {
+  const sql = `SELECT * FROM articles WHERE id=${params.id}`;
   const articles = await db.query(sql);
   const article = articles[0];
   return {
@@ -25,17 +33,17 @@ export const getStaticProps: GetStaticProps<PageProps> = async (context) => {
       ...article,
     },
   };
-};
+}
 
-export const getStaticPaths: GetStaticPaths<PathParams> = async () => {
+export async function getStaticPaths() {
   const sql = `SELECT id FROM articles`;
-  const posts = db.query(sql).map((post: any) => {
+  const paths = db.query(sql).map((post: any) => {
     params: {
       id: post.id;
     }
   });
   return {
-    paths: posts,
+    props: paths,
     fallback: false,
   };
-};
+}

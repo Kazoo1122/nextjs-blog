@@ -24,6 +24,6 @@ const test = async () => {
   const result = await db.query(`
   select * from articles
   `);
-  console.log(result);
+  return result;
 };
 test();
