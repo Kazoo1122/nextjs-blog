@@ -37,11 +37,14 @@ nav {
   margin-left: auto;
 }
 
-nav ul li {
+nav > ul > li {
   font: 18px Spartan;
   display: inline-block;
   margin-left: 60px;
   color: #35a7ea;
+  &:hover {
+    color: #1134f4;
+  }
 }
 
 div.dot-background {
@@ -56,6 +59,24 @@ h2 {
   color: #1134f4;
   font: normal normal 800 36px Spartan;
 }
+
+.container {
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding-bottom: 128px;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: #faf9fd;
+  position: absolute;
+  padding: 64px 0;
+  bottom: 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;

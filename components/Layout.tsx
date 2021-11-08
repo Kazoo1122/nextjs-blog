@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const Layout = (props: any) => {
   const { pageTitle, pageUrl, pageDescription, children } = props;
@@ -35,33 +34,35 @@ const Layout = (props: any) => {
         <meta name='twitter:site' content='@kazoo_1122' />
       </Head>
 
-      <header>
-        <div className='titleBox'>
-          <h1>レジ打ちからエンジニアになりました</h1>
-          <p className='subTitle'>〜中途エンジニアの開発日誌〜</p>
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <Link href='/index'>BLOG</Link>
-            </li>
-            <li>
-              <Link href='/profile'>PROFILE</Link>
-            </li>
-            <li>
-              <Link href='/contact'>CONTACT</Link>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <div className='dot-background'></div>
+      <div className='container'>
+        <header>
+          <div className='titleBox'>
+            <h1>レジ打ちからエンジニアになりました</h1>
+            <p className='subTitle'>〜中途エンジニアの開発日誌〜</p>
+          </div>
+          <nav>
+            <ul>
+              <li>
+                <Link href='/'>BLOG</Link>
+              </li>
+              <li>
+                <Link href='/profile'>PROFILE</Link>
+              </li>
+              <li>
+                <Link href='/contact'>CONTACT</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <div className='dot-background'></div>
 
-      <main>
-        {pageTitle ? <h2 className='page-title'>{pageTitle}</h2> : ``}
-        <div className='page-main'>{children}</div>
-      </main>
+        <main>
+          {pageTitle ? <h2 className='page-title'>{pageTitle}</h2> : ``}
+          <div className='page-main'>{children}</div>
+        </main>
 
-      <footer>&copy; 2021 {siteTitle}</footer>
+        <footer>&copy; 2021 {siteTitle}</footer>
+      </div>
     </div>
   );
 };
