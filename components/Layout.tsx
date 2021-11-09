@@ -37,8 +37,12 @@ const Layout = (props: any) => {
       <div className='container'>
         <header>
           <div className='titleBox'>
-            <h1>レジ打ちからエンジニアになりました</h1>
-            <p className='subTitle'>〜中途エンジニアの開発日誌〜</p>
+            <Link href='/'>
+              <a>
+                <h1>レジ打ちからエンジニアになりました</h1>
+                <p className='subTitle'>〜中途エンジニアの開発日誌〜</p>
+              </a>
+            </Link>
           </div>
           <nav>
             <ul>

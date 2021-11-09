@@ -1,8 +1,8 @@
-type PathParams = {
+type PostUrl = {
   id: string;
 };
 
-type PageProps = {
+type PostProps = {
   title: string;
   content: string;
   created_at: Date;
