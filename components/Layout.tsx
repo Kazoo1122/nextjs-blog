@@ -1,7 +1,15 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
-const Layout = (props: any) => {
+type MetaProps = {
+  pageTitle: string;
+  pageUrl?: string;
+  pageDescription?: string;
+  children: ReactNode;
+};
+
+const Layout = (props: MetaProps) => {
   const { pageTitle, pageUrl, pageDescription, children } = props;
   const siteTitle = 'レジ打ちからエンジニアになりました';
   const defaultDescription =
@@ -71,4 +79,4 @@ const Layout = (props: any) => {
   );
 };
 
-export default Layout;
+export { Layout };

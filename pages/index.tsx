@@ -1,13 +1,21 @@
-import Layout from '../components/Layout';
+import { Layout } from '../components/Layout';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-const db = require('../db');
+import { db } from '../db';
 
-export default function Home(props: any) {
+type PostItems = {
+  [key: string]: string;
+};
+
+type BlogGalleryProps = {
+  posts: PostItems[];
+};
+
+const Home = (props: BlogGalleryProps) => {
   const { posts } = props;
   return (
     <Layout pageTitle='BLOG'>
-      {posts.map((post: any) => (
+      {posts.map((post) => (
         <div key={post.id} className='post-teaser'>
           <h3>
             <Link href='/posts/[id]' as={`/posts/${post.id}`}>
@@ -21,19 +29,21 @@ export default function Home(props: any) {
       ))}
     </Layout>
   );
-}
+};
 
 /**
  * 値の読み込みを行う
  */
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
   const MAX_COUNT = 5;
   const sql = `SELECT * FROM articles`;
-  const data = await db.query(sql);
-  const posts = JSON.parse(JSON.stringify(data));
+  const dbResponse = await db.query(sql);
+  const posts = JSON.parse(JSON.stringify(dbResponse));
   return {
     props: {
       posts: posts.slice(0, MAX_COUNT),
     },
   };
 };
+
+export default Home;

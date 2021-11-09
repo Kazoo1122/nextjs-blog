@@ -1,6 +1,19 @@
-import Layout from '../../components/Layout';
+import { Layout } from '../../components/Layout';
+import { formatDate } from '../../lib/format_date';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { markdownToHtml } from '../../lib/md_to_html';
 const db = require('../../db');
+
+type PostUrl = {
+  id: string;
+};
+
+type PostProps = {
+  title: string;
+  content: string;
+  created_at: Date;
+  updated_at: Date;
+};
 
 /**
  * 記事詳細をレンダリングする
@@ -22,21 +35,20 @@ export default function Post(params: PostProps) {
 
 /**
  * 記事内容をIDを元に取得し返却する
- * @param context
+ * @param {params}
  * @returns props:{...article}
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
   const sql = `SELECT * FROM articles WHERE id=${id}`;
-  const data = await db.query(sql);
-  console.log(data[0].created_at);
-  data[0].created_at = formatDate(data[0].created_at);
-  data[0].updated_at = formatDate(data[0].updated_at);
-  const articles = JSON.parse(JSON.stringify(data));
-  const article = articles[0];
+  let postData = (await db.query(sql)).pop(); //DBから取得した配列から記事データを抜き出す
+  postData.created_at = formatDate(postData.created_at);
+  postData.updated_at = formatDate(postData.updated_at);
+  //postData.content = markdownToHtml(postData.content);
+  postData = JSON.parse(JSON.stringify(postData));
   return {
     props: {
-      ...article,
+      ...postData,
     },
   };
 };
@@ -55,30 +67,4 @@ export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
     paths,
     fallback: false,
   };
-};
-
-/**
- * 日時を整形する
- * @param date
- * @returns string
- */
-const formatDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = zeroFill(date.getHours(), false);
-  const minute = zeroFill(date.getMinutes(), false);
-  return `${year}年${month}月${day}日 ${hour}:${minute}`;
-};
-
-/**
- * 10未満の数値を0埋めする
- * @param checkedNum
- * @param isMonth 月の場合は1加算
- * @returns
- */
-const zeroFill = (checkedNum: number, isMonth: boolean) => {
-  let threshold;
-  isMonth === true ? (threshold = 9) : (threshold = 10);
-  return (checkedNum < threshold ? '0' : '') + checkedNum;
 };
