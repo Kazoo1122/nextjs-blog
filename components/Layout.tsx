@@ -2,6 +2,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+/**
+ * メタデータを格納した型 Headコンポーネント内で使用
+ */
 type MetaProps = {
   pageTitle: string;
   pageUrl?: string;

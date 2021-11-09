@@ -2,13 +2,20 @@ import { Layout } from '../../components/Layout';
 import { formatDate } from '../../lib/format_date';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { markdownToHtml } from '../../lib/md_to_html';
-const db = require('../../db');
+import { dbQuery } from '../../db';
 
+/**
+ * idのみが格納された型 getStaticPathsで使用する
+ */
 type PostUrl = {
   id: string;
 };
 
+/**
+ * 記事データが全て入った型(idのみ任意)
+ */
 type PostProps = {
+  id?: string;
   title: string;
   content: string;
   created_at: Date;
@@ -38,17 +45,23 @@ export default function Post(params: PostProps) {
  * @param {params}
  * @returns props:{...article}
  */
-export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<PostProps> = async ({ params }: any) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
   const sql = `SELECT * FROM articles WHERE id=${id}`;
-  let postData = (await db.query(sql)).pop(); //DBから取得した配列から記事データを抜き出す
-  postData.created_at = formatDate(postData.created_at);
-  postData.updated_at = formatDate(postData.updated_at);
-  //postData.content = markdownToHtml(postData.content);
-  postData = JSON.parse(JSON.stringify(postData));
+  const postInArray = await dbQuery(sql); //DBから取得した配列から記事データを抜き出す
+  const content = await markdownToHtml(postInArray[0].content);
+  const post = postInArray.map((item: PostProps) => {
+    return {
+      id: item.id,
+      title: item.title,
+      content: content,
+      created_at: formatDate(item.created_at),
+      updated_at: formatDate(item.updated_at),
+    };
+  });
   return {
     props: {
-      ...postData,
+      ...post.pop(),
     },
   };
 };
@@ -59,7 +72,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
   const sql = `SELECT id FROM articles`;
-  const posts = await db.query(sql);
+  const posts = await dbQuery(sql);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
   });

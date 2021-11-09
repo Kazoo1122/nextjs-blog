@@ -1,12 +1,18 @@
 import { Layout } from '../components/Layout';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
-import { db } from '../db';
+import { dbQuery } from '../db';
 
+/**
+ * JSON形式で文字列を格納した型
+ */
 type PostItems = {
   [key: string]: string;
 };
 
+/**
+ * ブログ記事一覧用
+ */
 type BlogGalleryProps = {
   posts: PostItems[];
 };
@@ -37,7 +43,7 @@ const Home = (props: BlogGalleryProps) => {
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
   const MAX_COUNT = 5;
   const sql = `SELECT * FROM articles`;
-  const dbResponse = await db.query(sql);
+  const dbResponse = await dbQuery(sql);
   const posts = JSON.parse(JSON.stringify(dbResponse));
   return {
     props: {
