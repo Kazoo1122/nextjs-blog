@@ -14,7 +14,7 @@ type PostUrl = {
 /**
  * 記事データが全て入った型(idのみ任意)
  */
-type PostProps = {
+export type PostProps = {
   id?: string;
   title: string;
   content: string;
@@ -45,7 +45,7 @@ export default function Post(params: PostProps) {
  * @param {params}
  * @returns props:{...article}
  */
-export const getStaticProps: GetStaticProps<PostProps> = async ({ params }: any) => {
+export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
   const sql = `SELECT * FROM articles WHERE id=${id}`;
   const postInArray = await dbQuery(sql); //DBから取得した配列から記事データを抜き出す

@@ -4,7 +4,6 @@ import { GetStaticProps } from 'next';
 import { dbQuery } from '../db';
 import { PostProps } from '../pages/posts/[id]';
 import { formatDate } from '../lib/format_date';
-import React, { useState } from 'react';
 
 /**
  * JSON形式で文字列を格納した型
@@ -21,13 +20,10 @@ type BlogGalleryProps = {
 };
 
 const Home = (props: BlogGalleryProps) => {
-  const COUNT_PER_POSTS = 5;
-  const [currentCount, setCurrentCount] = useState(COUNT_PER_POSTS);
   const { posts } = props;
-  const viewablePosts = posts.slice(0, currentCount);
   return (
     <Layout pageTitle='BLOG'>
-      {viewablePosts.map((post) => (
+      {posts.map((post) => (
         <div key={post.id} className='post-teaser'>
           <h3>
             <Link href='/posts/[id]' as={`/posts/${post.id}`}>
@@ -35,15 +31,10 @@ const Home = (props: BlogGalleryProps) => {
             </Link>
           </h3>
           <div>
-            <span>{post.updated_at}</span>
+            <span>{post.created_at}</span>
           </div>
         </div>
       ))}
-      {posts.length > currentCount ? (
-        <button onClick={() => setCurrentCount(currentCount + COUNT_PER_POSTS)}>LOAD MORE</button>
-      ) : (
-        ''
-      )}
     </Layout>
   );
 };
@@ -52,11 +43,12 @@ const Home = (props: BlogGalleryProps) => {
  * 値の読み込みを行う
  */
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
+  const MAX_COUNT = 5;
   const sql = `SELECT * FROM articles`;
-  const posts = await dbQuery(sql);
-  const sortedPosts = posts.sort(sortWithProps('updated_at', true));
+  const postsInArray = await dbQuery(sql);
+  const sortedPosts = postsInArray.sort(sortWithProps('created_at', true));
 
-  const formattedPosts = sortedPosts.map((item: PostProps) => {
+  const posts = sortedPosts.map((item: PostProps) => {
     return {
       id: item.id,
       title: item.title,
@@ -65,25 +57,19 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
       updated_at: formatDate(item.updated_at),
     };
   });
-
+  //const jsonArray = JSON.parse(JSON.stringify(posts));
   return {
     props: {
-      posts: formattedPosts,
+      posts: posts.slice(0, MAX_COUNT),
     },
   };
 };
 
-/**
- * sort関数のために大小を比較する
- * @param sortedName
- * @param reversed
- * @returns 1 or -1
- */
-const sortWithProps = (sortedName: string, reversed: boolean) => (a: PostItems, b: PostItems) => {
+const sortWithProps = (sortedName: string, reversed: boolean) => (a: any, b: any) => {
   if (reversed) {
-    return a[sortedName] < b[sortedName] ? 1 : -1;
+    return a.sortedName < b.sortedName ? 1 : -1;
   } else {
-    return a[sortedName] > b[sortedName] ? -1 : 1;
+    return a.sortedName < b.sortedName ? -1 : 1;
   }
 };
 
