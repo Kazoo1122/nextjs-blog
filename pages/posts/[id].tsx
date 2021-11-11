@@ -11,6 +11,11 @@ type PostUrl = {
   id: string;
 };
 
+export type TagProps = {
+  articles_id: string;
+  tag_name: string;
+};
+
 /**
  * 記事データが全て入った型(idのみ任意)
  */
@@ -20,6 +25,7 @@ export type PostProps = {
   content: string;
   created_at: Date;
   updated_at: Date;
+  attachedTag: Array<TagProps>;
 };
 
 /**
