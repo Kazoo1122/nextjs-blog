@@ -33,15 +33,19 @@ export type PostProps = {
  * @param params
  * @returns JSX
  */
-export default function Post(params: PostProps) {
+export default function Post(post: PostProps) {
   return (
-    <Layout pageTitle={params.title}>
+    <Layout pageTitle={post.title}>
       <div className='post-meta'>
-        <span>投稿日：{params.created_at}</span>
+        <span>投稿日：{post.created_at}</span>
         <br />
-        <span>更新日：{params.updated_at}</span>
+        <span>更新日：{post.updated_at}</span>
       </div>
-      <div className='post-body' dangerouslySetInnerHTML={{ __html: params.content }} />
+      {post.attachedTag.map((tag) => (
+        // eslint-disable-next-line react/jsx-key
+        <span className='tags'>{tag}</span>
+      ))}
+      <div className='post-body' dangerouslySetInnerHTML={{ __html: post.content }} />
     </Layout>
   );
 }
@@ -53,21 +57,27 @@ export default function Post(params: PostProps) {
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
-  const sql = `SELECT * FROM articles WHERE id=${id}`;
-  const postInArray = await dbQuery(sql); //DBから取得した配列から記事データを抜き出す
-  const content = await markdownToHtml(postInArray[0].content);
-  const post = postInArray.map((item: PostProps) => {
-    return {
-      id: item.id,
-      title: item.title,
-      content: content,
-      created_at: formatDate(item.created_at),
-      updated_at: formatDate(item.updated_at),
-    };
+  const queryAboutArticle = `SELECT * FROM articles WHERE id=${id}`;
+  const post = (await dbQuery(queryAboutArticle)).pop(); //DBから取得した配列から記事データを抜き出す
+
+  const queryAboutTags = `SELECT tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id WHERE tagging_articles.articles_id=${id};`;
+  const tags = await dbQuery(queryAboutTags); //タグと記事との紐付け一覧をDBから取得
+  console.log(tags, ':tags');
+  //タグと紐づいている記事を探し、あれば配列として格納する
+  tags.forEach((tag: TagProps) => {
+    if (post.hasOwnProperty('attachedTag') === false) {
+      post.attachedTag = [];
+    }
+    post.attachedTag.push(tag.tag_name);
   });
+
+  post.content = await markdownToHtml(post.content);
+  post.created_at = formatDate(post.created_at);
+  post.updated_at = formatDate(post.updated_at);
+
   return {
     props: {
-      ...post.pop(),
+      ...post,
     },
   };
 };
@@ -77,8 +87,8 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  * @returns paths 中身はparams{id}の一覧
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const sql = `SELECT id FROM articles`;
-  const posts = await dbQuery(sql);
+  const queryAboutId = `SELECT id FROM articles`;
+  const posts = await dbQuery(queryAboutId);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
   });

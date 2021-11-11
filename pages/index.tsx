@@ -49,11 +49,13 @@ const Home = (props: BlogGalleryProps) => {
  * 値の読み込みを行う
  */
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
-  const queryToArticles = 'SELECT * FROM articles';
-  const posts = await dbQuery(queryToArticles);
-  const queryToTags =
-    'SELECT articles_id, tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id ORDER BY articles_id;';
-  const tags = await dbQuery(queryToTags);
+  const queryAboutArticles = 'SELECT * FROM articles';
+  const posts = await dbQuery(queryAboutArticles); //記事一覧をDBから取得
+  const queryAboutTags =
+    'SELECT articles_id, tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id;';
+  const tags = await dbQuery(queryAboutTags); //タグと記事との紐付け一覧をDBから取得
+
+  //タグと紐づいている記事を探し、あれば配列として格納する
   tags.forEach((tag: TagProps) => {
     const taggedPost = posts.find((post: PostProps) => tag.articles_id === post.id);
     if (taggedPost.hasOwnProperty('attachedTag') === false) {
@@ -61,12 +63,11 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
     }
 
     taggedPost.attachedTag.push(tag.tag_name);
-    console.log(taggedPost, 'taggedPost');
   });
-  console.log(posts, 'posts');
 
   const sortedPosts = posts.sort(sortWithProps('updated_at', true));
 
+  //各記事の日付を整形
   const formattedPosts = sortedPosts.map((item: PostProps) => {
     return {
       id: item.id,
