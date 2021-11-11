@@ -1,0 +1,97 @@
+$title_color: #109aff;
+$menu_color: #35a7ea;
+$active_color: #1134f4;
+$header_footer_color: #faf9fd;
+$strong_color: #ffee56;
+
+div.wrapper {
+  width: 900px;
+
+  article.posts_list {
+    margin-bottom: 24px;
+    border-bottom: solid 1px;
+    border-color: $menu_color;
+    h3 {
+      text-align: left;
+      font-size: 24px;
+      margin-bottom: 8px;
+      a {
+        background: linear-gradient(transparent 60%, $strong_color 60%);
+        &:hover {
+          color: $menu_color;
+        }
+      }
+    }
+    div.attribute_area {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      div.tag_area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span.tags {
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 64px;
+          height: 24px;
+          background: $menu_color;
+          border-radius: 6px;
+          margin-right: 6px;
+          &:hover {
+            background-color: $active_color;
+          }
+          a {
+            font-size: 14px;
+            color: #fff;
+          }
+        }
+      }
+      div.date_area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        p.date {
+          text-align: right;
+          font: normal normal 16px Roboto;
+          letter-spacing: 0px;
+          color: #707070;
+        }
+      }
+    }
+    p.content {
+      margin-bottom: 48px;
+      line-height: 200%;
+      a:hover {
+        color: $menu_color;
+      }
+    }
+  }
+  div.button_area {
+    button.load_more {
+      margin: 48px auto 64px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      width: 193px;
+      height: 61px;
+      background-color: #4d6cdb;
+      box-shadow: 2px 2px 0px #00000029;
+      border-radius: 11px;
+      &:hover {
+        background-color: $active_color;
+      }
+      &:active {
+        background-color: $active_color;
+        box-shadow: none;
+        position: relative;
+        top: 2px;
+        left: 2px;
+      }
+    }
+  }
+}

@@ -51,7 +51,7 @@ const Layout = (props: MetaProps) => {
             <Link href='/'>
               <a>
                 <h1>レジ打ちからエンジニアになりました</h1>
-                <p className='subTitle'>〜中途エンジニアの開発日誌〜</p>
+                <p>〜中途エンジニアの開発日誌〜</p>
               </a>
             </Link>
           </div>

@@ -1,9 +1,14 @@
+$title_color: #109aff;
+$menu_color: #35a7ea;
+$active_color: #1134f4;
+$header_footer_color: #faf9fd;
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Hiragino Maru Gothic ProN, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 header {
@@ -13,37 +18,35 @@ header {
   align-items: center;
   padding-left: 36px;
   padding-right: 36px;
-  background-color: #faf9fd;
+  background-color: $header_footer_color;
   box-shadow: 0px 8px 20px #e7e9f4;
-}
 
-.titleBox {
-  text-align: left;
-}
+  .titleBox {
+    text-align: left;
 
-h1 {
-  font: 30px RocknRoll One;
-  color: #109aff;
-  width: 680px;
-}
+    h1 {
+      font: 30px RocknRoll One;
+      color: $title_color;
+      width: 680px;
+    }
 
-p.subTitle {
-  font: 20px Yusei Magic;
-  color: #707070;
-  width: 380px;
-}
-
-nav {
-  margin-left: auto;
-}
-
-nav > ul > li {
-  font: 18px Spartan;
-  display: inline-block;
-  margin-left: 60px;
-  color: #35a7ea;
-  &:hover {
-    color: #1134f4;
+    p {
+      font: 20px Yusei Magic;
+      color: #707070;
+      width: 380px;
+    }
+  }
+  nav {
+    margin-left: auto;
+    ul li {
+      font: 18px Spartan;
+      display: inline-block;
+      margin-left: 60px;
+      color: $menu_color;
+      &:hover {
+        color: $active_color;
+      }
+    }
   }
 }
 
@@ -54,10 +57,11 @@ div.dot-background {
 
 main {
   margin: 64px 128px;
-}
-h2 {
-  color: #1134f4;
-  font: normal normal 800 36px Spartan;
+  h2 {
+    color: $active_color;
+    font: normal normal 800 36px Spartan;
+    margin-bottom: 64px;
+  }
 }
 
 .container {
@@ -71,7 +75,7 @@ h2 {
 footer {
   width: 100%;
   text-align: center;
-  background-color: #faf9fd;
+  background-color: $header_footer_color;
   position: absolute;
   padding: 64px 0;
   bottom: 0;

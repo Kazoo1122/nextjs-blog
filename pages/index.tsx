@@ -4,7 +4,9 @@ import { GetStaticProps } from 'next';
 import { dbQuery } from '../db';
 import { PostProps, TagProps } from '../pages/posts/[id]';
 import { formatDate } from '../lib/format_date';
+import { markdownToPlain } from '../lib/md_convert';
 import React, { useState } from 'react';
+import styles from '../styles/Index.module.scss';
 
 /**
  * ブログ記事一覧用
@@ -13,34 +15,63 @@ type BlogGalleryProps = {
   posts: PostProps[];
 };
 
-const Home = (props: BlogGalleryProps) => {
+const Index = (props: BlogGalleryProps) => {
   const COUNT_PER_POSTS = 5;
+  const CHAR_LIMIT = 180;
   const [currentCount, setCurrentCount] = useState(COUNT_PER_POSTS);
   const { posts } = props;
   const viewablePosts = posts.slice(0, currentCount);
   return (
     <Layout pageTitle='BLOG'>
-      {viewablePosts.map((post) => (
-        <div key={post.id} className='post-teaser'>
-          <h3>
-            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
-              <a>{post.title}</a>
+      <div className={styles.wrapper}>
+        {viewablePosts.map((post) => (
+          <article key={post.id} className={styles.posts_list}>
+            <h3>
+              <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
+                <a>{post.title}</a>
+              </Link>
+            </h3>
+            <div className={styles.attribute_area}>
+              <div className={styles.tag_area}>
+                {post.attachedTag.map((tag) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <span className={styles.tags}>
+                    <a>{tag}</a>
+                  </span>
+                ))}
+              </div>
+              <div className={styles.date_area}>
+                <p className={styles.date}>
+                  作成日時：{post.created_at}
+                  <br />
+                  更新日時：{post.updated_at}
+                </p>
+              </div>
+            </div>
+            <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
+              <p className={styles.content}>
+                <a>
+                  {post.content.length > CHAR_LIMIT
+                    ? post.content.slice(0, CHAR_LIMIT - 1) + '…'
+                    : post.content}
+                </a>
+              </p>
             </Link>
-          </h3>
-          <div>
-            <span>{post.updated_at}</span>
-          </div>
-          {post.attachedTag.map((tag) => (
-            // eslint-disable-next-line react/jsx-key
-            <span className='tags'>{tag}</span>
-          ))}
+          </article>
+        ))}
+        <div className={styles.button_area}>
+          {posts.length > currentCount ? (
+            <button
+              className={styles.load_more}
+              onClick={() => setCurrentCount(currentCount + COUNT_PER_POSTS)}
+            >
+              LOAD MORE
+            </button>
+          ) : (
+            ''
+          )}
         </div>
-      ))}
-      {posts.length > currentCount ? (
-        <button onClick={() => setCurrentCount(currentCount + COUNT_PER_POSTS)}>LOAD MORE</button>
-      ) : (
-        ''
-      )}
+      </div>
     </Layout>
   );
 };
@@ -72,7 +103,7 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
     return {
       id: item.id,
       title: item.title,
-      content: item.content,
+      content: markdownToPlain(item.content),
       created_at: formatDate(item.created_at),
       updated_at: formatDate(item.updated_at),
       attachedTag: item.hasOwnProperty('attachedTag') ? item.attachedTag : [],
@@ -107,4 +138,4 @@ const sortWithProps = (sortedName: string, reversed: boolean) => (a: HashDate, b
   }
 };
 
-export default Home;
+export default Index;

@@ -2,6 +2,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse/lib';
 import remarkToRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify/lib';
+import removeMd from 'remove-markdown';
 
 /**
  * @param markdown
@@ -14,4 +15,8 @@ export const markdownToHtml = async (markdown: string) => {
     .use(rehypeStringify) // hast => html への変換
     .process(markdown); // 実行
   return html.toString();
+};
+
+export const markdownToPlain = (markdown: string) => {
+  return removeMd(markdown);
 };

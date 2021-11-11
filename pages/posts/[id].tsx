@@ -1,7 +1,7 @@
 import { Layout } from '../../components/Layout';
 import { formatDate } from '../../lib/format_date';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { markdownToHtml } from '../../lib/md_to_html';
+import { markdownToHtml } from '../../lib/md_convert';
 import { dbQuery } from '../../db';
 
 /**
@@ -41,10 +41,12 @@ export default function Post(post: PostProps) {
         <br />
         <span>更新日：{post.updated_at}</span>
       </div>
-      {post.attachedTag.map((tag) => (
-        // eslint-disable-next-line react/jsx-key
-        <span className='tags'>{tag}</span>
-      ))}
+      {post.hasOwnProperty('attachedTag')
+        ? post.attachedTag.map((tag) => (
+            // eslint-disable-next-line react/jsx-key
+            <span className='tags'>{tag}</span>
+          ))
+        : ''}
       <div className='post-body' dangerouslySetInnerHTML={{ __html: post.content }} />
     </Layout>
   );
