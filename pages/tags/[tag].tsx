@@ -9,83 +9,42 @@ import React, { useState } from 'react';
 //自作モジュール
 import { Layout } from '../../components/Layout';
 import { getAllPosts } from '../../lib/content';
-import { BlogGalleryProps, settings } from '../index';
+import { BlogGalleryProps, COUNT_PER_POSTS } from '../';
 import { dbQuery } from '../../db';
+import { LoadMore } from '../../components/LoadMore';
+import { Articles } from '../../components/Articles';
 
 //CSS
-import styles from '../styles/Index.module.scss';
+import styles from '../../styles/Index.module.scss';
+import { TagProps } from '../posts/[id]';
 
 type TagsUrl = {
   tag: string;
 };
-const Tag = (props: BlogGalleryProps) => {
-  const [currentCount, setCurrentCount] = useState(settings.COUNT_PER_POSTS);
+export default function Tag(props: BlogGalleryProps) {
+  const [currentCount, setCount] = useState(COUNT_PER_POSTS);
   const { posts, tag } = props;
   const filteredPosts = posts.filter((post) => {
     const attachedTag = post.attachedTag;
-    attachedTag.map((item) => (item.tag_name === tag ? true : false));
+    console.log(attachedTag, 'attachedTag');
+    return attachedTag.includes(tag);
   });
+  const postsLength = filteredPosts.length;
   const viewablePosts = filteredPosts.slice(0, currentCount);
   return (
-    <Layout pageTitle={'TAG:' + tag}>
+    <Layout pageTitle={'Tag:' + tag}>
       <div className={styles.wrapper}>
-        {viewablePosts.map((post) => (
-          <article key={post.id} className={styles.posts_list}>
-            <div className={styles.image_area}>
-              <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-                <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
-              </Link>
-            </div>
-            <div className={styles.detail_area}>
-              <h3>
-                <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-                  <a>{post.title}</a>
-                </Link>
-              </h3>
-              <div className={styles.attribute_area}>
-                <div className={styles.tag_area}>
-                  {post.attachedTag.map((tag) => (
-                    <span key={tag.toString()} className={styles.tags}>
-                      <a>{tag}</a>
-                    </span>
-                  ))}
-                </div>
-                <div className={styles.date_area}>
-                  <p className={styles.date}>
-                    作成日時：{post.created_at}
-                    <br />
-                    更新日時：{post.updated_at}
-                  </p>
-                </div>
-              </div>
-              <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-                <p className={styles.content}>
-                  <a>
-                    {post.content.length > settings.CHAR_LIMIT
-                      ? post.content.slice(0, settings.CHAR_LIMIT - 1) + '…'
-                      : post.content}
-                  </a>
-                </p>
-              </Link>
-            </div>
-          </article>
-        ))}
-        <div className={styles.button_area}>
-          {posts.length > currentCount ? (
-            <button
-              className={styles.load_more}
-              onClick={() => setCurrentCount(currentCount + settings.COUNT_PER_POSTS)}
-            >
-              LOAD MORE
-            </button>
-          ) : (
-            ''
-          )}
-        </div>
+        <Articles articles={viewablePosts} />
+        <LoadMore
+          currentCount={currentCount}
+          setCount={setCount}
+          posts={posts}
+          postsLength={postsLength}
+        />
       </div>
     </Layout>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async ({ params }) => {
   const { tag } = params as TagsUrl;
@@ -101,13 +60,11 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async ({ params 
 export const getStaticPaths: GetStaticPaths<TagsUrl> = async () => {
   const queryAboutTag = `SELECT tag_name FROM tags`;
   const tags = await dbQuery(queryAboutTag);
-  const paths = tags.map((tag: TagsUrl) => {
-    return { params: { tag: tag.toString() } };
+  const paths = tags.map((tag: TagProps) => {
+    return { params: { tag: tag.tag_name.toString() } };
   });
   return {
     paths,
     fallback: false,
   };
 };
-
-export default Tag;

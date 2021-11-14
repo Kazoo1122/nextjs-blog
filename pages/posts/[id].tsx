@@ -25,7 +25,7 @@ export type PostProps = {
   thumbnail: string;
   created_at: Date;
   updated_at: Date;
-  attachedTag: Array<TagProps>;
+  attachedTag: Array<string>;
 };
 
 /**
