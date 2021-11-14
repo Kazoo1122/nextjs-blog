@@ -7,6 +7,8 @@ import { formatDate } from '../lib/format_date';
 import { markdownToPlain } from '../lib/md_convert';
 import React, { useState } from 'react';
 import styles from '../styles/Index.module.scss';
+import path from 'path';
+import Image from 'next/image';
 
 /**
  * ブログ記事一覧用
@@ -26,6 +28,16 @@ const Index = (props: BlogGalleryProps) => {
       <div className={styles.wrapper}>
         {viewablePosts.map((post) => (
           <article key={post.id} className={styles.posts_list}>
+            <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
+            <Image
+              src={post.thumbnail}
+              width={426}
+              height={285}
+              layout={'intrinsic'}
+              alt='thumbnail'
+            />
+            </Link>
+            <div className={styles.detail_area}>
             <h3>
               <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
                 <a>{post.title}</a>
@@ -34,8 +46,7 @@ const Index = (props: BlogGalleryProps) => {
             <div className={styles.attribute_area}>
               <div className={styles.tag_area}>
                 {post.attachedTag.map((tag) => (
-                  // eslint-disable-next-line react/jsx-key
-                  <span className={styles.tags}>
+                  <span key={tag.toString()} className={styles.tags}>
                     <a>{tag}</a>
                   </span>
                 ))}
@@ -57,6 +68,7 @@ const Index = (props: BlogGalleryProps) => {
                 </a>
               </p>
             </Link>
+            </div>
           </article>
         ))}
         <div className={styles.button_area}>
@@ -80,6 +92,9 @@ const Index = (props: BlogGalleryProps) => {
  * 値の読み込みを行う
  */
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
+  const IMG_DIR_PATH = '/images';
+  const NO_IMG_PATH = path.join(IMG_DIR_PATH, '/no_image.png');
+
   const queryAboutArticles = 'SELECT * FROM articles';
   const posts = await dbQuery(queryAboutArticles); //記事一覧をDBから取得
   const queryAboutTags =
@@ -96,7 +111,7 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
     taggedPost.attachedTag.push(tag.tag_name);
   });
 
-  const sortedPosts = posts.sort(sortWithProps('updated_at', true));
+  const sortedPosts = posts.sort(sortWithProps('created_at', true));
 
   //各記事の日付を整形
   const formattedPosts = sortedPosts.map((item: PostProps) => {
@@ -106,10 +121,10 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
       content: markdownToPlain(item.content),
       created_at: formatDate(item.created_at),
       updated_at: formatDate(item.updated_at),
+      thumbnail: item.thumbnail !== null ? path.join(IMG_DIR_PATH, item.thumbnail) : NO_IMG_PATH,
       attachedTag: item.hasOwnProperty('attachedTag') ? item.attachedTag : [],
     };
   });
-
   return {
     props: {
       posts: formattedPosts,

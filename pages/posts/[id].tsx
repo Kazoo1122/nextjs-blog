@@ -23,6 +23,7 @@ export type PostProps = {
   id?: string;
   title: string;
   content: string;
+  thumbnail: string;
   created_at: Date;
   updated_at: Date;
   attachedTag: Array<TagProps>;
