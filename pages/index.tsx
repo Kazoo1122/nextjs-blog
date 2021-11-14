@@ -32,7 +32,7 @@ const Index = (props: BlogGalleryProps) => {
   return (
     <Layout pageTitle='BLOG'>
       <div className={styles.wrapper}>
-        <TagList tags={tags} />
+        <TagList tags={tags} posts={posts} tag='' />
         <Articles articles={viewablePosts} />
         <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
       </div>

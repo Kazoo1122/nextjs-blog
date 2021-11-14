@@ -15,6 +15,7 @@ import { getAllTags } from '../../lib/tag';
 //CSS
 import styles from '../../styles/Index.module.scss';
 import { TagProps } from '../posts/[id]';
+import { filterByTags } from '../../components/TagList';
 
 type TagsUrl = {
   tag: string;
@@ -22,11 +23,7 @@ type TagsUrl = {
 export default function Tag(props: BlogGalleryProps) {
   const [currentCount, setCount] = useState(COUNT_PER_POSTS);
   const { posts, tag } = props;
-  const filteredPosts = posts.filter((post) => {
-    const attachedTag = post.attachedTag;
-    console.log(attachedTag, 'attachedTag');
-    return attachedTag.includes(tag);
-  });
+  const filteredPosts = filterByTags(posts, tag);
   const postsLength = filteredPosts.length;
   const viewablePosts = filteredPosts.slice(0, currentCount);
   return (
