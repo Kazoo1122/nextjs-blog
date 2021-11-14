@@ -1,43 +1,33 @@
 //Next.jsモジュール
 import Link from 'next/link';
 import Image from 'next/image';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, GetStaticPaths } from 'next';
 
 //Reactモジュール
 import React, { useState } from 'react';
 
 //自作モジュール
-import { Layout } from '../components/Layout';
-import { getAllPosts } from '../lib/content';
-import { PostProps } from '../pages/posts/[id]';
+import { Layout } from '../../components/Layout';
+import { getAllPosts } from '../../lib/content';
+import { BlogGalleryProps, settings } from '../index';
+import { dbQuery } from '../../db';
 
 //CSS
 import styles from '../styles/Index.module.scss';
 
-/**
- * ブログ記事一覧用
- */
-export type BlogGalleryProps = {
-  posts: PostProps[];
-  tag?: string;
+type TagsUrl = {
+  tag: string;
 };
-
-type ReadOnlySettings = {
-  readonly COUNT_PER_POSTS: number;
-  readonly CHAR_LIMIT: number;
-};
-
-export const settings: ReadOnlySettings = {
-  COUNT_PER_POSTS: 5,
-  CHAR_LIMIT: 128,
-};
-
-const Index = (props: BlogGalleryProps) => {
+const Tag = (props: BlogGalleryProps) => {
   const [currentCount, setCurrentCount] = useState(settings.COUNT_PER_POSTS);
-  const { posts } = props;
-  const viewablePosts = posts.slice(0, currentCount);
+  const { posts, tag } = props;
+  const filteredPosts = posts.filter((post) => {
+    const attachedTag = post.attachedTag;
+    attachedTag.map((item) => (item.tag_name === tag ? true : false));
+  });
+  const viewablePosts = filteredPosts.slice(0, currentCount);
   return (
-    <Layout pageTitle='BLOG'>
+    <Layout pageTitle={'TAG:' + tag}>
       <div className={styles.wrapper}>
         {viewablePosts.map((post) => (
           <article key={post.id} className={styles.posts_list}>
@@ -56,9 +46,7 @@ const Index = (props: BlogGalleryProps) => {
                 <div className={styles.tag_area}>
                   {post.attachedTag.map((tag) => (
                     <span key={tag.toString()} className={styles.tags}>
-                      <Link href='/tags/[tag]' as={`/tags/${tag}`} passHref>
-                        <a>{tag}</a>
-                      </Link>
+                      <a>{tag}</a>
                     </span>
                   ))}
                 </div>
@@ -99,16 +87,27 @@ const Index = (props: BlogGalleryProps) => {
   );
 };
 
-/**
- * 値の読み込みを行う
- */
-export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
+export const getStaticProps: GetStaticProps<BlogGalleryProps> = async ({ params }) => {
+  const { tag } = params as TagsUrl;
   const posts = await getAllPosts();
   return {
     props: {
       posts: posts,
+      tag: tag,
     },
   };
 };
 
-export default Index;
+export const getStaticPaths: GetStaticPaths<TagsUrl> = async () => {
+  const queryAboutTag = `SELECT tag_name FROM tags`;
+  const tags = await dbQuery(queryAboutTag);
+  const paths = tags.map((tag: TagsUrl) => {
+    return { params: { tag: tag.toString() } };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export default Tag;

@@ -24,4 +24,25 @@ const zeroFill = (checkedNum: number, isMonth: boolean) => {
   return (checkedNum < threshold ? '0' : '') + checkedNum;
 };
 
-export { formatDate };
+/**
+ * JSON形式で文字列を格納した型
+ */
+type HashDate = {
+  [key: string]: Date;
+};
+
+/**
+ * sort関数のために日付の大小を比較する
+ * @param sortedName
+ * @param reversed
+ * @returns 1 or -1
+ */
+const sortWithDate = (sortedName: string, reversed: boolean) => (a: HashDate, b: HashDate) => {
+  if (reversed) {
+    return a[sortedName] < b[sortedName] ? 1 : -1;
+  } else {
+    return a[sortedName] > b[sortedName] ? -1 : 1;
+  }
+};
+
+export { formatDate, sortWithDate };

@@ -1,4 +1,9 @@
-@import './variables';
+:root {
+  --title_color: #109aff;
+  --menu_color: #35a7ea;
+  --active_color: #1134f4;
+  --header_footer_color: #faf9fd;
+}
 
 html,
 body {
@@ -15,7 +20,7 @@ header {
   align-items: center;
   padding-left: 36px;
   padding-right: 36px;
-  background-color: $header_footer_color;
+  background-color: var(--header_footer_color);
   box-shadow: 0px 8px 20px #e7e9f4;
 
   .titleBox {
@@ -27,7 +32,7 @@ header {
 
     h1 {
       font: 30px RocknRoll One;
-      color: $title_color;
+      color: var(--title_color);
       width: 680px;
     }
 
@@ -43,9 +48,9 @@ header {
       font: 18px Spartan;
       display: inline-block;
       margin-left: 60px;
-      color: $menu_color;
+      color: var(--menu_color);
       &:hover {
-        color: $active_color;
+        color: var(--active_color);
       }
     }
   }
@@ -59,7 +64,7 @@ div.dot-background {
 main {
   margin: 64px 128px;
   h2 {
-    color: $active_color;
+    color: var(--active_color);
     font: normal normal 800 36px Spartan;
     margin-bottom: 64px;
   }
@@ -76,7 +81,7 @@ main {
 footer {
   width: 100%;
   text-align: center;
-  background-color: $header_footer_color;
+  background-color: var(--header_footer_color);
   position: absolute;
   padding: 64px 0;
   bottom: 0;

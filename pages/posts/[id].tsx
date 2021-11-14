@@ -1,8 +1,7 @@
 import { Layout } from '../../components/Layout';
-import { formatDate } from '../../lib/format_date';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { markdownToHtml } from '../../lib/md_convert';
 import { dbQuery } from '../../db';
+import { getPostsDetail } from '../../lib/content';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -60,24 +59,7 @@ export default function Post(post: PostProps) {
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
-  const queryAboutArticle = `SELECT * FROM articles WHERE id=${id}`;
-  const post = (await dbQuery(queryAboutArticle)).pop(); //DBから取得した配列から記事データを抜き出す
-
-  const queryAboutTags = `SELECT tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id WHERE tagging_articles.articles_id=${id};`;
-  const tags = await dbQuery(queryAboutTags); //タグと記事との紐付け一覧をDBから取得
-  console.log(tags, ':tags');
-  //タグと紐づいている記事を探し、あれば配列として格納する
-  tags.forEach((tag: TagProps) => {
-    if (post.hasOwnProperty('attachedTag') === false) {
-      post.attachedTag = [];
-    }
-    post.attachedTag.push(tag.tag_name);
-  });
-
-  post.content = await markdownToHtml(post.content);
-  post.created_at = formatDate(post.created_at);
-  post.updated_at = formatDate(post.updated_at);
-
+  const post = await getPostsDetail(id);
   return {
     props: {
       ...post,
