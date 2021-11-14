@@ -8,9 +8,9 @@ import { useState } from 'react';
 import { Layout } from '../../components/Layout';
 import { getAllPosts } from '../../lib/content';
 import { BlogGalleryProps, COUNT_PER_POSTS } from '../';
-import { dbQuery } from '../../db';
 import { LoadMore } from '../../components/LoadMore';
 import { Articles } from '../../components/Articles';
+import { getAllTags } from '../../lib/tag';
 
 //CSS
 import styles from '../../styles/Index.module.scss';
@@ -42,17 +42,18 @@ export default function Tag(props: BlogGalleryProps) {
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async ({ params }) => {
   const { tag } = params as TagsUrl;
   const posts = await getAllPosts();
+  const tags = await getAllTags();
   return {
     props: {
       posts: posts,
       tag: tag,
+      tags: JSON.parse(JSON.stringify(tags)),
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths<TagsUrl> = async () => {
-  const queryAboutTag = `SELECT tag_name FROM tags`;
-  const tags = await dbQuery(queryAboutTag);
+  const tags = await getAllTags();
   const paths = tags.map((tag: TagProps) => {
     return { params: { tag: tag.tag_name.toString() } };
   });

@@ -43,8 +43,9 @@ export default function Post(post: PostProps) {
       </div>
       {post.hasOwnProperty('attachedTag')
         ? post.attachedTag.map((tag) => (
-            // eslint-disable-next-line react/jsx-key
-            <span className='tags'>{tag}</span>
+            <span className='tags' key={tag.toString()}>
+              {tag}
+            </span>
           ))
         : ''}
       <div className='post-body' dangerouslySetInnerHTML={{ __html: post.content }} />
