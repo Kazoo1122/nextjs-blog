@@ -1,8 +1,15 @@
 import styles from '../styles/Index.module.scss';
 import { COUNT_PER_POSTS } from '../pages';
+import React, { SetStateAction } from 'react';
 
-const LoadMore = (props: any) => {
-  const { posts, currentCount, setCount, postsLength } = props;
+type LoadMoreProps = {
+  currentCount: number;
+  setCount: React.Dispatch<SetStateAction<number>>;
+  postsLength: number;
+};
+
+const LoadMore = (props: LoadMoreProps) => {
+  const { currentCount, setCount, postsLength } = props;
   return (
     <div className={styles.button_area}>
       {postsLength > currentCount ? (

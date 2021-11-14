@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 
 //Reactモジュール
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 //自作モジュール
 import { Layout } from '../components/Layout';
@@ -30,12 +30,7 @@ const Index = (props: BlogGalleryProps) => {
     <Layout pageTitle='BLOG'>
       <div className={styles.wrapper}>
         <Articles articles={viewablePosts} />
-        <LoadMore
-          currentCount={currentCount}
-          setCount={setCount}
-          posts={posts}
-          postsLength={postsLength}
-        />
+        <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
       </div>
     </Layout>
   );

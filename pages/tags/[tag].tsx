@@ -1,10 +1,8 @@
 //Next.jsモジュール
-import Link from 'next/link';
-import Image from 'next/image';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
 //Reactモジュール
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 //自作モジュール
 import { Layout } from '../../components/Layout';
@@ -35,12 +33,7 @@ export default function Tag(props: BlogGalleryProps) {
     <Layout pageTitle={'Tag:' + tag}>
       <div className={styles.wrapper}>
         <Articles articles={viewablePosts} />
-        <LoadMore
-          currentCount={currentCount}
-          setCount={setCount}
-          posts={posts}
-          postsLength={postsLength}
-        />
+        <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
       </div>
     </Layout>
   );

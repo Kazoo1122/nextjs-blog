@@ -3,7 +3,11 @@ import Image from 'next/image';
 import styles from '../styles/Index.module.scss';
 import { PostProps } from '../pages/posts/[id]';
 
-const Articles = (props: any) => {
+type ArticleProps = {
+  articles: PostProps[];
+};
+
+const Articles = (props: ArticleProps) => {
   const CHAR_LIMIT = 128;
   const { articles } = props;
   //const posts = articles as PostProps[];
