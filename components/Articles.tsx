@@ -29,7 +29,7 @@ const Articles = (props: ArticleProps) => {
             <div className={styles.attribute_area}>
               <div className={styles.tag_area}>
                 {post.attachedTag.map((tag) => (
-                  <span key={tag.toString()} className={styles.tags}>
+                  <span key={tag.toString()} className='tags'>
                     <Link href='/tags/[tag]' as={`/tags/${tag}`} passHref>
                       <a>{tag}</a>
                     </Link>

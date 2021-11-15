@@ -3,6 +3,7 @@
   --menu_color: #35a7ea;
   --active_color: #1134f4;
   --header_footer_color: #faf9fd;
+  --strong_color: #ffee56;
 }
 
 html,
@@ -62,12 +63,7 @@ div.dot-background {
 }
 
 main {
-  margin: 64px 128px;
-  h2 {
-    color: var(--active_color);
-    font: normal normal 800 36px Spartan;
-    margin-bottom: 64px;
-  }
+  margin: 64px;
 }
 
 .container {
@@ -85,6 +81,23 @@ footer {
   position: absolute;
   padding: 64px 0;
   bottom: 0;
+}
+.tags {
+  text-align: center;
+  height: 28px;
+  line-height: 28px;
+  background: var(--menu_color);
+  border-radius: 10px;
+  margin-right: 6px;
+  padding: 0 12px;
+  &:hover {
+    background-color: var(--active_color);
+  }
+  a {
+    font-size: 14px;
+    color: #fff;
+    margin: 0 auto;
+  }
 }
 
 a {

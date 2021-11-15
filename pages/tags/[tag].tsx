@@ -11,6 +11,7 @@ import { BlogGalleryProps, COUNT_PER_POSTS } from '../';
 import { LoadMore } from '../../components/LoadMore';
 import { Articles } from '../../components/Articles';
 import { getAllTags } from '../../lib/tag';
+import { TagList } from '../../components/TagList';
 
 //CSS
 import styles from '../../styles/Index.module.scss';
@@ -22,15 +23,20 @@ type TagsUrl = {
 };
 export default function Tag(props: BlogGalleryProps) {
   const [currentCount, setCount] = useState(COUNT_PER_POSTS);
-  const { posts, tag } = props;
+  const { posts, tag, tags } = props;
   const filteredPosts = filterByTags(posts, tag);
   const postsLength = filteredPosts.length;
   const viewablePosts = filteredPosts.slice(0, currentCount);
   return (
     <Layout pageTitle={'Tag:' + tag}>
       <div className={styles.wrapper}>
-        <Articles articles={viewablePosts} />
-        <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
+        <div className={styles.main_area}>
+          <Articles articles={viewablePosts} />
+          <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
+        </div>
+        <div className={styles.side_area}>
+          <TagList tags={tags} posts={posts} tag='' />
+        </div>
       </div>
     </Layout>
   );

@@ -2,6 +2,7 @@ import { Layout } from '../../components/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { dbQuery } from '../../db';
 import { getPostsDetail } from '../../lib/content';
+import { BreadCrumbs } from '../../components/BreadCrumbs';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -36,6 +37,17 @@ export type PostProps = {
 export default function Post(post: PostProps) {
   return (
     <Layout pageTitle={post.title}>
+      <BreadCrumbs
+        visitedLists={[
+          {
+            title: 'BLOG',
+            path: '/',
+          },
+          {
+            title: post.title,
+          },
+        ]}
+      />
       <div className='post-meta'>
         <span>投稿日：{post.created_at}</span>
         <br />

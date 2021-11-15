@@ -71,10 +71,7 @@ const Layout = (props: MetaProps) => {
         </header>
         <div className='dot-background'></div>
 
-        <main>
-          {pageTitle ? <h2 className='page-title'>{pageTitle}</h2> : ``}
-          <div className='page-main'>{children}</div>
-        </main>
+        <main>{children}</main>
 
         <footer>&copy; 2021 {siteTitle}</footer>
       </div>

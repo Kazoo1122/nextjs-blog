@@ -1,112 +1,130 @@
-div.wrapper {
-  width: 900px;
+h2.page_title {
+  color: var(--active_color);
+  font: normal normal 800 36px Spartan;
+  margin-bottom: 64px;
+}
 
-  article.posts_list {
-    border-top: solid 1px;
-    border-color: var(--menu_color);
-    padding-top: 24px;
-    display: flex;
+.wrapper {
+  display: flex;
+  justify-content: space-between;
 
-    div.image_area {
-      flex-shrink: 0;
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin-right: 24px;
-      margin-bottom: 48px;
-      &:hover {
-        opacity: 0.8;
+  .main_area {
+    width: 900px;
+
+    article.posts_list {
+      border-top: solid 1px;
+      border-color: var(--menu_color);
+      padding-top: 24px;
+      display: flex;
+
+      div.image_area {
+        flex-shrink: 0;
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin-right: 24px;
+        margin-bottom: 48px;
+        &:hover {
+          opacity: 0.8;
+        }
       }
-    }
 
-    div.detail_area {
-      width: 100%;
-      h3 {
-        text-align: left;
-        font-size: 24px;
-        margin-bottom: 8px;
-        a {
-          background: linear-gradient(transparent 60%, var(--strong_color) 60%);
-          &:hover {
+      div.detail_area {
+        width: 100%;
+        h3 {
+          text-align: left;
+          font-size: 24px;
+          margin-bottom: 8px;
+          a {
+            background: linear-gradient(transparent 60%, var(--strong_color) 60%);
+            &:hover {
+              color: var(--menu_color);
+            }
+          }
+        }
+
+        div.attribute_area {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 8px;
+
+          //タグエリア
+          div.tag_area {
+            display: flex;
+            align-items: flex-end;
+            flex-direction: row-reverse;
+          }
+
+          //作成日・更新日エリア
+          div.date_area {
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p.date {
+              text-align: right;
+              font: normal normal 16px Roboto;
+              letter-spacing: 0px;
+              color: #707070;
+            }
+          }
+        }
+        p.content {
+          margin-bottom: 48px;
+          line-height: 200%;
+          a:hover {
             color: var(--menu_color);
           }
         }
       }
-
-      div.attribute_area {
+    }
+    div.button_area {
+      button.load_more {
+        margin: 48px auto 64px;
+        text-align: center;
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-
-        //タグエリア
-        div.tag_area {
-          display: flex;
-          align-items: flex-end;
-          flex-direction: row-reverse;
-          span.tags {
-            text-align: center;
-            height: 28px;
-            line-height: 28px;
-            background: var(--menu_color);
-            border-radius: 10px;
-            margin-right: 6px;
-            padding: 0 12px;
-            &:hover {
-              background-color: var(--active_color);
-            }
-            a {
-              font-size: 14px;
-              color: #fff;
-              margin: 0 auto;
-            }
-          }
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        width: 193px;
+        height: 61px;
+        background-color: #4d6cdb;
+        box-shadow: 2px 2px 0px #00000029;
+        border-radius: 11px;
+        &:hover {
+          opacity: 0.8;
         }
-
-        //作成日・更新日エリア
-        div.date_area {
-          right: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          p.date {
-            text-align: right;
-            font: normal normal 16px Roboto;
-            letter-spacing: 0px;
-            color: #707070;
-          }
-        }
-      }
-      p.content {
-        margin-bottom: 48px;
-        line-height: 200%;
-        a:hover {
-          color: var(--menu_color);
+        &:active {
+          opacity: 0.8;
+          box-shadow: none;
+          position: relative;
+          top: 2px;
+          left: 2px;
         }
       }
     }
   }
-  div.button_area {
-    button.load_more {
-      margin: 48px auto 64px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      width: 193px;
-      height: 61px;
-      background-color: #4d6cdb;
-      box-shadow: 2px 2px 0px #00000029;
-      border-radius: 11px;
-      &:hover {
-        opacity: 0.8;
+  .side_area {
+    width: 320px;
+
+    .tag_list {
+      padding: 36px;
+      border: 2px solid var(--menu_color);
+      border-radius: 32px;
+
+      h3 {
+        text-align: left;
+        //font: normal normal 800 32px Spartan;
+        font-size: 24px;
+        margin-bottom: 32px;
+        span {
+          background: linear-gradient(transparent 60%, var(--strong_color) 60%);
+        }
       }
-      &:active {
-        opacity: 0.8;
-        box-shadow: none;
-        position: relative;
-        top: 2px;
-        left: 2px;
+      .hidden_box {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 2px;
       }
     }
   }

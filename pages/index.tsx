@@ -29,12 +29,18 @@ const Index = (props: BlogGalleryProps) => {
   const { posts, tags } = props;
   const viewablePosts = posts.slice(0, currentCount);
   const postsLength = posts.length;
+  const pageTitle = 'BLOG';
   return (
-    <Layout pageTitle='BLOG'>
+    <Layout pageTitle={pageTitle}>
+      <h2 className={styles.page_title}>{pageTitle}</h2>
       <div className={styles.wrapper}>
-        <TagList tags={tags} posts={posts} tag='' />
-        <Articles articles={viewablePosts} />
-        <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
+        <div className={styles.main_area}>
+          <Articles articles={viewablePosts} />
+          <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
+        </div>
+        <div className={styles.side_area}>
+          <TagList tags={tags} posts={posts} tag='' />
+        </div>
       </div>
     </Layout>
   );
