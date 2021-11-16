@@ -73,7 +73,11 @@ const Layout = (props: MetaProps) => {
 
         <main>{children}</main>
 
-        <footer>&copy; 2021 {siteTitle}</footer>
+        <footer>
+          <Link href='/'>
+            <a> &copy; 2021 {siteTitle} </a>
+          </Link>
+        </footer>
       </div>
     </div>
   );

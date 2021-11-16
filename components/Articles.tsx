@@ -10,14 +10,15 @@ type ArticleProps = {
 const Articles = (props: ArticleProps) => {
   const CHAR_LIMIT = 128;
   const { articles } = props;
-  //const posts = articles as PostProps[];
   return (
     <>
       {articles.map((post: PostProps) => (
         <article key={post.id} className={styles.posts_list}>
           <div className={styles.image_area}>
             <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-              <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
+              <>
+                <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
+              </>
             </Link>
           </div>
           <div className={styles.detail_area}>

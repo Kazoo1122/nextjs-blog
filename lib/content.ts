@@ -48,7 +48,6 @@ export async function getPostsDetail(id: string) {
 
   const queryAboutTags = `SELECT tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id WHERE tagging_articles.articles_id=${id};`;
   const tags = await dbQuery(queryAboutTags); //タグと記事との紐付け一覧をDBから取得
-  console.log(tags, ':tags');
   //タグと紐づいている記事を探し、あれば配列として格納する
   tags.forEach((tag: TagProps) => {
     if (post.hasOwnProperty('attachedTag') === false) {

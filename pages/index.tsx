@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 
 //Reactモジュール
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 //自作モジュール
 import { Layout } from '../components/Layout';
@@ -12,6 +12,7 @@ import { PostProps, TagProps } from '../pages/posts/[id]';
 import styles from '../styles/Index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { TagList } from '../components/TagList';
+import { BreadCrumbContext } from '../context/context';
 
 /**
  * ブログ記事一覧用
@@ -30,6 +31,12 @@ const Index = (props: BlogGalleryProps) => {
   const viewablePosts = posts.slice(0, currentCount);
   const postsLength = posts.length;
   const pageTitle = 'BLOG';
+  const items = [{ title: pageTitle, path: '/' }];
+  const context = useContext(BreadCrumbContext);
+  useEffect(() => {
+    context.setItems([]);
+    context.setItems(items);
+  });
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className={styles.page_title}>{pageTitle}</h2>
