@@ -33,7 +33,7 @@ export default function Tag(props: BlogGalleryProps) {
   const context = useContext(BreadCrumbContext);
   const items = [
     {
-      title: 'BLOG',
+      title: 'HOME',
       path: '/',
     },
     {
@@ -49,6 +49,7 @@ export default function Tag(props: BlogGalleryProps) {
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
+      <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.wrapper}>
         <div className={styles.main_area}>
           <Articles articles={viewablePosts} />
@@ -58,6 +59,7 @@ export default function Tag(props: BlogGalleryProps) {
           <TagList tags={tags} posts={posts} tag='' />
         </div>
       </div>
+      <BreadCrumbs items={context.items} />
     </Layout>
   );
 }

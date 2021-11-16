@@ -44,6 +44,7 @@ export default function Post(post: PostProps) {
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
+      <h2 className='page_title'>{pageTitle}</h2>
       <div className='post-meta'>
         <span>投稿日：{post.created_at}</span>
         <br />
@@ -57,6 +58,7 @@ export default function Post(post: PostProps) {
           ))
         : ''}
       <div className='post-body' dangerouslySetInnerHTML={{ __html: post.content }} />
+      <BreadCrumbs items={context.items} />
     </Layout>
   );
 }

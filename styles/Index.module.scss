@@ -1,9 +1,3 @@
-h2.page_title {
-  color: var(--active_color);
-  font: normal normal 800 36px Spartan;
-  margin-bottom: 64px;
-}
-
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -13,7 +7,7 @@ h2.page_title {
 
     article.posts_list {
       border-top: solid 1px;
-      border-color: var(--menu_color);
+      border-color: var(--menu-color);
       padding-top: 24px;
       display: flex;
 
@@ -36,9 +30,9 @@ h2.page_title {
           font-size: 24px;
           margin-bottom: 8px;
           a {
-            background: linear-gradient(transparent 60%, var(--strong_color) 60%);
+            background: linear-gradient(transparent 60%, var(--strong-color) 60%);
             &:hover {
-              color: var(--menu_color);
+              color: var(--menu-color);
             }
           }
         }
@@ -73,7 +67,7 @@ h2.page_title {
           margin-bottom: 48px;
           line-height: 200%;
           a:hover {
-            color: var(--menu_color);
+            color: var(--menu-color);
           }
         }
       }
@@ -89,7 +83,7 @@ h2.page_title {
         width: 193px;
         height: 61px;
         background-color: #4d6cdb;
-        box-shadow: 2px 2px 0px #00000029;
+        box-shadow: 4px 4px 0px #00000029;
         border-radius: 11px;
         &:hover {
           opacity: 0.8;
@@ -98,8 +92,8 @@ h2.page_title {
           opacity: 0.8;
           box-shadow: none;
           position: relative;
-          top: 2px;
-          left: 2px;
+          top: 4px;
+          left: 4px;
         }
       }
     }
@@ -109,8 +103,9 @@ h2.page_title {
 
     .tag_list {
       padding: 36px;
-      border: 2px solid var(--menu_color);
+      border: 3px solid black;
       border-radius: 32px;
+      box-shadow: 8px 8px #eaebf5;
 
       h3 {
         text-align: left;
@@ -118,7 +113,7 @@ h2.page_title {
         font-size: 24px;
         margin-bottom: 32px;
         span {
-          background: linear-gradient(transparent 60%, var(--strong_color) 60%);
+          background: linear-gradient(transparent 60%, var(--strong-color) 60%);
         }
       }
       .hidden_box {

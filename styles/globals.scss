@@ -1,9 +1,10 @@
 :root {
-  --title_color: #109aff;
-  --menu_color: #35a7ea;
-  --active_color: #1134f4;
-  --header_footer_color: #faf9fd;
-  --strong_color: #ffee56;
+  --title-color: #109aff;
+  --menu-color: #35a7ea;
+  --active-color: #1134f4;
+  --header-color: #faf9fd;
+  --strong-color: #ffee56;
+  --gray-color: #707070;
 }
 
 html,
@@ -21,7 +22,7 @@ header {
   align-items: center;
   padding-left: 36px;
   padding-right: 36px;
-  background-color: var(--header_footer_color);
+  background-color: var(--header-color);
   box-shadow: 0px 8px 20px #e7e9f4;
 
   .titleBox {
@@ -33,7 +34,7 @@ header {
 
     h1 {
       font: 30px RocknRoll One;
-      color: var(--title_color);
+      color: var(--title-color);
       width: 680px;
     }
 
@@ -49,9 +50,9 @@ header {
       font: 18px Spartan;
       display: inline-block;
       margin-left: 60px;
-      color: var(--menu_color);
+      color: var(--menu-color);
       &:hover {
-        color: var(--active_color);
+        color: var(--active-color);
       }
     }
   }
@@ -63,7 +64,13 @@ div.dot-background {
 }
 
 main {
-  margin: 64px;
+  margin: 48px 64px;
+}
+
+.page_title {
+  color: var(--active-color);
+  font: 800 36px Spartan;
+  margin-bottom: 48px;
 }
 
 .container {
@@ -77,7 +84,7 @@ main {
 footer {
   width: 100%;
   text-align: center;
-  background-color: var(--header_footer_color);
+  background-color: var(--header-color);
   position: absolute;
   padding: 64px 0;
   bottom: 0;
@@ -86,12 +93,12 @@ footer {
   text-align: center;
   height: 28px;
   line-height: 28px;
-  background: var(--menu_color);
+  background: var(--menu-color);
   border-radius: 10px;
   margin-right: 6px;
   padding: 0 12px;
   &:hover {
-    background-color: var(--active_color);
+    background-color: var(--active-color);
   }
   a {
     font-size: 14px;

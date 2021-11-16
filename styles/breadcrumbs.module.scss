@@ -1,0 +1,20 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 48px;
+  color: var(--gray-color);
+  //margin-right: 6px;
+  font: 18px;
+  .breadcrumbs_item {
+    .home_icon {
+      position: relative;
+      bottom: 1px;
+      margin-right: 8px;
+    }
+    .chevron_icon {
+      position: relative;
+      bottom: 1px;
+      margin: 0 8px;
+    }
+  }
+}

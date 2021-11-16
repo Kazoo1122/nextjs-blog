@@ -13,6 +13,7 @@ import styles from '../styles/Index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { TagList } from '../components/TagList';
 import { BreadCrumbContext } from '../context/context';
+import { BreadCrumbs } from '../components/BreadCrumbs';
 
 /**
  * ブログ記事一覧用
@@ -31,7 +32,7 @@ const Index = (props: BlogGalleryProps) => {
   const viewablePosts = posts.slice(0, currentCount);
   const postsLength = posts.length;
   const pageTitle = 'BLOG';
-  const items = [{ title: pageTitle, path: '/' }];
+  const items = [{ title: 'HOME', path: '/' }];
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
     context.setItems([]);
@@ -39,7 +40,8 @@ const Index = (props: BlogGalleryProps) => {
   });
   return (
     <Layout pageTitle={pageTitle}>
-      <h2 className={styles.page_title}>{pageTitle}</h2>
+      <BreadCrumbs items={context.items} />
+      <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.wrapper}>
         <div className={styles.main_area}>
           <Articles articles={viewablePosts} />
@@ -49,6 +51,7 @@ const Index = (props: BlogGalleryProps) => {
           <TagList tags={tags} posts={posts} tag='' />
         </div>
       </div>
+      <BreadCrumbs items={context.items} />
     </Layout>
   );
 };
