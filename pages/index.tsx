@@ -65,7 +65,9 @@ const Index = (props: BlogGalleryProps) => {
           <TagList tags={tags} posts={posts} tag='' />
         </div>
       </div>
-      <BreadCrumbs items={context.items} />
+      <div className='bottom_breadcrumbs_area'>
+        <BreadCrumbs items={context.items} />
+      </div>
     </Layout>
   );
 };

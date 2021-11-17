@@ -24,19 +24,21 @@
   width: 100%;
   //記事タイトル
   .articles_title_area {
-    text-align: left;
-    font-size: 24px;
-    margin-bottom: 8px;
-    background: var(--marker);
-    &:hover {
-      color: var(--menu-color);
+    margin-bottom: 16px;
+    .articles_title_text {
+      text-align: left;
+      font-size: 24px;
+      background: var(--marker);
+      &:hover {
+        color: var(--menu-color);
+      }
     }
   }
   //記事属性エリア
   .attribute_area {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 
     //タグエリア
     .tags_area {
@@ -55,6 +57,7 @@
 
   //コンテンツエリア
   .body_area {
+    font-size: 16px;
     margin-bottom: 48px;
     line-height: 200%;
     &:hover {

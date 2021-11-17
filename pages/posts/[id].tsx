@@ -4,8 +4,9 @@ import { dbQuery } from '../../db';
 import { getPostsDetail } from '../../lib/content';
 import { BreadCrumbContext } from '../../context/context';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import styles from '../../styles/post.module.scss';
+import Link from 'next/link';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -45,15 +46,17 @@ export default function Post(post: PostProps) {
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
+      <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.post_wrapper}>
         <div className='contents_area'>
-          <h2 className='page_title'>{pageTitle}</h2>
           <div className={styles.attribute_area}>
             <div className={styles.tags_area}>
               {post.hasOwnProperty('attachedTag')
                 ? post.attachedTag.map((tag) => (
                     <span className='tags' key={tag.toString()}>
-                      <a>{tag}</a>
+                      <Link href={{ pathname: '/', query: { tag: tag } }}>
+                        <a>{tag}</a>
+                      </Link>
                     </span>
                   ))
                 : ''}
@@ -69,7 +72,9 @@ export default function Post(post: PostProps) {
           <div className={styles.body_area} dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
       </div>
-      <BreadCrumbs items={items} />
+      <div className='bottom_breadcrumbs_area'>
+        <BreadCrumbs items={items} />
+      </div>
     </Layout>
   );
 }

@@ -12,7 +12,7 @@
   --white-text-color: #fff;
   --black-text-color: #000;
 
-  //マーカーの設定変数
+  //マーカーの設定
   --marker: linear-gradient(transparent 60%, var(--highlight-color) 60%);
 }
 
@@ -34,11 +34,11 @@ body {
 
 //各ページのコンテンツエリア
 .contents_area {
-  width: 900px;
+  width: 1000px;
 }
 
 .side_area {
-  width: 320px;
+  width: 270px;
 }
 
 //各ページのタグ設定
@@ -46,15 +46,15 @@ body {
   text-align: center;
   height: 28px;
   line-height: 28px;
-  background: var(--menu-color);
+  background: var(--strong-color);
   border-radius: 10px;
   margin-right: 6px;
   padding: 0 12px;
   &:hover {
-    background-color: var(--strong-color);
+    background-color: var(--menu-color);
   }
   a {
-    font-size: 14px;
+    font-size: 16px;
     color: #fff;
     margin: 0 auto;
   }
@@ -69,6 +69,10 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.bottom_breadcrumbs_area {
+  margin-top: 64px;
 }
 
 * {

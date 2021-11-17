@@ -22,9 +22,11 @@ const Articles = (props: ArticleProps) => {
             </Link>
           </div>
           <div className={styles.summary_area}>
-            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
-              <a className={styles.articles_title_area}>{post.title}</a>
-            </Link>
+            <div className={styles.articles_title_area}>
+              <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+                <a className={styles.articles_title_text}>{post.title}</a>
+              </Link>
+            </div>
             <div className={styles.attribute_area}>
               <div className={styles.tags_area}>
                 {post.attachedTag.map((tag) => (

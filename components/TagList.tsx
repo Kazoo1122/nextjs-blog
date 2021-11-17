@@ -14,10 +14,9 @@ const TagList = (props: BlogGalleryProps) => {
       <div className={styles.tags_box}>
         {tags.map((tag: TagProps) => (
           <span key={tag.tag_name.toString()} className='tags'>
-            {/*<Link href='/tags/[tag]' as={`/tags/${tag.tag_name}`} passHref>*/}
             <Link href={{ pathname: '/', query: { tag: tag.tag_name } }} passHref>
               <a>
-                {tag.tag_name} ({filterByTags(posts, tag.tag_name).length})
+                {tag.tag_name} ( {filterByTags(posts, tag.tag_name).length} )
               </a>
             </Link>
           </span>
