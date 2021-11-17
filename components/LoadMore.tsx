@@ -1,4 +1,4 @@
-import styles from '../styles/Index.module.scss';
+import styles from '../styles/load_more.module.scss';
 import { COUNT_PER_POSTS } from '../pages';
 import React, { SetStateAction } from 'react';
 
@@ -11,10 +11,10 @@ type LoadMoreProps = {
 const LoadMore = (props: LoadMoreProps) => {
   const { currentCount, setCount, postsLength } = props;
   return (
-    <div className={styles.button_area}>
+    <>
       {postsLength > currentCount ? (
         <button
-          className={styles.load_more}
+          className={styles.load_more_button}
           onClick={() => setCount(currentCount + COUNT_PER_POSTS)}
         >
           LOAD MORE
@@ -22,7 +22,7 @@ const LoadMore = (props: LoadMoreProps) => {
       ) : (
         ''
       )}
-    </div>
+    </>
   );
 };
 export { LoadMore };

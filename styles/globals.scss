@@ -1,94 +1,47 @@
+//CSS用グローバル変数設定
 :root {
+  //色に関する変数
   --title-color: #109aff;
   --menu-color: #35a7ea;
-  --active-color: #1134f4;
+  --strong-color: #1134f4;
   --header-color: #faf9fd;
-  --strong-color: #ffee56;
+  --highlight-color: #ffee56;
   --gray-color: #707070;
+  --shadow-color: #e7e9f4;
+  --button-color: #4d6cdb;
+  --white-text-color: #fff;
+  --black-text-color: #000;
+
+  //マーカーの設定変数
+  --marker: linear-gradient(transparent 60%, var(--highlight-color) 60%);
 }
 
+//全体設定、フォントと余白消去
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Hiragino Maru Gothic ProN, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Maru Gothic ProN W4', 'Hiragino Sans', Meiryo,
+    sans-serif;
 }
 
-header {
-  height: 128px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-left: 36px;
-  padding-right: 36px;
-  background-color: var(--header-color);
-  box-shadow: 0px 8px 20px #e7e9f4;
-
-  .titleBox {
-    text-align: left;
-    opacity: 1;
-    &:hover {
-      opacity: 0.6;
-    }
-
-    h1 {
-      font: 30px RocknRoll One;
-      color: var(--title-color);
-      width: 680px;
-    }
-
-    p {
-      font: 20px Yusei Magic;
-      color: #707070;
-      width: 380px;
-    }
-  }
-  nav {
-    margin-left: auto;
-    ul li {
-      font: 18px Spartan;
-      display: inline-block;
-      margin-left: 60px;
-      color: var(--menu-color);
-      &:hover {
-        color: var(--active-color);
-      }
-    }
-  }
-}
-
-div.dot-background {
-  height: 96px;
-  background: url(../public/images/dot_background.png) center / cover;
-}
-
-main {
-  margin: 48px 64px;
-}
-
+//各ページのタイトル部分
 .page_title {
-  color: var(--active-color);
+  color: var(--strong-color);
   font: 800 36px Spartan;
-  margin-bottom: 48px;
+  margin-bottom: 96px;
 }
 
-.container {
-  height: 100%;
-  position: relative;
-  box-sizing: border-box;
-  min-height: 100vh;
-  padding-bottom: 128px;
+//各ページのコンテンツエリア
+.contents_area {
+  width: 900px;
 }
 
-footer {
-  width: 100%;
-  text-align: center;
-  background-color: var(--header-color);
-  position: absolute;
-  padding: 64px 0;
-  bottom: 0;
+.side_area {
+  width: 320px;
 }
+
+//各ページのタグ設定
 .tags {
   text-align: center;
   height: 28px;
@@ -98,13 +51,19 @@ footer {
   margin-right: 6px;
   padding: 0 12px;
   &:hover {
-    background-color: var(--active-color);
+    background-color: var(--strong-color);
   }
   a {
     font-size: 14px;
     color: #fff;
     margin: 0 auto;
   }
+}
+
+.date_text {
+  text-align: right;
+  font: 16px Roboto;
+  color: var(--gray-color);
 }
 
 a {

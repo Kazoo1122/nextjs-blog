@@ -1,0 +1,77 @@
+//全体のラッパークラス
+.layout_wrapper {
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding-bottom: 128px;
+
+  //ヘッダー部分
+  .header_area {
+    height: 128px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 36px;
+    padding-right: 36px;
+    background-color: var(--header-color);
+    box-shadow: 0px 8px 20px var(--shadow-color);
+
+    //サイトタイトルゾーン
+    .title_area {
+      text-align: left;
+      opacity: 1;
+      &:hover {
+        opacity: 0.6;
+      }
+
+      //サイトタイトルテキスト
+      .title_text {
+        font: 30px RocknRoll One;
+        color: var(--title-color);
+        width: 680px;
+      }
+      //サブタイトルテキスト
+      .subtitle_text {
+        font: 20px Yusei Magic;
+        color: var(--gray-color);
+        width: 380px;
+      }
+    }
+    //グローバルナビゲーション
+    .global_navigation_area {
+      margin-left: auto;
+      li {
+        font: 18px Spartan;
+        display: inline-block;
+        margin-left: 60px;
+        color: var(--menu-color);
+        &:hover {
+          color: var(--strong-color);
+        }
+      }
+    }
+  }
+
+  //ヘッダー下部のドット柄背景
+  .dot_background_image {
+    height: 96px;
+    background: url(../public/images/dot_background.png) center / cover;
+  }
+
+  //メインのコンテンツを表示するエリア(childrenが格納されるところ)
+  .main_area {
+    margin: 64px 64px;
+  }
+
+  //フッター部分
+  .footer_area {
+    width: 100%;
+    text-align: center;
+    background-color: var(--header-color);
+    color: var(--gray-color);
+    position: absolute;
+    padding: 64px 0;
+    bottom: 0;
+  }
+}

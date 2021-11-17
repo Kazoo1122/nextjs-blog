@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from '../styles/Index.module.scss';
+import styles from '../styles/articles.module.scss';
 import { PostProps } from '../pages/posts/[id]';
 
 type ArticleProps = {
@@ -13,46 +13,42 @@ const Articles = (props: ArticleProps) => {
   return (
     <>
       {articles.map((post: PostProps) => (
-        <article key={post.id} className={styles.posts_list}>
-          <div className={styles.image_area}>
-            <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-              <>
+        <article key={post.id} className={styles.articles_area}>
+          <div className={styles.thumbnail_area}>
+            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+              <a>
                 <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
-              </>
+              </a>
             </Link>
           </div>
-          <div className={styles.detail_area}>
-            <h3>
-              <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-                <a>{post.title}</a>
-              </Link>
-            </h3>
+          <div className={styles.summary_area}>
+            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+              <a className={styles.articles_title_area}>{post.title}</a>
+            </Link>
             <div className={styles.attribute_area}>
-              <div className={styles.tag_area}>
+              <div className={styles.tags_area}>
                 {post.attachedTag.map((tag) => (
                   <span key={tag.toString()} className='tags'>
-                    <Link href='/tags/[tag]' as={`/tags/${tag}`} passHref>
+                    <Link href={{ pathname: '/', query: { tag: tag } }}>
                       <a>{tag}</a>
                     </Link>
                   </span>
                 ))}
               </div>
               <div className={styles.date_area}>
-                <p className={styles.date}>
+                <p className='date_text'>
                   作成日時：{post.created_at}
                   <br />
                   更新日時：{post.updated_at}
                 </p>
               </div>
             </div>
-            <Link href='/posts/[id]' as={`/posts/${post.id}`} passHref>
-              <p className={styles.content}>
-                <a>
-                  {post.content.length > CHAR_LIMIT
-                    ? post.content.slice(0, CHAR_LIMIT - 1) + '…'
-                    : post.content}
-                </a>
-              </p>
+            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+              <a className={styles.body_area}>
+                {post.content.length > CHAR_LIMIT
+                  ? post.content.slice(0, CHAR_LIMIT - 1) + '…'
+                  : post.content}
+              </a>
             </Link>
           </div>
         </article>

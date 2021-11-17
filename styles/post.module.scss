@@ -1,0 +1,26 @@
+.post_wrapper {
+  .attribute_area {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 64px;
+    .date_area {
+      align-items: flex-end;
+    }
+    .tags_area {
+      display: flex;
+      align-items: flex-end;
+    }
+  }
+  .body_area {
+    font-size: 18px;
+    line-height: 250%;
+
+    h3 {
+      font-size: 28px;
+    }
+    strong {
+      font-family: 'Hiragino Maru Gothic ProN W6';
+      background: var(--marker);
+    }
+  }
+}

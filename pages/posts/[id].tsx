@@ -5,6 +5,7 @@ import { getPostsDetail } from '../../lib/content';
 import { BreadCrumbContext } from '../../context/context';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 import { useContext } from 'react';
+import styles from '../../styles/post.module.scss';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -44,21 +45,31 @@ export default function Post(post: PostProps) {
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
-      <h2 className='page_title'>{pageTitle}</h2>
-      <div className='post-meta'>
-        <span>投稿日：{post.created_at}</span>
-        <br />
-        <span>更新日：{post.updated_at}</span>
+      <div className={styles.post_wrapper}>
+        <div className='contents_area'>
+          <h2 className='page_title'>{pageTitle}</h2>
+          <div className={styles.attribute_area}>
+            <div className={styles.tags_area}>
+              {post.hasOwnProperty('attachedTag')
+                ? post.attachedTag.map((tag) => (
+                    <span className='tags' key={tag.toString()}>
+                      <a>{tag}</a>
+                    </span>
+                  ))
+                : ''}
+            </div>
+            <div className={styles.date_area}>
+              <p className='date_text'>
+                <span>投稿日：{post.created_at}</span>
+                <br />
+                <span>更新日：{post.updated_at}</span>
+              </p>
+            </div>
+          </div>
+          <div className={styles.body_area} dangerouslySetInnerHTML={{ __html: post.content }} />
+        </div>
       </div>
-      {post.hasOwnProperty('attachedTag')
-        ? post.attachedTag.map((tag) => (
-            <span className='tags' key={tag.toString()}>
-              {tag}
-            </span>
-          ))
-        : ''}
-      <div className='post-body' dangerouslySetInnerHTML={{ __html: post.content }} />
-      <BreadCrumbs items={context.items} />
+      <BreadCrumbs items={items} />
     </Layout>
   );
 }

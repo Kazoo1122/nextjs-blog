@@ -1,0 +1,23 @@
+.load_more_button {
+  margin: 48px auto 64px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-text-color);
+  width: 193px;
+  height: 61px;
+  background-color: var(--button-color);
+  box-shadow: 4px 4px 0px #00000029;
+  border-radius: 11px;
+  &:hover {
+    opacity: 0.8;
+  }
+  &:active {
+    opacity: 0.8;
+    box-shadow: none;
+    position: relative;
+    top: 4px;
+    left: 4px;
+  }
+}

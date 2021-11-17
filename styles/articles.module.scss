@@ -1,0 +1,64 @@
+//記事一覧エリア
+.articles_area {
+  border-top: solid 1px;
+  border-color: var(--menu-color);
+  padding-top: 24px;
+  display: flex;
+}
+
+//記事サムネイルエリア
+.thumbnail_area {
+  flex-shrink: 0;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-right: 24px;
+  margin-bottom: 48px;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+//記事概要エリア
+.summary_area {
+  width: 100%;
+  //記事タイトル
+  .articles_title_area {
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 8px;
+    background: var(--marker);
+    &:hover {
+      color: var(--menu-color);
+    }
+  }
+  //記事属性エリア
+  .attribute_area {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    //タグエリア
+    .tags_area {
+      display: flex;
+      align-items: flex-end;
+      flex-direction: row-reverse;
+    }
+    //作成日・更新日エリア
+    .date_area {
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  //コンテンツエリア
+  .body_area {
+    margin-bottom: 48px;
+    line-height: 200%;
+    &:hover {
+      color: var(--menu-color);
+    }
+  }
+}

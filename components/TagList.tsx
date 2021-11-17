@@ -1,4 +1,4 @@
-import styles from '../styles/Index.module.scss';
+import styles from '../styles/tag_list.module.scss';
 import Link from 'next/link';
 import { PostProps, TagProps } from '../pages/posts/[id]';
 import { BlogGalleryProps } from '../pages';
@@ -7,14 +7,15 @@ import { BlogGalleryProps } from '../pages';
 const TagList = (props: BlogGalleryProps) => {
   const { tags, posts } = props;
   return (
-    <div className={styles.tag_list}>
-      <h3>
+    <div className={styles.tag_list_area}>
+      <h3 className={styles.tag_list_title}>
         <span>Tag List</span>
       </h3>
-      <div className={styles.hidden_box}>
+      <div className={styles.tags_box}>
         {tags.map((tag: TagProps) => (
           <span key={tag.tag_name.toString()} className='tags'>
-            <Link href='/tags/[tag]' as={`/tags/${tag.tag_name}`} passHref>
+            {/*<Link href='/tags/[tag]' as={`/tags/${tag.tag_name}`} passHref>*/}
+            <Link href={{ pathname: '/', query: { tag: tag.tag_name } }} passHref>
               <a>
                 {tag.tag_name} ({filterByTags(posts, tag.tag_name).length})
               </a>

@@ -1,0 +1,23 @@
+//タグ一覧のエリア
+.tag_list_area {
+  padding: 36px;
+  border: 3px solid black;
+  border-radius: 32px;
+  box-shadow: 8px 8px var(--shadow-color);
+  //タグ一覧のタイトル
+  .tag_list_title {
+    text-align: left;
+    font-size: 24px;
+    margin-bottom: 24px;
+    //マーカー部分
+    span {
+      background: var(--marker);
+    }
+  }
+  //タグの格納ボックス
+  .tags_box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 2px;
+  }
+}

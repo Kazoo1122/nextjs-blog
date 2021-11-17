@@ -5,7 +5,12 @@ import Link from 'next/dist/client/link';
 
 export type BreadCrumbItem = {
   title: string;
-  path?: string;
+  path?: string | RouterObj;
+};
+
+type RouterObj = {
+  pathname: string;
+  query: { tag: string };
 };
 
 export type BreadCrumbProps = {
@@ -14,7 +19,7 @@ export type BreadCrumbProps = {
 
 const BreadCrumbs = ({ items }: BreadCrumbProps) => {
   return (
-    <ol className={styles.breadcrumbs}>
+    <ol className={styles.breadcrumbs_list}>
       <li className={styles.breadcrumbs_item}>
         <IoHomeSharp aria-hidden='true' className={styles.home_icon} />
       </li>
@@ -23,12 +28,14 @@ const BreadCrumbs = ({ items }: BreadCrumbProps) => {
           {items.length - 1 !== index ? (
             <>
               <Link href={path}>
-                <a>{title}</a>
+                <a className={styles.past_text}>{title}</a>
               </Link>
               <FaChevronRight aria-hidden='true' className={styles.chevron_icon} />
             </>
           ) : (
-            <span aria-current>{title}</span>
+            <span className={styles.current_text} aria-current>
+              {title}
+            </span>
           )}
         </li>
       ))}

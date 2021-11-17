@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import styles from '../styles/layout.module.scss';
 
 /**
  * メタデータを格納した型 Headコンポーネント内で使用
@@ -45,17 +46,17 @@ const Layout = (props: MetaProps) => {
         <meta name='twitter:site' content='@kazoo_1122' />
       </Head>
 
-      <div className='container'>
-        <header>
-          <div className='titleBox'>
+      <div className={styles.layout_wrapper}>
+        <header className={styles.header_area}>
+          <div className={styles.title_area}>
             <Link href='/'>
               <a>
-                <h1>レジ打ちからエンジニアになりました</h1>
-                <p>〜中途エンジニアの開発日誌〜</p>
+                <h1 className={styles.title_text}>レジ打ちからエンジニアになりました</h1>
+                <p className={styles.subtitle_text}>〜中途エンジニアの開発日誌〜</p>
               </a>
             </Link>
           </div>
-          <nav>
+          <nav className={styles.global_navigation_area}>
             <ul>
               <li>
                 <Link href='/'>BLOG</Link>
@@ -69,11 +70,11 @@ const Layout = (props: MetaProps) => {
             </ul>
           </nav>
         </header>
-        <div className='dot-background'></div>
+        <div className={styles.dot_background_image}></div>
 
-        <main>{children}</main>
+        <main className={styles.main_area}>{children}</main>
 
-        <footer>
+        <footer className={styles.footer_area}>
           <Link href='/'>
             <a> &copy; 2021 {siteTitle} </a>
           </Link>
