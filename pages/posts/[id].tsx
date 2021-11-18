@@ -2,9 +2,8 @@ import { Layout } from '../../components/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { dbQuery } from '../../db';
 import { getPostsDetail } from '../../lib/content';
-import { BreadCrumbContext } from '../../context/context';
+import { useGetBreadCrumbs } from '../../context/context';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
-import React, { useContext } from 'react';
 import styles from '../../styles/post.module.scss';
 import Link from 'next/link';
 
@@ -40,8 +39,7 @@ export type PostProps = {
  */
 export default function Post(post: PostProps) {
   const pageTitle = post.title;
-  const context = useContext(BreadCrumbContext);
-  const restItems = context.items;
+  const restItems = useGetBreadCrumbs();
   const items = [...restItems, { title: pageTitle, path: `/posts/${post.id}` }];
   return (
     <Layout pageTitle={pageTitle}>

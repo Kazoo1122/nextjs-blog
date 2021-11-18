@@ -1,18 +1,18 @@
 import { GetStaticProps } from 'next';
 
 //Reactモジュール
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 //自作モジュール
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
 import { getAllPosts } from '../lib/content';
 import { getAllTags } from '../lib/tag';
-import { PostProps, TagProps } from '../pages/posts/[id]';
+import { PostProps, TagProps } from './posts/[id]';
 import styles from '../styles/index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { filterByTags, TagList } from '../components/TagList';
-import { BreadCrumbContext } from '../context/context';
+import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbItem, BreadCrumbs } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
 
@@ -25,13 +25,9 @@ export type BlogGalleryProps = {
   tags: TagProps[];
 };
 
-type QueryOfTag = {
-  tag: string;
-};
-
 export const COUNT_PER_POSTS = 5;
 
-const Index = (props: BlogGalleryProps) => {
+export default function Index(props: BlogGalleryProps) {
   const router = useRouter();
   const tag = router.query.tag as string;
   const [currentCount, setCount] = useState(COUNT_PER_POSTS);
@@ -47,14 +43,10 @@ const Index = (props: BlogGalleryProps) => {
         path: { pathname: '/', query: { tag: tag } },
       })
     : '';
-  const context = useContext(BreadCrumbContext);
-  useEffect(() => {
-    context.setItems([]);
-    context.setItems(items);
-  });
+  useSetBreadCrumbs(items);
   return (
     <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={context.items} />
+      <BreadCrumbs items={items} />
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.index_wrapper}>
         <div className='contents_area'>
@@ -66,11 +58,11 @@ const Index = (props: BlogGalleryProps) => {
         </div>
       </div>
       <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={context.items} />
+        <BreadCrumbs items={items} />
       </div>
     </Layout>
   );
-};
+}
 
 /**
  * 値の読み込みを行う
@@ -86,5 +78,3 @@ export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
     },
   };
 };
-
-export default Index;

@@ -1,22 +1,17 @@
-import { useContext, useEffect } from 'react';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { Layout } from '../components/Layout';
-import { BreadCrumbContext } from '../context/context';
+import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/profile.module.scss';
 import { GiGuitarHead } from 'react-icons/gi';
 import { BiRun } from 'react-icons/bi';
 
-export default function Profile(props: any) {
+export default function Profile() {
   const pageTitle = 'PROFILE';
   const items = [
     { title: 'HOME', path: '/' },
     { title: pageTitle, path: '/profile' },
   ];
-  const context = useContext(BreadCrumbContext);
-  useEffect(() => {
-    context.setItems([]);
-    context.setItems(items);
-  });
+  useSetBreadCrumbs(items);
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
