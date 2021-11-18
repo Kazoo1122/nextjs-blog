@@ -46,12 +46,12 @@ body {
   text-align: center;
   height: 28px;
   line-height: 28px;
-  background: var(--strong-color);
+  background: var(--button-color);
   border-radius: 10px;
   margin-right: 6px;
   padding: 0 12px;
   &:hover {
-    background-color: var(--menu-color);
+    background-color: var(--strong-color);
   }
   a {
     font-size: 16px;
@@ -73,6 +73,20 @@ a {
 
 .bottom_breadcrumbs_area {
   margin-top: 64px;
+}
+
+.markdown-body {
+  font-size: 18px;
+  line-height: 250%;
+  padding-bottom: 48px;
+  p {
+    font-family: 'Hiragino Maru Gothic ProN W4';
+    font-size: 18px;
+  }
+  strong {
+    font-family: 'Hiragino Maru Gothic ProN W6';
+    background: var(--marker);
+  }
 }
 
 * {
