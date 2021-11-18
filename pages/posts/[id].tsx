@@ -69,7 +69,9 @@ export default function Post(post: PostProps) {
               </p>
             </div>
           </div>
-          <div className={styles.body_area} dangerouslySetInnerHTML={{ __html: post.content }} />
+          <article className='markdown-body'>
+            <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          </article>
         </div>
       </div>
       <div className='bottom_breadcrumbs_area'>
