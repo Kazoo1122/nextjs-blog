@@ -5,7 +5,7 @@ import styles from '../styles/profile.module.scss';
 import { GiGuitarHead } from 'react-icons/gi';
 import { BiRun } from 'react-icons/bi';
 
-export default function Profile() {
+const Profile = () => {
   const pageTitle = 'PROFILE';
   const items = [
     { title: 'HOME', path: '/' },
@@ -27,7 +27,7 @@ export default function Profile() {
               <br />
               ものぐさな性分から最近になって勉強にハマる。
               <br />
-              新卒で小売業界に飛び込むものの、紆余曲折を経てエンジニアへ転身。
+              新卒で小売業界に飛び込むも、紆余曲折を経てエンジニアへ転身。
               <br />
               大好物のTVゲームは封印し、スキルアップに勤しむ日々を送る。
             </p>
@@ -60,4 +60,5 @@ export default function Profile() {
       </div>
     </Layout>
   );
-}
+};
+export default Profile;

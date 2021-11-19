@@ -6,6 +6,7 @@ import { BreadCrumbs } from '../components/BreadCrumbs';
 import { useMail } from '../lib/useMail';
 import styles from '../styles/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
+import { router } from 'next/client';
 
 export type FormValues = {
   name: string;
@@ -26,7 +27,13 @@ const Contact = () => {
     shouldFocusError: false,
   });
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    await send(data);
+    await send(data).then((res) => {
+      const result = res.status === 200 ? 'success' : 'failed';
+      router.push({
+        pathname: '/contact-sent',
+        query: { result: result },
+      });
+    });
   };
 
   const pageTitle = 'CONTACT';
@@ -72,7 +79,7 @@ const Contact = () => {
         <Button
           variant='contained'
           type='submit'
-          disabled={!formState.isValid}
+          disabled={!formState.isValid || formState.isSubmitting}
           className={styles.submit_button}
         >
           SEND

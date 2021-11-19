@@ -1,7 +1,12 @@
 import { createTransport } from 'nodemailer';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import nextConnect from 'next-connect';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default nextConnect<NextApiRequest, NextApiResponse>({
+  onError(error, req, res) {
+    res.status(500).json({ error: `Error happened. ${error.message}` });
+  },
+}).post(async (req: NextApiRequest, res: NextApiResponse) => {
   const { MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS, MAIL_FROM, MAIL_TO } = process.env;
   const options = {
     host: MAIL_HOST,
@@ -28,19 +33,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await transporter.sendMail(mail, function (error, info) {
       if (error) {
-        console.log(MAIL_HOST);
         console.log('send failed');
         console.log(error.message);
         return;
       }
 
-      res.status(200).json({
-        success: true,
-      });
       console.log('send successful');
       console.log(info.messageId);
+      return res.status(200).end();
     });
   } catch (e) {
     console.log('error', e);
+    return res.status(500).end();
   }
-};
+});
