@@ -1,23 +1,17 @@
 .load_more_button {
+  font: 800 16px Spartan;
   margin: 48px auto 64px;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--white-text-color);
-  width: 193px;
-  height: 61px;
+  width: 160px;
+  height: 60px;
   background-color: var(--button-color);
   box-shadow: 4px 4px 0px #00000029;
   border-radius: 11px;
   &:hover {
-    opacity: 0.8;
+    background-color:  var(--button-active-color);
   }
-  &:active {
-    opacity: 0.8;
-    box-shadow: none;
-    position: relative;
-    top: 4px;
-    left: 4px;
-  }
-}
+  };

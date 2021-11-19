@@ -1,6 +1,7 @@
 import styles from '../styles/load_more.module.scss';
 import { COUNT_PER_POSTS } from '../pages';
 import React, { SetStateAction } from 'react';
+import { Button } from '@mui/material';
 
 type LoadMoreProps = {
   currentCount: number;
@@ -13,12 +14,13 @@ const LoadMore = (props: LoadMoreProps) => {
   return (
     <>
       {postsLength > currentCount ? (
-        <button
+        <Button
+          variant='contained'
           className={styles.load_more_button}
           onClick={() => setCount(currentCount + COUNT_PER_POSTS)}
         >
           LOAD MORE
-        </button>
+        </Button>
       ) : (
         ''
       )}

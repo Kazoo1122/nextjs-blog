@@ -9,6 +9,7 @@
   --gray-color: #707070;
   --shadow-color: #e7e9f4;
   --button-color: #4d6cdb;
+  --button-active-color:#7a91e8;
   --white-text-color: #fff;
   --black-text-color: #000;
 
@@ -34,11 +35,11 @@ body {
 
 //各ページのコンテンツエリア
 .contents_area {
-  width: 1000px;
+  width: 70vw;
 }
 
 .side_area {
-  width: 270px;
+  width: 22vw;
 }
 
 //各ページのタグ設定
@@ -51,7 +52,7 @@ body {
   margin-right: 6px;
   padding: 0 12px;
   &:hover {
-    background-color: var(--strong-color);
+    background-color:  var(--button-active-color);
   }
   a {
     font-size: 16px;
@@ -80,11 +81,11 @@ a {
   line-height: 250%;
   padding-bottom: 48px;
   p {
-    font-family: 'Hiragino Maru Gothic ProN W4';
+    font-family: 'Hiragino Maru Gothic ProN W4', sans-serif;
     font-size: 18px;
   }
   strong {
-    font-family: 'Hiragino Maru Gothic ProN W6';
+    font-family: 'Hiragino Maru Gothic ProN W6', sans-serif;
     background: var(--marker);
   }
 }

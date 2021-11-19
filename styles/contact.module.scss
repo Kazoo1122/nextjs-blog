@@ -1,10 +1,26 @@
 .contact_form {
+  padding-top: 64px;
+  width:700px;
+  height: 600px;
   display: flex;
-  flex-display: column;
+  flex-direction: column;
+  background: #FFFFFF  padding-box;
+  align-items: center;
+  box-shadow: 24px 32px 36px #EAEBF5;
+  border-radius: 6px;
+  gap: 8px 0;
 }
 .error{
   color:#d32f2f;
 }
 .warn_icon{
-  viewBox:0 0 200 100;
+
+}
+.form_control_box {
+  width:550px;
+}
+
+.submit_button{
+  margin-top:32px;
+
 }

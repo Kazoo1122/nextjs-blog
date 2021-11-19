@@ -1,12 +1,12 @@
 import { Layout } from '../components/Layout';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Box, Button, FormControl, InputLabel, FilledInput } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { useMail } from '../lib/useMail';
 import styles from '../styles/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
-import { router } from 'next/client';
+import { useRouter } from 'next/router';
 
 export type FormValues = {
   name: string;
@@ -15,6 +15,7 @@ export type FormValues = {
 };
 
 const Contact = () => {
+  const router = useRouter();
   const { send } = useMail();
   const {
     register,
@@ -46,38 +47,53 @@ const Contact = () => {
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
       <Box component='form' className={styles.contact_form} onSubmit={handleSubmit(onSubmit)}>
-        <FormControl error={'name' in errors} variant='filled' className={styles.input_field}>
+        <FormControl className={styles.form_control_box} error={'name' in errors} variant='filled'>
           <InputLabel htmlFor='component-filled'>NAME *</InputLabel>
-          <FilledInput type='text' {...register('name', { required: true })} />
+          <OutlinedInput type='text' {...register('name', { required: true })} />
           {errors.name && (
-            <p className={'name' in errors ? styles.error : styles.safe}>
+            <p className={'name' in errors ? styles.error : ''}>
               <AiOutlineWarning />
               名前は必須です
             </p>
           )}
+          {!('name' in errors) ? <br /> : ''}
         </FormControl>
 
-        <FormControl error={'email' in errors} variant='filled' className={styles.input_field}>
+        <FormControl className={styles.form_control_box} error={'email' in errors} variant='filled'>
           <InputLabel htmlFor='component-filled'>E-MAIL</InputLabel>
-          <FilledInput
+          <OutlinedInput
             color={'email' in errors ? 'error' : 'primary'}
             type='email'
             {...register('email')}
           />
+          <br />
         </FormControl>
 
-        <FormControl error={'message' in errors} variant='filled' className={styles.input_field}>
+        <FormControl
+          className={styles.form_control_box}
+          error={'message' in errors}
+          variant='filled'
+        >
           <InputLabel htmlFor='component-filled'>MESSAGE *</InputLabel>
-          <FilledInput multiline type='text' {...register('message', { required: true })} />
+          <OutlinedInput
+            rows={8}
+            multiline
+            type='text'
+            className={styles.message}
+            {...register('message', { required: true })}
+          />
           {errors.message && (
-            <p className={'message' in errors ? styles.error : styles.safe}>
+            <p className={'message' in errors ? styles.error : ''}>
               <AiOutlineWarning className={styles.warn_icon} />
               お問い合わせ内容は必須です
             </p>
           )}
+          {!('message' in errors) ? <br /> : ''}
         </FormControl>
         <Button
-          variant='contained'
+          color='info'
+          size='large'
+          variant='outlined'
           type='submit'
           disabled={!formState.isValid || formState.isSubmitting}
           className={styles.submit_button}

@@ -20,7 +20,7 @@ const Profile = () => {
         <div className='contents_area'>
           <div className={styles.container_box}>
             <h3 className={styles.my_name_text}>
-              <span>大平　和正　- Kazumasa Ohira -</span>
+              <span>大平 和正 - Kazumasa Ohira -</span>
             </h3>
             <p>
               30代の遅咲き（？）エンジニア。
@@ -29,7 +29,7 @@ const Profile = () => {
               <br />
               新卒で小売業界に飛び込むも、紆余曲折を経てエンジニアへ転身。
               <br />
-              大好物のTVゲームは封印し、スキルアップに勤しむ日々を送る。
+              大好きなTVゲームは封印し、スキルアップに勤しむ日々を送る。
             </p>
           </div>
 
