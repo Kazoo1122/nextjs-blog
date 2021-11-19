@@ -5,29 +5,28 @@ import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { useMail } from '../lib/useMail';
 import styles from '../styles/contact.module.scss';
+import { AiOutlineWarning } from 'react-icons/ai';
 
-type FormValues = {
+export type FormValues = {
   name: string;
   email: string;
   message: string;
 };
 
-export default function Contact() {
-  const { setName, setEmail, setMessage, send } = useMail();
+const Contact = () => {
+  const { send } = useMail();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    formState,
   } = useForm<FormValues>({
     mode: 'onChange',
     criteriaMode: 'all',
     shouldFocusError: false,
   });
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    setName(data.name);
-    setEmail(data.email);
-    setMessage(data.message);
-    await send();
+    await send(data);
   };
 
   const pageTitle = 'CONTACT';
@@ -40,29 +39,42 @@ export default function Contact() {
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
       <Box component='form' className={styles.contact_form} onSubmit={handleSubmit(onSubmit)}>
-        <FormControl variant='filled' className={styles.input_field}>
+        <FormControl error={'name' in errors} variant='filled' className={styles.input_field}>
           <InputLabel htmlFor='component-filled'>NAME *</InputLabel>
           <FilledInput type='text' {...register('name', { required: true })} />
-          {errors.name && <p className={styles.required}>名前は必須です</p>}
-        </FormControl>
-        <FormControl variant='filled' className={styles.input_field}>
-          <InputLabel htmlFor='component-filled'>E-MAIL</InputLabel>
-          <FilledInput
-            type='email'
-            {...register('email', {
-              pattern: /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-            })}
-          />
-          {errors.email && (
-            <p className={styles.required}>正しいメールアドレスを入力してください</p>
+          {errors.name && (
+            <p className={'name' in errors ? styles.error : styles.safe}>
+              <AiOutlineWarning />
+              名前は必須です
+            </p>
           )}
         </FormControl>
-        <FormControl variant='filled' className={styles.input_field}>
+
+        <FormControl error={'email' in errors} variant='filled' className={styles.input_field}>
+          <InputLabel htmlFor='component-filled'>E-MAIL</InputLabel>
+          <FilledInput
+            color={'email' in errors ? 'error' : 'primary'}
+            type='email'
+            {...register('email')}
+          />
+        </FormControl>
+
+        <FormControl error={'message' in errors} variant='filled' className={styles.input_field}>
           <InputLabel htmlFor='component-filled'>MESSAGE *</InputLabel>
           <FilledInput multiline type='text' {...register('message', { required: true })} />
-          {errors.message && <p className={styles.required}>お問い合わせ内容は必須です</p>}
+          {errors.message && (
+            <p className={'message' in errors ? styles.error : styles.safe}>
+              <AiOutlineWarning className={styles.warn_icon} />
+              お問い合わせ内容は必須です
+            </p>
+          )}
         </FormControl>
-        <Button variant='contained' type='submit' className={styles.submit_button}>
+        <Button
+          variant='contained'
+          type='submit'
+          disabled={!formState.isValid}
+          className={styles.submit_button}
+        >
           SEND
         </Button>
       </Box>
@@ -71,4 +83,6 @@ export default function Contact() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Contact;
