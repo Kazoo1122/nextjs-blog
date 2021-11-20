@@ -1,6 +1,6 @@
 import { FormValues } from '../pages/contact';
 
-export const useMail = () => {
+export const callApiMail = () => {
   const send = async (data: FormValues) => {
     return await fetch('/api/mail', {
       method: 'POST',

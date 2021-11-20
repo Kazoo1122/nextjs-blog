@@ -7,27 +7,26 @@ import { useState } from 'react';
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
 import { getAllPosts } from '../lib/content';
-import { getAllTags } from '../lib/tag';
-import { PostProps, TagProps } from './posts/[id]';
+import { PostProps } from './posts/[id]';
 import styles from '../styles/index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { filterByTags, TagList } from '../components/TagList';
 import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbItem, BreadCrumbs } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
+import { dbQuery } from '../db';
 
 /**
  * ブログ記事一覧用
  */
 export type BlogGalleryProps = {
   posts: PostProps[];
-  tag: string;
-  tags: TagProps[];
+  tags: string[];
 };
 
 export const COUNT_PER_POSTS = 5;
 
-export default function Index(props: BlogGalleryProps) {
+const Index = (props: BlogGalleryProps) => {
   const router = useRouter();
   const tag = router.query.tag as string;
   const [currentCount, setCount] = useState(COUNT_PER_POSTS);
@@ -54,7 +53,7 @@ export default function Index(props: BlogGalleryProps) {
           <LoadMore currentCount={currentCount} setCount={setCount} postsLength={postsLength} />
         </div>
         <div className='side_area'>
-          <TagList tags={tags} posts={posts} tag='' />
+          <TagList tags={tags} posts={posts} />
         </div>
       </div>
       <div className='bottom_breadcrumbs_area'>
@@ -62,19 +61,21 @@ export default function Index(props: BlogGalleryProps) {
       </div>
     </Layout>
   );
-}
+};
 
 /**
  * 値の読み込みを行う
  */
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
   const posts = await getAllPosts();
-  const tags = await getAllTags();
+  const query = 'SELECT tag_name FROM tags';
+  const tags = await dbQuery(query);
   return {
     props: {
       posts: posts,
-      tag: '',
       tags: JSON.parse(JSON.stringify(tags)),
     },
   };
 };
+
+export default Index;

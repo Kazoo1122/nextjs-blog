@@ -1,8 +1,13 @@
 import path from 'path';
 import { dbQuery } from '../db';
 import { formatDate, sortWithDate } from './date';
-import { markdownToPlain, markdownToHtml } from '../lib/md_convert';
-import { PostProps, TagProps } from '../pages/posts/[id]';
+import { markdownToHtml, markdownToPlain } from './md_convert';
+import { PostProps } from '../pages/posts/[id]';
+
+type LinkingTag = {
+  tag_name: string;
+  articles_id: string;
+};
 
 export async function getAllPosts() {
   const IMG_DIR_PATH = '/images';
@@ -15,9 +20,9 @@ export async function getAllPosts() {
   const tags = await dbQuery(queryAboutTags); //タグと記事との紐付け一覧をDBから取得
 
   //タグと紐づいている記事を探し、あれば配列として格納する
-  tags.forEach((tag: TagProps) => {
+  tags.forEach((tag: LinkingTag) => {
     const taggedPost = posts.find((post: PostProps) => tag.articles_id === post.id);
-    if (taggedPost.hasOwnProperty('attachedTag') === false) {
+    if (Object.prototype.hasOwnProperty.call(taggedPost, 'attachedTag') === false) {
       taggedPost.attachedTag = [];
     }
 
@@ -27,7 +32,7 @@ export async function getAllPosts() {
   const sortedPosts = posts.sort(sortWithDate('created_at', true));
 
   //各記事の日付と内容を整形
-  const formattedPosts = sortedPosts.map((item: PostProps) => {
+  return sortedPosts.map((item: PostProps) => {
     return {
       id: item.id,
       title: item.title,
@@ -35,11 +40,11 @@ export async function getAllPosts() {
       created_at: formatDate(item.created_at),
       updated_at: formatDate(item.updated_at),
       thumbnail: item.thumbnail !== null ? path.join(IMG_DIR_PATH, item.thumbnail) : NO_IMG_PATH,
-      attachedTag: item.hasOwnProperty('attachedTag') ? item.attachedTag : [],
+      attachedTag: Object.prototype.hasOwnProperty.call(item, 'attachedTag')
+        ? item.attachedTag
+        : [],
     };
   });
-
-  return formattedPosts;
 }
 
 export async function getPostsDetail(id: string) {
@@ -48,12 +53,13 @@ export async function getPostsDetail(id: string) {
 
   const queryAboutTags = `SELECT tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id WHERE tagging_articles.articles_id=${id};`;
   const tags = await dbQuery(queryAboutTags); //タグと記事との紐付け一覧をDBから取得
+  const arrayTags: string[] = JSON.parse(JSON.stringify(tags));
   //タグと紐づいている記事を探し、あれば配列として格納する
-  tags.forEach((tag: TagProps) => {
-    if (post.hasOwnProperty('attachedTag') === false) {
+  arrayTags.forEach((tag) => {
+    if (Object.prototype.hasOwnProperty.call(post, 'attachedTag') === false) {
       post.attachedTag = [];
     }
-    post.attachedTag.push(tag.tag_name);
+    post.attachedTag.push(tag);
   });
 
   post.content = await markdownToHtml(post.content);

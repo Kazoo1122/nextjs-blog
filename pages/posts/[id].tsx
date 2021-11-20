@@ -6,17 +6,14 @@ import { useGetBreadCrumbs } from '../../context/context';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
 import styles from '../../styles/post.module.scss';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { CircularProgress } from '@mui/material';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
  */
 type PostUrl = {
   id: string;
-};
-
-export type TagProps = {
-  articles_id: string;
-  tag_name: string;
 };
 
 /**
@@ -37,10 +34,26 @@ export type PostProps = {
  * @param params
  * @returns JSX
  */
-export default function Post(post: PostProps) {
+const Post = (post: PostProps) => {
   const pageTitle = post.title;
   const restItems = useGetBreadCrumbs();
   const items = [...restItems, { title: pageTitle, path: `/posts/${post.id}` }];
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <Layout pageTitle={pageTitle}>
+        <BreadCrumbs items={items} />
+        <h2 className='page_title'>{pageTitle}</h2>
+        <p>
+          <CircularProgress />
+          Now loading...
+        </p>
+        <div className='bottom_breadcrumbs_area'>
+          <BreadCrumbs items={items} />
+        </div>
+      </Layout>
+    );
+  }
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
@@ -49,7 +62,7 @@ export default function Post(post: PostProps) {
         <div className='contents_area'>
           <div className={styles.attribute_area}>
             <div className={styles.tags_area}>
-              {post.hasOwnProperty('attachedTag')
+              {Object.prototype.hasOwnProperty.call(post, 'attachedTag')
                 ? post.attachedTag.map((tag) => (
                     <span className='tags' key={tag.toString()}>
                       <Link href={{ pathname: '/', query: { tag: tag } }}>
@@ -77,7 +90,7 @@ export default function Post(post: PostProps) {
       </div>
     </Layout>
   );
-}
+};
 
 /**
  * 記事内容をIDを元に取得し返却する
@@ -99,13 +112,14 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  * @returns paths 中身はparams{id}の一覧
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const queryAboutId = `SELECT id FROM articles`;
+  const queryAboutId = 'SELECT id FROM articles';
   const posts = await dbQuery(queryAboutId);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
   });
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
+export default Post;

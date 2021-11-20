@@ -3,13 +3,17 @@ import '../styles/globals.scss';
 import '../node_modules/github-markdown-css/github-markdown-light.css';
 import { AppProps } from 'next/app';
 import { BreadCrumbProvider } from '../context/provider';
+import { Provider } from 'next-auth/client';
+import React from 'react';
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <BreadCrumbProvider>
-      <Component {...pageProps} />
-    </BreadCrumbProvider>
+    <Provider session={pageProps.session}>
+      <BreadCrumbProvider>
+        <Component {...pageProps} />
+      </BreadCrumbProvider>
+    </Provider>
   );
-}
+};
 
 export default MyApp;

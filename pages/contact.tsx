@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbs } from '../components/BreadCrumbs';
-import { useMail } from '../lib/useMail';
+import { callApiMail } from '../lib/call_mail';
 import styles from '../styles/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { useRouter } from 'next/router';
@@ -16,7 +16,7 @@ export type FormValues = {
 
 const Contact = () => {
   const router = useRouter();
-  const { send } = useMail();
+  const { send } = callApiMail();
   const {
     register,
     handleSubmit,
@@ -46,6 +46,7 @@ const Contact = () => {
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />
+      <h2 className='page_title'>{pageTitle}</h2>
       <Box component='form' className={styles.contact_form} onSubmit={handleSubmit(onSubmit)}>
         <FormControl className={styles.form_control_box} error={'name' in errors} variant='filled'>
           <InputLabel htmlFor='component-filled'>NAME *</InputLabel>
