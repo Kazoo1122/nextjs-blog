@@ -21,7 +21,11 @@ import { dbQuery } from '../db';
  */
 export type BlogGalleryProps = {
   posts: PostProps[];
-  tags: string[];
+  tags: TagNames[];
+};
+
+type TagNames = {
+  tag_name: string;
 };
 
 export const COUNT_PER_POSTS = 5;

@@ -1,0 +1,48 @@
+.admin_form {
+  padding: 48px;
+  margin-bottom: 64px;
+  width:700px;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF  padding-box;
+  box-shadow: 24px 32px 36px #EAEBF5;
+  border-radius: 6px;
+  gap: 8px 0;
+}
+.error{
+  color:#d32f2f;
+}
+
+.form_control_box {
+  width:600px;
+  margin-bottom: 32px;
+}
+
+.form_check_box {
+  width:600px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 32px;
+}
+
+.normal_drag_zone {
+  width: 300px;
+  height:200px;
+  border:1px dotted #888;
+}
+
+.active_drag_zone {
+  width: 300px;
+  height:200px;
+  border:1px solid #00f;
+  transition: border .5s ease-in-out;
+  background-color: var(--menu-color);
+  opacity: 0.2;
+}
+
+
+.submit_button{
+  margin:32px 0;
+width: 96px;
+}

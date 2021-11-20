@@ -12,10 +12,10 @@ const TagList = (props: BlogGalleryProps) => {
       </h3>
       <div className={styles.tags_box}>
         {tags.map((tag) => (
-          <span key={tag} className='tags'>
-            <Link href={{ pathname: '/', query: { tag: tag } }} passHref>
+          <span key={tag.tag_name} className='tags'>
+            <Link href={{ pathname: '/', query: { tag: tag.tag_name } }} passHref>
               <a>
-                {tag} ( {filterByTags(posts, tag).length} )
+                {tag.tag_name} ( {filterByTags(posts, tag.tag_name).length} )
               </a>
             </Link>
           </span>
