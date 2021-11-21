@@ -1,4 +1,5 @@
 import mysql from 'serverless-mysql';
+import handler from '../../lib/handler';
 
 const db = mysql({
   config: {
@@ -10,6 +11,23 @@ const db = mysql({
   },
 });
 
+export default handler
+  .get(async (req, res) => {
+    console.log(req.query.sql, 'sql1');
+    const sql = decodeURI(req.query.sql as string);
+    console.log(sql, 'sql2');
+    const result = (await db.query(sql)) as any;
+    await db.end();
+    res.status(200).json(result);
+  })
+  .post(async (req, res) => {
+    const query = req.body;
+    const { lastID } = await db.query(query);
+    await db.end();
+    res.status(201).json({ ...req.body, id: lastID });
+  });
+
+/*
 export const dbQuery = async (sql: string) => {
   try {
     const results = (await db.query(sql)) as any;
@@ -19,3 +37,4 @@ export const dbQuery = async (sql: string) => {
     return { error }; // TODO: エラー時の例外処理が必要
   }
 };
+*/

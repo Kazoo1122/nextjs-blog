@@ -1,12 +1,8 @@
 import { createTransport } from 'nodemailer';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import nextConnect from 'next-connect';
+import handler from '../../lib/handler';
 
-export default nextConnect<NextApiRequest, NextApiResponse>({
-  onError(error, req, res) {
-    res.status(500).json({ error: `Error happened. ${error.message}` });
-  },
-}).post(async (req: NextApiRequest, res: NextApiResponse) => {
+export default handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const { MAIL_HOST, MAIL_PORT, MAIL_USER, MAIL_PASS, MAIL_FROM, MAIL_TO } = process.env;
   const options = {
     host: MAIL_HOST,

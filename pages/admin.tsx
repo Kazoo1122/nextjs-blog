@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import {
   Box,
@@ -18,13 +18,13 @@ import { BreadCrumbs } from '../components/BreadCrumbs';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { callApiPost } from '../lib/call_post';
+import { postDbApi } from '../lib/call_api';
 import { GetStaticProps } from 'next';
 import { getAllPosts } from '../lib/content';
-import { dbQuery } from '../db';
 import { PostProps } from './posts/[id]';
-import { useDropzone } from 'react-dropzone';
+import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styles from '../styles/admin.module.scss';
+import { getDbApi } from '../lib/call_api';
 
 export type PostValues = {
   title: string;
@@ -55,7 +55,6 @@ const Admin = (props: PastArticlesProps) => {
 
   //記事登録・編集フォーム関連
   const { tags } = props;
-  const { postRegister } = callApiPost();
   const {
     register,
     control,
@@ -66,10 +65,9 @@ const Admin = (props: PastArticlesProps) => {
     formState,
   } = useForm<PostValues>({
     criteriaMode: 'all',
-    shouldFocusError: false,
   });
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
-    await postRegister(data).then((res) => {
+    await postDbApi(data).then((res) => {
       const result = res.status === 200 ? 'success' : 'failed';
       router.push({
         pathname: '/post-registration',
@@ -91,11 +89,51 @@ const Admin = (props: PastArticlesProps) => {
       newValues = values?.filter((value) => value.tag_name !== tag.tag_name);
     }
     setValue('tags', newValues);
-    return newValues;
   };
 
-  const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone();
-  const files = acceptedFiles.map((file, i) => <li key={i}>{file.name}</li>);
+  const onDropText = useCallback(
+    (acceptedFiles) => {
+      acceptedFiles.forEach((file: File) => {
+        const reader = new FileReader();
+        reader.onabort = () => console.log('File reading was aborted');
+        reader.onerror = () => console.log('File reading has failed');
+        reader.onload = () => {
+          const binaryStr = reader.result as string;
+          setValue('body', binaryStr);
+        };
+        reader.readAsText(file);
+      });
+    },
+    [setValue]
+  );
+
+  const onDropImg = useCallback(
+    (acceptedFiles) => {
+      acceptedFiles.forEach((file: File) => {
+        const reader = new FileReader();
+        reader.onabort = () => console.log('File reading was aborted');
+        reader.onerror = () => console.log('File reading has failed');
+        reader.onload = async () => {
+          const binaryImg = reader.result as ArrayBuffer;
+          const uInt8Array = new Uint8Array(binaryImg);
+          const decodedString = new TextDecoder().decode(uInt8Array);
+          setValue('thumbnail', decodedString);
+        };
+        reader.readAsArrayBuffer(file);
+      });
+    },
+    [setValue]
+  );
+
+  const mdTextRef = useRef<DropzoneRef>(null);
+  const thumbnailRef = useRef<DropzoneRef>(null);
+  const openDialog = () => {
+    if (mdTextRef.current) {
+      mdTextRef.current.open();
+    } else if (thumbnailRef.current) {
+      thumbnailRef.current.open();
+    }
+  };
 
   //認証関連
   const [session, loading] = useSession();
@@ -138,11 +176,6 @@ const Admin = (props: PastArticlesProps) => {
               {!('title' in errors) ? <br /> : ''}
             </FormControl>
 
-            <FormControl className={styles.form_control_box} variant='filled'>
-              <InputLabel htmlFor='component-filled'>THUMBNAIL</InputLabel>
-              <OutlinedInput fullWidth type='text' {...register('thumbnail')} />
-            </FormControl>
-
             <FormLabel className={styles.tags_label} component='legend'>
               Tags select
             </FormLabel>
@@ -171,16 +204,59 @@ const Admin = (props: PastArticlesProps) => {
                 )}
               />
             </FormGroup>
+            <div className={styles.file_read_area}>
+              <Dropzone ref={mdTextRef} onDrop={onDropText}>
+                {({ getRootProps, getInputProps, acceptedFiles, isDragActive }) => (
+                  <div
+                    {...getRootProps({
+                      className: isDragActive ? styles.active_drag_zone : styles.normal_drag_zone,
+                    })}
+                  >
+                    <input {...getInputProps()} />
+                    <p>Load the &quot;.md&quot; file containing the text of the blog body here.</p>
+                    <Button type='button' onClick={openDialog}>
+                      Open file dialog
+                    </Button>
+                    <aside>
+                      <h4>Files</h4>
+                      <ul>
+                        {acceptedFiles.map((file) => (
+                          <li key={file.name}>
+                            {file.name} - {file.size} bytes <br />
+                          </li>
+                        ))}
+                      </ul>
+                    </aside>
+                  </div>
+                )}
+              </Dropzone>
 
-            <div
-              {...getRootProps({
-                className: isDragActive ? styles.active_drag_zone : styles.normal_drag_zone,
-              })}
-            >
-              <input {...getInputProps()} />
-              <p>Drag n drop some files here, or click to select files</p>
+              <Dropzone ref={thumbnailRef} onDrop={onDropImg}>
+                {({ getRootProps, getInputProps, acceptedFiles, isDragActive }) => (
+                  <div
+                    {...getRootProps({
+                      className: isDragActive ? styles.active_drag_zone : styles.normal_drag_zone,
+                    })}
+                  >
+                    <input {...getInputProps()} />
+                    <p>Load the thumbnail image&apos;s path here.</p>
+                    <Button type='button' onClick={openDialog}>
+                      Open file dialog
+                    </Button>
+                    <aside>
+                      <h4>Files</h4>
+                      <ul>
+                        {acceptedFiles.map((file) => (
+                          <li key={file.name}>
+                            {file.name} - {file.size} bytes <br />
+                          </li>
+                        ))}
+                      </ul>
+                    </aside>
+                  </div>
+                )}
+              </Dropzone>
             </div>
-            <ul>{files}</ul>
 
             <Button
               color='info'
@@ -215,9 +291,10 @@ const Admin = (props: PastArticlesProps) => {
 };
 
 export const getStaticProps: GetStaticProps<PastArticlesProps> = async () => {
+  const { getDbData } = getDbApi();
   const posts = await getAllPosts();
-  const query = 'SELECT id, tag_name FROM tags';
-  const tags: TagProps[] = await dbQuery(query);
+  const sql = 'SELECT id, tag_name FROM tags';
+  const tags = (await getDbData(encodeURI(sql))) as any;
   return {
     props: {
       posts: posts,

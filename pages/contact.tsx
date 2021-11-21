@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbs } from '../components/BreadCrumbs';
-import { callApiMail } from '../lib/call_mail';
+import { postMailApi } from '../lib/call_api';
 import styles from '../styles/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { useRouter } from 'next/router';
@@ -16,7 +16,6 @@ export type FormValues = {
 
 const Contact = () => {
   const router = useRouter();
-  const { send } = callApiMail();
   const {
     register,
     handleSubmit,
@@ -28,7 +27,7 @@ const Contact = () => {
     shouldFocusError: false,
   });
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    await send(data).then((res) => {
+    await postMailApi(data).then((res) => {
       const result = res.status === 200 ? 'success' : 'failed';
       router.push({
         pathname: '/contact-sent',

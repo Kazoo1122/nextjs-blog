@@ -14,7 +14,7 @@ import { filterByTags, TagList } from '../components/TagList';
 import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbItem, BreadCrumbs } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
-import { dbQuery } from '../db';
+import { getDbApi } from '../lib/call_api';
 
 /**
  * ブログ記事一覧用
@@ -71,9 +71,10 @@ const Index = (props: BlogGalleryProps) => {
  * 値の読み込みを行う
  */
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
+  const { getDbData } = getDbApi();
   const posts = await getAllPosts();
-  const query = 'SELECT tag_name FROM tags';
-  const tags = await dbQuery(query);
+  const sql = 'SELECT tag_name FROM tags';
+  const tags = await getDbData(encodeURI(sql));
   return {
     props: {
       posts: posts,

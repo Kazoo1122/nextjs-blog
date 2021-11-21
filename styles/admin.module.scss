@@ -27,20 +27,25 @@
 }
 
 .normal_drag_zone {
-  width: 300px;
-  height:200px;
+  width: 250px;
+  height:180px;
   border:1px dotted #888;
+  margin-right: 32px;
 }
 
 .active_drag_zone {
-  width: 300px;
-  height:200px;
+  width: 250px;
+  height:180px;
   border:1px solid #00f;
+  margin-right: 32px;
   transition: border .5s ease-in-out;
   background-color: var(--menu-color);
   opacity: 0.2;
 }
 
+.file_read_area {
+  display: flex;
+}
 
 .submit_button{
   margin:32px 0;

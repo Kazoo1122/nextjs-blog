@@ -1,6 +1,5 @@
 import { Layout } from '../../components/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { dbQuery } from '../../db';
 import { getPostsDetail } from '../../lib/content';
 import { useGetBreadCrumbs } from '../../context/context';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
@@ -8,6 +7,7 @@ import styles from '../../styles/post.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
+import { getDbApi } from '../../lib/call_api';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -31,8 +31,6 @@ export type PostProps = {
 
 /**
  * 記事詳細をレンダリングする
- * @param params
- * @returns JSX
  */
 const Post = (post: PostProps) => {
   const pageTitle = post.title;
@@ -112,8 +110,9 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  * @returns paths 中身はparams{id}の一覧
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const queryAboutId = 'SELECT id FROM articles';
-  const posts = await dbQuery(queryAboutId);
+  const { getDbData } = getDbApi();
+  const sql = 'SELECT id FROM articles';
+  const posts = (await getDbData(encodeURI(sql))) as any;
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
   });

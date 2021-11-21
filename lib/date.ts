@@ -20,7 +20,7 @@ const formatDate = (date: Date) => {
  */
 const zeroFill = (checkedNum: number, isMonth: boolean) => {
   let threshold;
-  isMonth === true ? (threshold = 9) : (threshold = 10);
+  isMonth ? (threshold = 9) : (threshold = 10);
   return (checkedNum < threshold ? '0' : '') + checkedNum;
 };
 
