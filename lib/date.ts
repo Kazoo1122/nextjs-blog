@@ -1,9 +1,10 @@
 /**
  * 日時を整形する
- * @param date
+ * @param d
  * @returns string
  */
-const formatDate = (date: Date) => {
+const formatDate = (d: Date) => {
+  const date = new Date(d);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();

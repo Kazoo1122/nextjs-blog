@@ -24,7 +24,7 @@ import { getAllPosts } from '../lib/content';
 import { PostProps } from './posts/[id]';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styles from '../styles/admin.module.scss';
-import { getDbApi } from '../lib/call_api';
+import { DbApi } from '../lib/call_api';
 
 export type PostValues = {
   title: string;
@@ -291,7 +291,7 @@ const Admin = (props: PastArticlesProps) => {
 };
 
 export const getStaticProps: GetStaticProps<PastArticlesProps> = async () => {
-  const { getDbData } = getDbApi();
+  const { getDbData } = DbApi();
   const posts = await getAllPosts();
   const sql = 'SELECT id, tag_name FROM tags';
   const tags = (await getDbData(encodeURI(sql))) as any;

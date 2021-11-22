@@ -16,14 +16,14 @@ export const postMailApi = async (data: FormValues) => {
   });
 };
 
-export function getDbApi() {
+export function DbApi() {
   const getDbData = async (sql: string) => {
     const url = process.env.server + `/api/${sql}`;
-    console.log(url);
-    return await fetch(url, {
+    const res = await fetch(url, {
       method: 'GET',
       headers: headers,
     });
+    return await res.json();
   };
   return { getDbData };
 }

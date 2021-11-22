@@ -13,9 +13,9 @@ const db = mysql({
 
 export default handler
   .get(async (req, res) => {
-    console.log(req.query.sql, 'sql1');
+    console.log(req.query.sql, 'before sql');
     const sql = decodeURI(req.query.sql as string);
-    console.log(sql, 'sql2');
+    console.log(sql, 'after sql');
     const result = (await db.query(sql)) as any;
     await db.end();
     res.status(200).json(result);

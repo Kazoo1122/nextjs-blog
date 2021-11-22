@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { verify, VerifyErrors } from 'jsonwebtoken';
 import nextConnect from 'next-connect';
-import fs from 'fs';
-import path from 'path';
 
 export default nextConnect<NextApiRequest, NextApiResponse>({
   onError(error, req, res) {
@@ -14,7 +12,7 @@ export default nextConnect<NextApiRequest, NextApiResponse>({
     res.status(405).json({ error: `Method ${req.method} Not Allowed.` });
   },
 }).use(async (req, res, next) => {
-  let secretKey = process.env.JWT_PUBLIC_KEY as string;
+  let secretKey = process.env.JWT_SECRET_KEY as string;
   secretKey = secretKey.replace(/\\n/g, '\n');
   const token = req.headers['authorization'];
 
