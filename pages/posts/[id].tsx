@@ -7,7 +7,8 @@ import styles from '../../styles/post.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
-import { DbApi } from '../../lib/call_api';
+import { dbApi } from '../../lib/call_api';
+import { DATABASE_QUERY } from '../api/db/query';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -110,9 +111,9 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  * @returns paths 中身はparams{id}の一覧
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const { getDbData } = DbApi();
-  const sql = 'SELECT id FROM articles';
-  const posts = (await getDbData(encodeURI(sql))) as any;
+  const { getDbData } = dbApi();
+  // const sql = 'SELECT id FROM articles';
+  const posts = (await getDbData(DATABASE_QUERY.ALL_ARTICLES_ID)) as any;
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
   });

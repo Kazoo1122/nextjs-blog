@@ -18,13 +18,13 @@ import { BreadCrumbs } from '../components/BreadCrumbs';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { postDbApi } from '../lib/call_api';
 import { GetStaticProps } from 'next';
 import { getAllPosts } from '../lib/content';
 import { PostProps } from './posts/[id]';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styles from '../styles/admin.module.scss';
-import { DbApi } from '../lib/call_api';
+import { dbApi } from '../lib/call_api';
+import { DATABASE_QUERY } from './api/db/query';
 
 export type PostValues = {
   title: string;
@@ -45,6 +45,7 @@ type TagProps = {
 
 const Admin = (props: PastArticlesProps) => {
   const pageTitle = 'ADMIN';
+  const { postDbData } = dbApi();
 
   //ぱんくずリスト関連
   const items = [
@@ -67,13 +68,13 @@ const Admin = (props: PastArticlesProps) => {
     criteriaMode: 'all',
   });
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
-    await postDbApi(data).then((res) => {
-      const result = res.status === 200 ? 'success' : 'failed';
-      router.push({
-        pathname: '/post-registration',
-        query: { result: result },
-      });
-    });
+    const res = await postDbData(data);
+    const result = res.status === 200 ? 'success' : 'failed';
+    console.log(res.message);
+    // await router.push({
+    //   pathname: '/post-registration',
+    //   query: { result: result },
+    // });
   };
   const handleCheck = (
     tag: { tag_name: string; id: number },
@@ -89,6 +90,7 @@ const Admin = (props: PastArticlesProps) => {
       newValues = values?.filter((value) => value.tag_name !== tag.tag_name);
     }
     setValue('tags', newValues);
+    return newValues;
   };
 
   const onDropText = useCallback(
@@ -115,8 +117,9 @@ const Admin = (props: PastArticlesProps) => {
         reader.onerror = () => console.log('File reading has failed');
         reader.onload = async () => {
           const binaryImg = reader.result as ArrayBuffer;
-          const uInt8Array = new Uint8Array(binaryImg);
-          const decodedString = new TextDecoder().decode(uInt8Array);
+          // const uInt8Array = new Uint8Array(binaryImg);
+          // const decodedString = new TextDecoder().decode(uInt8Array);
+          const decodedString = new TextDecoder().decode(binaryImg);
           setValue('thumbnail', decodedString);
         };
         reader.readAsArrayBuffer(file);
@@ -291,10 +294,10 @@ const Admin = (props: PastArticlesProps) => {
 };
 
 export const getStaticProps: GetStaticProps<PastArticlesProps> = async () => {
-  const { getDbData } = DbApi();
+  const { getDbData } = dbApi();
   const posts = await getAllPosts();
-  const sql = 'SELECT id, tag_name FROM tags';
-  const tags = (await getDbData(encodeURI(sql))) as any;
+  // const sql = 'SELECT id, tag_name FROM tags';
+  const tags = (await getDbData(DATABASE_QUERY.ALL_TAGS_ID_AND_NAME)) as TagProps[];
   return {
     props: {
       posts: posts,

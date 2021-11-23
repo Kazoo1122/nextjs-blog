@@ -14,7 +14,7 @@ export default nextConnect<NextApiRequest, NextApiResponse>({
 }).use(async (req, res, next) => {
   let secretKey = process.env.JWT_SECRET_KEY as string;
   secretKey = secretKey.replace(/\\n/g, '\n');
-  const token = req.headers['authorization'];
+  const token = req.headers.authorization;
 
   //authorizationキーがない場合
   if (!token) {
@@ -24,7 +24,7 @@ export default nextConnect<NextApiRequest, NextApiResponse>({
   }
 
   await verify(token, secretKey, (err: VerifyErrors | null, decoded: object | undefined) => {
-    if (!err && decoded) {
+    if (err === null && decoded !== undefined) {
       console.log('verified!');
       next();
     } else {

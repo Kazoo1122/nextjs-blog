@@ -1,10 +1,16 @@
 import { FormValues } from '../pages/contact';
 import { PostValues } from '../pages/admin';
+import { DatabaseQuery } from '../pages/api/db/query';
 
-const httpHeaders = { Authorization: process.env.JWT as string };
-const headers = new Headers(httpHeaders);
+const token = process.env.NEXT_PUBLIC_JWT as string;
 
-export const postMailApi = async (data: FormValues) => {
+export const mailApi = async (data: FormValues) => {
+  const httpHeaders = {
+    Authorization: token,
+    Accept: 'application/json',
+    'Content-Type': 'text/plain',
+  };
+  const headers = new Headers(httpHeaders);
   return await fetch('/api/mail', {
     method: 'POST',
     headers: headers,
@@ -16,21 +22,38 @@ export const postMailApi = async (data: FormValues) => {
   });
 };
 
-export function DbApi() {
-  const getDbData = async (sql: string) => {
-    const url = process.env.server + `/api/${sql}`;
+export const dbApi = () => {
+  const getDbData = async (query: DatabaseQuery, id?: string) => {
+    const httpHeaders = {
+      Authorization: token,
+      Accept: 'application/json',
+    };
+    const headers = new Headers(httpHeaders);
+    const url = process.env.server + `/api/db/query?params=${query}&params=${id ?? 'none'}`;
+    console.log(url);
     const res = await fetch(url, {
       method: 'GET',
       headers: headers,
     });
     return await res.json();
   };
-  return { getDbData };
-}
 
-export const postDbApi = async (data: PostValues) => {
-  return await fetch('/api/db', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  });
+  const postDbData = async (data: PostValues) => {
+    const httpHeaders = {
+      Authorization: token,
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    };
+    const headers = new Headers(httpHeaders);
+    const url = process.env.server + '/api/db/post';
+    const body = JSON.stringify(data);
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    });
+    return await res.json();
+  };
+
+  return { getDbData, postDbData };
 };

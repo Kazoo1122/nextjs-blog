@@ -86,7 +86,7 @@
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx",
-    "pages/api/[sql].ts"
+    "pages/api/db/params?query=[query]&id=[id].ts"
   ],
   "exclude": ["node_modules"]
 }

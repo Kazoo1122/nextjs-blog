@@ -2,7 +2,8 @@ import path from 'path';
 import { formatDate, sortWithDate } from './date';
 import { markdownToHtml, markdownToPlain } from './md_convert';
 import { PostProps } from '../pages/posts/[id]';
-import { DbApi } from './call_api';
+import { dbApi } from './call_api';
+import { DATABASE_QUERY } from '../pages/api/db/query';
 
 type LinkingTag = {
   tag_name: string;
@@ -15,14 +16,15 @@ type Tag = {
 export async function getAllPosts() {
   const IMG_DIR_PATH = '/images';
   const NO_IMG_PATH = path.join(IMG_DIR_PATH, '/no_image.png');
-  const { getDbData } = DbApi();
-
-  const sqlAboutArticles = 'SELECT * FROM articles';
-  const encodedSql = encodeURI(sqlAboutArticles);
-  const posts = (await getDbData(encodedSql)) as any; //記事一覧をDBから取得
-  const sqlAboutTags =
-    'SELECT articles_id, tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id;';
-  const tags = (await getDbData(encodeURI(sqlAboutTags))) as any; //タグと記事との紐付け一覧をDBから取得
+  const { getDbData } = dbApi();
+  // const sqlAboutArticles = 'SELECT * FROM articles';
+  // const encodedSql = encodeURI(sqlAboutArticles);
+  const posts = (await getDbData(DATABASE_QUERY.ALL_ARTICLES)) as any; //記事一覧をDBから取得
+  console.log(posts);
+  // const sqlAboutTags =
+  //   'SELECT articles_id, tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id;';
+  const tags = (await getDbData(DATABASE_QUERY.TAGS_FOR_ALL_ARTICLES)) as any; //タグと記事との紐付け一覧をDBから取得
+  console.log(tags);
   //タグと紐づいている記事を探し、あれば配列として格納する
   tags.forEach((tag: LinkingTag) => {
     const taggedPost = posts.find((post: PostProps) => tag.articles_id === post.id);
@@ -52,12 +54,12 @@ export async function getAllPosts() {
 }
 
 export async function getPostsDetail(id: string) {
-  const { getDbData } = DbApi();
-  const sqlAboutArticle = `SELECT * FROM articles WHERE id=${id}`;
-  const posts = (await getDbData(encodeURI(sqlAboutArticle))) as any;
+  const { getDbData } = dbApi();
+  // const sqlAboutArticle = `SELECT * FROM articles WHERE id=${id}`;
+  const posts = (await getDbData(DATABASE_QUERY.ONE_ARTICLE, id)) as any;
   const post = posts.pop(); //DBから取得した配列から記事データを抜き出す
-  const sqlAboutTags = `SELECT tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id WHERE tagging_articles.articles_id=${id};`;
-  const tags = await getDbData(encodeURI(sqlAboutTags)); //タグと記事との紐付け一覧をDBから取得
+  // const sqlAboutTags = `SELECT tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id WHERE tagging_articles.articles_id=${id};`;
+  const tags = await getDbData(DATABASE_QUERY.TAGS_FOR_ONE_ARTICLE, id); //タグと記事との紐付け一覧をDBから取得
   const arrayTags: Tag[] = JSON.parse(JSON.stringify(tags));
   //タグと紐づいている記事を探し、あれば配列として格納する
   arrayTags.forEach((tag) => {
