@@ -1,5 +1,9 @@
 import mysql from 'serverless-mysql';
 import handler from '../../../lib/handler';
+import fs from 'fs';
+import path from 'path';
+import { THUMBNAIL_IMG_DIR_PATH } from '../../../lib/content';
+import { TagProps } from '../../admin';
 
 const db = mysql({
   config: {
@@ -25,16 +29,8 @@ export type DatabaseQuery = typeof DATABASE_QUERY[keyof typeof DATABASE_QUERY];
 
 export default handler
   .get(async (req, res) => {
-    // const params = req.query.params as string;
-    // const amp = params.indexOf('&');
-    // const query = params.slice(6, amp); //6は"query="の文字数分
-    // console.log(query, 'query');
-    // const id = params.slice(amp + 3); //3は"id="の文字数分
-    // console.log(id, 'id');
     const query = req.query.params[0];
-    console.log(query, 'query');
     const id = req.query.params[1];
-    console.log(id, 'id');
     let sql;
     switch (Number(query)) {
       case DATABASE_QUERY.ALL_ARTICLES:
@@ -68,15 +64,28 @@ export default handler
   })
   .post(async (req, res) => {
     const data = req.body;
-    console.log(data, 'data');
-    console.log(data.title, 'title');
-    console.log(data.tags, 'tags');
-    console.log(data.body, 'body');
-    const encodeString = new TextEncoder().encode(data.thumbnail);
-    const blob = new Blob([encodeString]);
-    console.log(blob);
+    const { title, tags, content, thumbnail_name, thumbnail_data } = data;
+    if (thumbnail_name !== '') {
+      const imgPath = path.join(THUMBNAIL_IMG_DIR_PATH, thumbnail_name);
+      const buffer = new Buffer(thumbnail_data, 'base64');
+      fs.writeFile(imgPath, buffer, (err) => {
+        if (!err) {
+          console.log('Writing completed.');
+        } else {
+          console.log('Writing is failed.' + err);
+          throw err;
+        }
+      });
+    }
 
-    // const { lastID } = await db.query(query);
-    // await db.end();
-    // res.status(201).json({ ...req.body, id: lastID });
+    let sql = `INSERT INTO articles(title,content,thumbnail,created_at,updated_at) VALUES(${title},${content},NOW(),NOW())`;
+    await db.query(sql);
+    sql = 'SELECT LAST_INSERT_ID()';
+    const lastID = await db.query(sql);
+    tags.map(async (tag: TagProps) => {
+      sql = `INSERT INTO tagging_articles(articles_id, tags_id) VALUES(${lastID},${tag.id})`;
+      await db.query(sql);
+    });
+    await db.end();
+    res.status(201).json({ ...req.body, id: lastID });
   });

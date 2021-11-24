@@ -29,8 +29,9 @@ import { DATABASE_QUERY } from './api/db/query';
 export type PostValues = {
   title: string;
   tags: TagProps[];
-  body: string;
-  thumbnail: string;
+  content: string;
+  thumbnail_data: string;
+  thumbnail_name: string;
 };
 
 type PastArticlesProps = {
@@ -38,7 +39,7 @@ type PastArticlesProps = {
   tags: TagProps[];
 };
 
-type TagProps = {
+export type TagProps = {
   id: number;
   tag_name: string;
 };
@@ -63,18 +64,25 @@ const Admin = (props: PastArticlesProps) => {
     getValues,
     handleSubmit,
     formState: { errors },
-    formState,
   } = useForm<PostValues>({
     criteriaMode: 'all',
+    defaultValues: {
+      title: '',
+      tags: [],
+      content: '',
+      thumbnail_data: '',
+      thumbnail_name: 'null',
+    },
   });
+
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
     const res = await postDbData(data);
     const result = res.status === 200 ? 'success' : 'failed';
-    console.log(res.message);
-    // await router.push({
-    //   pathname: '/post-registration',
-    //   query: { result: result },
-    // });
+
+    await router.push({
+      pathname: '/posting',
+      query: { result: result },
+    });
   };
   const handleCheck = (
     tag: { tag_name: string; id: number },
@@ -95,35 +103,34 @@ const Admin = (props: PastArticlesProps) => {
 
   const onDropText = useCallback(
     (acceptedFiles) => {
-      acceptedFiles.forEach((file: File) => {
-        const reader = new FileReader();
-        reader.onabort = () => console.log('File reading was aborted');
-        reader.onerror = () => console.log('File reading has failed');
-        reader.onload = () => {
-          const binaryStr = reader.result as string;
-          setValue('body', binaryStr);
-        };
-        reader.readAsText(file);
-      });
+      const file = acceptedFiles[0];
+      const reader = new FileReader();
+      reader.onabort = () => console.log('File reading was aborted');
+      reader.onerror = () => console.log('File reading has failed');
+      reader.onload = () => {
+        const binaryStr = reader.result as string;
+        setValue('content', binaryStr);
+      };
+      reader.readAsText(file);
     },
     [setValue]
   );
 
   const onDropImg = useCallback(
-    (acceptedFiles) => {
-      acceptedFiles.forEach((file: File) => {
-        const reader = new FileReader();
-        reader.onabort = () => console.log('File reading was aborted');
-        reader.onerror = () => console.log('File reading has failed');
-        reader.onload = async () => {
-          const binaryImg = reader.result as ArrayBuffer;
-          // const uInt8Array = new Uint8Array(binaryImg);
-          // const decodedString = new TextDecoder().decode(uInt8Array);
-          const decodedString = new TextDecoder().decode(binaryImg);
-          setValue('thumbnail', decodedString);
-        };
-        reader.readAsArrayBuffer(file);
-      });
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const dataUrl = reader.result as string;
+        const base64Data = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+        setValue('thumbnail_data', base64Data);
+        setValue('thumbnail_name', file.name);
+      };
+      reader.onerror = () => {
+        reader.abort();
+        alert(`${file.name} reading has failed`);
+      };
+      reader.readAsDataURL(file);
     },
     [setValue]
   );
@@ -207,6 +214,7 @@ const Admin = (props: PastArticlesProps) => {
                 )}
               />
             </FormGroup>
+
             <div className={styles.file_read_area}>
               <Dropzone ref={mdTextRef} onDrop={onDropText}>
                 {({ getRootProps, getInputProps, acceptedFiles, isDragActive }) => (
@@ -241,7 +249,7 @@ const Admin = (props: PastArticlesProps) => {
                       className: isDragActive ? styles.active_drag_zone : styles.normal_drag_zone,
                     })}
                   >
-                    <input {...getInputProps()} />
+                    <input {...getInputProps()} name='thumbnail_data' />
                     <p>Load the thumbnail image&apos;s path here.</p>
                     <Button type='button' onClick={openDialog}>
                       Open file dialog
@@ -266,7 +274,7 @@ const Admin = (props: PastArticlesProps) => {
               size='large'
               variant='outlined'
               type='submit'
-              disabled={formState.isSubmitting}
+              //  disabled={formState.isSubmitting}
               className={styles.submit_button}
             >
               SEND

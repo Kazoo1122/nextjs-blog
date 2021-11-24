@@ -13,18 +13,18 @@ type Tag = {
   tag_name: string;
 };
 
+export const IMG_DIR_PATH = path.join(process.cwd(), 'public/images');
+export const THUMBNAIL_IMG_DIR_PATH = path.join(IMG_DIR_PATH, 'thumbnail');
+
 export async function getAllPosts() {
-  const IMG_DIR_PATH = '/images';
-  const NO_IMG_PATH = path.join(IMG_DIR_PATH, '/no_image.png');
+  const NO_IMG_PATH = path.join(THUMBNAIL_IMG_DIR_PATH, 'no_image.png');
   const { getDbData } = dbApi();
   // const sqlAboutArticles = 'SELECT * FROM articles';
   // const encodedSql = encodeURI(sqlAboutArticles);
   const posts = (await getDbData(DATABASE_QUERY.ALL_ARTICLES)) as any; //記事一覧をDBから取得
-  console.log(posts);
   // const sqlAboutTags =
   //   'SELECT articles_id, tag_name FROM tagging_articles INNER JOIN tags ON tagging_articles.tags_id = tags.id;';
   const tags = (await getDbData(DATABASE_QUERY.TAGS_FOR_ALL_ARTICLES)) as any; //タグと記事との紐付け一覧をDBから取得
-  console.log(tags);
   //タグと紐づいている記事を探し、あれば配列として格納する
   tags.forEach((tag: LinkingTag) => {
     const taggedPost = posts.find((post: PostProps) => tag.articles_id === post.id);

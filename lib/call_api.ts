@@ -45,7 +45,7 @@ export const dbApi = () => {
       'Content-type': 'application/json',
     };
     const headers = new Headers(httpHeaders);
-    const url = process.env.server + '/api/db/post';
+    const url = process.env.server + '/api/db/query';
     const body = JSON.stringify(data);
     const res = await fetch(url, {
       method: 'POST',
