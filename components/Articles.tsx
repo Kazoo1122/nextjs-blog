@@ -10,12 +10,13 @@ type ArticleProps = {
 const Articles = (props: ArticleProps) => {
   const CHAR_LIMIT = 128;
   const { articles } = props;
+  const idUrl = '/posts/[id]';
   return (
     <>
       {articles.map((post: PostProps) => (
         <article key={post.id} className={styles.articles_area}>
           <div className={styles.thumbnail_area}>
-            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+            <Link href={idUrl} as={`/posts/${post.id}`}>
               <a>
                 <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
               </a>
@@ -23,7 +24,7 @@ const Articles = (props: ArticleProps) => {
           </div>
           <div className={styles.summary_area}>
             <div className={styles.articles_title_area}>
-              <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+              <Link href={idUrl} as={`/posts/${post.id}`}>
                 <a className={styles.articles_title_text}>{post.title}</a>
               </Link>
             </div>
@@ -45,7 +46,7 @@ const Articles = (props: ArticleProps) => {
                 </p>
               </div>
             </div>
-            <Link href='/posts/[id]' as={`/posts/${post.id}`}>
+            <Link href={idUrl} as={`/posts/${post.id}`}>
               <a className={styles.body_area}>
                 {post.content.length > CHAR_LIMIT
                   ? post.content.slice(0, CHAR_LIMIT - 1) + '…'

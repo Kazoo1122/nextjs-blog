@@ -76,12 +76,16 @@ const Admin = (props: PastArticlesProps) => {
   });
 
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
-    const res = await postDbData(data);
-    const result = res.status === 200 ? 'success' : 'failed';
-
-    await router.push({
-      pathname: '/posting',
-      query: { result: result },
+    await postDbData(data).then(async (res) => {
+      console.log(res.status, 'post end.');
+      const result = res.status === 201 ? 'success' : 'failed';
+      const toJSON = await res.json();
+      const lastID = toJSON.id;
+      console.log(lastID, 'lastID');
+      await router.push({
+        pathname: '/posting',
+        query: { result: result, id: lastID },
+      });
     });
   };
   const handleCheck = (

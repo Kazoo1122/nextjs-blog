@@ -30,7 +30,6 @@ export const dbApi = () => {
     };
     const headers = new Headers(httpHeaders);
     const url = process.env.server + `/api/db/query?params=${query}&params=${id ?? 'none'}`;
-    console.log(url);
     const res = await fetch(url, {
       method: 'GET',
       headers: headers,
@@ -47,12 +46,11 @@ export const dbApi = () => {
     const headers = new Headers(httpHeaders);
     const url = process.env.server + '/api/db/query';
     const body = JSON.stringify(data);
-    const res = await fetch(url, {
+    return await fetch(url, {
       method: 'POST',
       headers: headers,
       body: body,
     });
-    return await res.json();
   };
 
   return { getDbData, postDbData };

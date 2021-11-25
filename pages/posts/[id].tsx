@@ -36,7 +36,9 @@ export type PostProps = {
 const Post = (post: PostProps) => {
   const pageTitle = post.title;
   const restItems = useGetBreadCrumbs();
+  console.log(restItems, 'restItems');
   const items = [...restItems, { title: pageTitle, path: `/posts/${post.id}` }];
+  console.log(items, 'items');
   const router = useRouter();
   if (router.isFallback) {
     return (

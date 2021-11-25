@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next';
 
 //Reactモジュール
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 //自作モジュール
 import { Layout } from '../components/Layout';
@@ -11,7 +11,7 @@ import { PostProps } from './posts/[id]';
 import styles from '../styles/index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { filterByTags, TagList } from '../components/TagList';
-import { useSetBreadCrumbs } from '../context/context';
+import { BreadCrumbContext } from '../context/context';
 import { BreadCrumbItem, BreadCrumbs } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
 import { dbApi } from '../lib/call_api';
@@ -41,13 +41,19 @@ const Index = (props: BlogGalleryProps) => {
   const postsLength = filteredPosts.length;
   const pageTitle = tag === undefined ? 'BLOG' : 'Tags:' + tag;
   const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
-  tag !== undefined
-    ? items.push({
-        title: pageTitle,
-        path: { pathname: '/', query: { tag: tag } },
-      })
-    : '';
-  useSetBreadCrumbs(items);
+  if (tag !== undefined) {
+    items.push({
+      title: pageTitle,
+      path: { pathname: '/', query: { tag: tag } },
+    });
+  }
+  //contextのセッター(useSetBreadCrumbs)はcontext.tsに用意しているが、
+  // indexページはtagの値が変更されたら発火するようにしたいため、直接useContextを使用している
+  const context = useContext(BreadCrumbContext);
+  useEffect(() => {
+    context.setItems(items);
+  }, [tag]);
+
   return (
     <Layout pageTitle={pageTitle}>
       <BreadCrumbs items={items} />

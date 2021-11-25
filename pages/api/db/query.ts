@@ -2,8 +2,9 @@ import mysql from 'serverless-mysql';
 import handler from '../../../lib/handler';
 import fs from 'fs';
 import path from 'path';
-import { THUMBNAIL_IMG_DIR_PATH } from '../../../lib/content';
 import { TagProps } from '../../admin';
+import { THUMBNAIL_IMG_DIR_PATH } from '../../../lib/content';
+import { OkPacket, packetCallback } from 'mysql';
 
 const db = mysql({
   config: {
@@ -63,10 +64,11 @@ export default handler
     res.status(200).json(result);
   })
   .post(async (req, res) => {
+    const THUMBNAIL_IMG_DIR_FULL_PATH = path.join(process.cwd(), 'public', THUMBNAIL_IMG_DIR_PATH);
     const data = req.body;
     const { title, tags, content, thumbnail_name, thumbnail_data } = data;
     if (thumbnail_name !== '') {
-      const imgPath = path.join(THUMBNAIL_IMG_DIR_PATH, thumbnail_name);
+      const imgPath = path.join(THUMBNAIL_IMG_DIR_FULL_PATH, thumbnail_name);
       const buffer = new Buffer(thumbnail_data, 'base64');
       fs.writeFile(imgPath, buffer, (err) => {
         if (!err) {
@@ -77,15 +79,27 @@ export default handler
         }
       });
     }
-
-    let sql = `INSERT INTO articles(title,content,thumbnail,created_at,updated_at) VALUES(${title},${content},NOW(),NOW())`;
-    await db.query(sql);
-    sql = 'SELECT LAST_INSERT_ID()';
-    const lastID = await db.query(sql);
-    tags.map(async (tag: TagProps) => {
-      sql = `INSERT INTO tagging_articles(articles_id, tags_id) VALUES(${lastID},${tag.id})`;
-      await db.query(sql);
-    });
-    await db.end();
-    res.status(201).json({ ...req.body, id: lastID });
+    const now = new Date();
+    let sql =
+      'INSERT INTO articles(title, content, thumbnail, created_at, updated_at) VALUES(?, ?, ?, ?, ?)';
+    let values = [title, content, thumbnail_name, now, now];
+    try {
+      const articleResult: OkPacket = await db.query(sql, values);
+      const lastID = articleResult.insertId;
+      console.log('article result is:', articleResult);
+      const tagsResult: OkPacket[] = [];
+      await tags.map(async (tag: TagProps) => {
+        sql = 'INSERT INTO tagging_articles(articles_id, tags_id) VALUES(?, ?)';
+        values = [lastID, tag.id];
+        const result: OkPacket = await db.query(sql, values);
+        console.log(result);
+        tagsResult.push(result);
+      });
+      console.log('tags result is:', tagsResult);
+      res.status(201).json({ ...data, id: lastID });
+    } catch (err) {
+      console.log(err, 'databases error.');
+    } finally {
+      await db.end();
+    }
   });
