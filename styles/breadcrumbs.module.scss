@@ -1,34 +1,35 @@
+@use "import";
 //ぱんくずリスト
 .breadcrumbs_list {
   display: flex;
   align-items: center;
   margin-bottom: 96px;
-  font: 18px;
+  font-size: 18px;
   //ぱんくずリストの各アイテム
   .breadcrumbs_item {
     //現在地（リンクなし）
     .current_text {
-      color: var(--gray-color);
+      color: import.$gray-color;
     }
     //過去の訪問地点（リンクあり）
     .past_text {
-      color: var(--menu-color);
+      color: import.$menu-color;
       &:hover {
-        color: var(--strong-color);
+        color: import.$strong-color;
         text-decoration: underline;
       }
     }
     //ホームアイコン
     .home_icon {
       position: relative;
-      color: var(--gray-color);
+      color: import.$gray-color;
       bottom: 1px;
       margin-right: 8px;
     }
     //矢印アイコン
     .chevron_icon {
       position: relative;
-      color: var(--gray-color);
+      color: import.$gray-color;
       bottom: 1px;
       margin: 0 8px;
     }

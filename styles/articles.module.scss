@@ -1,7 +1,8 @@
+@use "import";
 //記事一覧エリア
 .articles_area {
   border-top: solid 1px;
-  border-color: var(--menu-color);
+  border-color: import.$menu-color;
   padding-top: 24px;
   display: flex;
 }
@@ -28,9 +29,9 @@
     .articles_title_text {
       text-align: left;
       font-size: 24px;
-      background: var(--marker);
+      background: import.$marker;
       &:hover {
-        color: var(--menu-color);
+        color: import.$menu-color;
       }
     }
   }
@@ -43,8 +44,10 @@
     //タグエリア
     .tags_area {
       display: flex;
+      width:60%;
+      gap:8px 0;
+      flex-wrap: wrap;
       align-items: flex-end;
-      flex-direction: row-reverse;
     }
     //作成日・更新日エリア
     .date_area {
@@ -61,7 +64,7 @@
     margin-bottom: 48px;
     line-height: 200%;
     &:hover {
-      color: var(--menu-color);
+      color: import.$menu-color;
     }
   }
 }

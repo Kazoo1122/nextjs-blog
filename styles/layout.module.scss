@@ -1,3 +1,4 @@
+@use "import";
 //全体のラッパークラス
 .layout_wrapper {
   height: 100%;
@@ -14,8 +15,8 @@
     align-items: center;
     padding-left: 36px;
     padding-right: 36px;
-    background-color: var(--header-color);
-    box-shadow: 0px 8px 20px var(--shadow-color);
+    background-color: import.$header-color;
+    box-shadow: 0 8px 20px import.$shadow-color;
 
     //サイトタイトルゾーン
     .title_area {
@@ -28,13 +29,13 @@
       //サイトタイトルテキスト
       .title_text {
         font: 30px RocknRoll One;
-        color: var(--title-color);
+        color: import.$title-color;
         width: 680px;
       }
       //サブタイトルテキスト
       .subtitle_text {
         font: 20px Yusei Magic;
-        color: var(--gray-color);
+        color: import.$gray-color;
         width: 380px;
       }
     }
@@ -45,9 +46,9 @@
         font: 20px Spartan;
         display: inline-block;
         margin-left: 60px;
-        color: var(--menu-color);
+        color: import.$menu-color;
         &:hover {
-          color: var(--strong-color);
+          color: import.$strong-color;
         }
       }
     }
@@ -68,8 +69,8 @@
   .footer_area {
     width: 100%;
     text-align: center;
-    background-color: var(--header-color);
-    color: var(--gray-color);
+    background-color: import.$header-color;
+    color: import.$gray-color;
     position: absolute;
     padding: 64px 0;
     bottom: 0;

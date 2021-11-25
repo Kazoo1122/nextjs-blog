@@ -1,7 +1,8 @@
+@use "import";
 .result {
-  white-space:pre-line
+  white-space:pre-line;
 };
 .mail{
-  color:var(--menu-color);
+  color: import.$menu-color;
   text-decoration: underline;
 };

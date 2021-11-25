@@ -1,17 +1,18 @@
+@use "import";
 .contact_form {
   padding-top: 64px;
   width:700px;
   height: 600px;
   display: flex;
   flex-direction: column;
-  background: #FFFFFF  padding-box;
+  background: white padding-box;
   align-items: center;
   box-shadow: 24px 32px 36px #EAEBF5;
   border-radius: 6px;
   gap: 8px 0;
 }
 .error{
-  color:#d32f2f;
+  color: import.$error-color;
 }
 .warn_icon{
 

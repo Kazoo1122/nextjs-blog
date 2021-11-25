@@ -1,19 +1,21 @@
+@use "import";
+
 .profile_wrapper {
   .my_name_text {
     font-size: 24px;
     margin-bottom: 48px;
     span {
-      background: var(--marker);
+      background: import.$marker;
     }
   }
   h4 {
     font: 800 36px Spartan;
-    color: var(--strong-color);
+    color: import.$strong-color;
     margin-bottom: 64px;
   }
   h5 {
     font: 800 24px Spartan;
-    color: var(--strong-color);
+    color: import.$strong-color;
     margin-bottom: 12px;
   }
 
@@ -21,7 +23,7 @@
     padding-top: 48px;
     padding-bottom: 48px;
     width: 70vw;
-    border-top: var(--menu-color) solid 1px;
+    border-top: import.$menu-color solid 1px;
   }
   p {
     line-height: 250%;

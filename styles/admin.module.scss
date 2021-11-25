@@ -1,3 +1,5 @@
+@use "import";
+
 .admin_form {
   padding: 48px;
   margin-bottom: 64px;
@@ -5,13 +7,13 @@
   height: 800px;
   display: flex;
   flex-direction: column;
-  background: #FFFFFF  padding-box;
+  background: white  padding-box;
   box-shadow: 24px 32px 36px #EAEBF5;
   border-radius: 6px;
   gap: 8px 0;
 }
 .error{
-  color:#d32f2f;
+  color: import.$error-color;
 }
 
 .form_control_box {
@@ -36,10 +38,10 @@
 .active_drag_zone {
   width: 250px;
   height:180px;
-  border:1px solid #00f;
+  border:1px solid import.$strong-color;
   margin-right: 32px;
   transition: border .5s ease-in-out;
-  background-color: var(--menu-color);
+  background-color: import.$menu-color;
   opacity: 0.2;
 }
 

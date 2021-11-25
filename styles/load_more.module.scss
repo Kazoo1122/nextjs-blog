@@ -1,3 +1,4 @@
+@use "import";
 .load_more_button {
   font: 800 16px Spartan;
   margin: 48px auto 64px;
@@ -5,13 +6,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--white-text-color);
+  color: white;
   width: 160px;
   height: 60px;
-  background-color: var(--button-color);
+  background-color: import.$button-color;
   box-shadow: 4px 4px 0px #00000029;
   border-radius: 11px;
   &:hover {
-    background-color:  var(--button-active-color);
+    background-color:  import.$button-active-color;
   }
   };

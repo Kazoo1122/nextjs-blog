@@ -1,21 +1,4 @@
-//CSS用グローバル変数設定
-:root {
-  //色に関する変数
-  --title-color: #109aff;
-  --menu-color: #35a7ea;
-  --strong-color: #1134f4;
-  --header-color: #faf9fd;
-  --highlight-color: #ffee56;
-  --gray-color: #707070;
-  --shadow-color: #e7e9f4;
-  --button-color: #4d6cdb;
-  --button-active-color:#7a91e8;
-  --white-text-color: #fff;
-  --black-text-color: #000;
-
-  //マーカーの設定
-  --marker: linear-gradient(transparent 60%, var(--highlight-color) 60%);
-}
+@use "import";
 
 //全体設定、フォントと余白消去
 html,
@@ -28,7 +11,7 @@ body {
 
 //各ページのタイトル部分
 .page_title {
-  color: var(--strong-color);
+  color: import.$strong-color;
   font: 800 36px Spartan;
   margin-bottom: 96px;
 }
@@ -47,12 +30,12 @@ body {
   text-align: center;
   height: 28px;
   line-height: 28px;
-  background: var(--button-color);
+  background: import.$button-color;
   border-radius: 10px;
   margin-right: 6px;
   padding: 0 12px;
   &:hover {
-    background-color:  var(--button-active-color);
+    background-color: import.$button-active-color;
   }
   a {
     font-size: 16px;
@@ -64,7 +47,7 @@ body {
 .date_text {
   text-align: right;
   font: 16px Roboto;
-  color: var(--gray-color);
+  color: import.$gray-color;
 }
 
 a {
@@ -86,7 +69,7 @@ a {
   }
   strong {
     font-family: 'Hiragino Maru Gothic ProN W6', sans-serif;
-    background: var(--marker);
+    background: import.$marker;
   }
 }
 

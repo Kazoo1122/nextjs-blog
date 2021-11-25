@@ -1,9 +1,10 @@
+@use "import";
 //タグ一覧のエリア
 .tag_list_area {
   padding: 36px 24px;
   border: 3px solid black;
   border-radius: 32px;
-  box-shadow: 8px 8px var(--shadow-color);
+  box-shadow: 8px 8px import.$shadow-color;
   //タグ一覧のタイトル
   .tag_list_title {
     text-align: left;
@@ -11,7 +12,7 @@
     margin-bottom: 24px;
     //マーカー部分
     span {
-      background: var(--marker);
+      background: import.$marker;
     }
   }
   //タグの格納ボックス
