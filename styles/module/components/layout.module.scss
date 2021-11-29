@@ -1,0 +1,247 @@
+@use "../../config/import";
+//全体のラッパークラス
+.layout_wrapper {
+  height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding-bottom: 128px;
+
+  //ヘッダー部分
+  .header_area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: import.$header-color;
+    box-shadow: 0 8px 20px import.$shadow-color;
+
+    //サイトタイトルゾーン
+    .title_area {
+      text-align: left;
+      &:hover {
+        opacity: 0.6;
+      }
+
+      //サイトタイトルテキスト
+      .title_text {
+        font-family:RocknRoll One, sans-serif;
+        color: import.$title-color;
+      }
+      //サブタイトルテキスト
+      .subtitle_text {
+        font-family:Yusei Magic,sans-serif;
+        color: import.$gray-color;
+      }
+    }
+  }
+
+  .slide_menu_area,
+  .global_navigation_area {
+    ul{
+      li {
+        font-family:Spartan, sans-serif;
+        color: import.$menu-color;
+      }
+    }
+  }
+
+  //ヘッダー下部のドット柄背景
+  .dot_background_image {
+    width: 100%;
+    overflow: hidden;
+    object-fit: cover;
+    user-select: none;
+  }
+
+  //フッター部分
+  .footer_area {
+    width: 100%;
+    text-align: center;
+    background-color: import.$header-color;
+    color: import.$gray-color;
+    position: absolute;
+    padding: 64px 0;
+    bottom: 0;
+  }
+}
+
+
+/*breakpoint============================================================*/
+//スマホ用
+@include import.media-breakpoint(xs) {
+  .header_area {
+    height: 80px;
+    padding: 0 12px;
+  }
+
+  .title_text {
+    font-size: 18px;
+  }
+
+  //サブタイトルテキスト
+  .subtitle_text {
+    font-size: 16px;
+  }
+
+  .hamburger_btn {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+  }
+  .slide_menu_area {
+    position: absolute;
+    z-index: 1;
+    overflow-x: hidden;
+    text-align: center;
+    width: 100%;
+    height: 0;
+    transition-property: height;
+    transition-duration: 1s;
+    transition-delay: 0s;
+    transition-timing-function: ease-in-out;
+
+    ul {
+      display: block;
+      background: url(../../../public/images/dot_background_bk.png) center / cover;
+
+      li {
+        width: 85vw;
+        padding: 32px 0;
+        margin: 0 auto;
+        font-size: 20px;
+        border-top: 1px solid import.$menu-color;
+        border-bottom: 1px solid import.$menu-color;
+
+        &:hover {
+          //color:  lighten(import.$menu-color, 15%);
+          color: import.$light-color;
+        }
+
+        &:first-child {
+          border-top: 0;
+        }
+
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+  .open{
+    height: 100%;
+  }
+  //メインのコンテンツを表示するエリア(childrenが格納されるところ)
+  .main_area {
+    margin: 12px 12px;
+  }
+}
+/*breakpoint============================================================*/
+//PC小画面orタブレット
+@include import.media-breakpoint(md){
+  .header_area {
+    height: 96px;
+  }
+  .title_text {
+    font-size: 22px;
+    width: 400px;
+  }
+  //サブタイトルテキスト
+  .subtitle_text {
+    font-size: 20px;
+  }
+
+  .hamburger_btn {
+    height: 60px;
+    width: 60px;
+  }
+  .dot_background_image {
+    height: 196px;
+    opacity: 0.9;
+  }
+  //メインのコンテンツを表示するエリア(childrenが格納されるところ)
+  .main_area {
+    margin: 32px 16px;
+  }
+
+  .slide_menu_area{
+    ul{
+      li {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+
+
+
+/*breakpoint============================================================*/
+//PC用（中画面）
+@include import.media-breakpoint(lg){
+  .header_area {
+    height: 128px;
+    padding: 0 36px;
+  }
+
+  .title_text {
+    font-size: 28px;
+    width: 500px;
+  }
+  //サブタイトルテキスト
+  .subtitle_text {
+    font-size: 18px;
+    width: 380px;
+  }
+
+  .dot_background_image {
+    height: 96px;
+  }
+  //メインのコンテンツを表示するエリア(childrenが格納されるところ)
+  .main_area {
+    margin: 64px 32px;
+  }
+
+ .global_navigation_area {
+   ul{
+     vertical-align: middle;
+     li {
+       border:none;
+       font-size: 18px;
+       margin-left: 32px;
+       display: inline-block;
+       &:hover {
+         color: import.$strong-color;
+       }
+     }
+   }
+  }
+}
+
+/*breakpoint============================================================*/
+//PC用（全画面）
+@include import.media-breakpoint(xl){
+
+  .title_text {
+    font-size: 30px;
+    width: 680px;
+  }
+  //サブタイトルテキスト
+  .subtitle_text {
+    font-size: 20px;
+    width: 380px;
+  }
+
+  .global_navigation_area {
+    margin-left: auto;
+    ul{
+      li {
+        font-size: 20px;
+        margin-left: 60px;
+      }
+    }
+  }
+}
+
+:export {
+  lg: map-get(import.$breakpoints, lg);
+}

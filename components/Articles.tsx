@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from '../styles/articles.module.scss';
+import styles from '../styles/module/components/articles.module.scss';
 import { PostProps } from '../pages/posts/[id]';
 
 type ArticleProps = {

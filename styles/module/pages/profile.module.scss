@@ -1,11 +1,11 @@
-@use "import";
+@use "../../config/import";
 
 .profile_wrapper {
   .my_name_text {
-    font-size: 24px;
+    @include import.font-size(lg);
     margin-bottom: 48px;
     span {
-      background: import.$marker;
+      @include import.marker();
     }
   }
   h4 {
@@ -36,7 +36,7 @@
   }
   p,
   li {
-    font-size: 18px;
+    @include import.font-size(md);
   }
   .hobby_icon {
     margin-right: 18px;

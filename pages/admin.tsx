@@ -22,7 +22,7 @@ import { GetStaticProps } from 'next';
 import { getAllPosts } from '../lib/content';
 import { PostProps } from './posts/[id]';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
-import styles from '../styles/admin.module.scss';
+import styles from '../styles/module/pages/admin.module.scss';
 import { dbApi } from '../lib/call_api';
 import { DATABASE_QUERY } from './api/db/query';
 
@@ -162,9 +162,7 @@ const Admin = (props: PastArticlesProps) => {
   }
 
   return (
-    <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={items} />
-
+    <Layout pageTitle={pageTitle} items={items}>
       {session && (
         <>
           <h2 className='page_title'>POSTS MANAGEMENT</h2>
@@ -278,7 +276,6 @@ const Admin = (props: PastArticlesProps) => {
               size='large'
               variant='outlined'
               type='submit'
-              //  disabled={formState.isSubmitting}
               className={styles.submit_button}
             >
               SEND
@@ -298,9 +295,6 @@ const Admin = (props: PastArticlesProps) => {
           </Button>
         </>
       )}
-      <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={items} />
-      </div>
     </Layout>
   );
 };

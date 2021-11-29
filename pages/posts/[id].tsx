@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { getPostsDetail } from '../../lib/content';
 import { useGetBreadCrumbs } from '../../context/context';
 import { BreadCrumbs } from '../../components/BreadCrumbs';
-import styles from '../../styles/post.module.scss';
+import styles from '../../styles/module/pages/post.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
@@ -42,22 +42,17 @@ const Post = (post: PostProps) => {
   const router = useRouter();
   if (router.isFallback) {
     return (
-      <Layout pageTitle={pageTitle}>
-        <BreadCrumbs items={items} />
+      <Layout pageTitle={pageTitle} items={items}>
         <h2 className='page_title'>{pageTitle}</h2>
         <p>
           <CircularProgress />
           Now loading...
         </p>
-        <div className='bottom_breadcrumbs_area'>
-          <BreadCrumbs items={items} />
-        </div>
       </Layout>
     );
   }
   return (
-    <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={items} />
+    <Layout pageTitle={pageTitle} items={items}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.post_wrapper}>
         <div className='contents_area'>
@@ -86,9 +81,7 @@ const Post = (post: PostProps) => {
           </article>
         </div>
       </div>
-      <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={items} />
-      </div>
+      <div className='bottom_breadcrumbs_area'></div>
     </Layout>
   );
 };

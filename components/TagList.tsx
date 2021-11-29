@@ -1,4 +1,4 @@
-import styles from '../styles/tag_list.module.scss';
+import styles from '../styles/module/components/tag_list.module.scss';
 import Link from 'next/link';
 import { PostProps } from '../pages/posts/[id]';
 import { BlogGalleryProps } from '../pages';

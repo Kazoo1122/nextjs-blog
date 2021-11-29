@@ -1,4 +1,4 @@
-import styles from '../styles/load_more.module.scss';
+import styles from '../styles/module/components/load_more.module.scss';
 import { COUNT_PER_POSTS } from '../pages';
 import React, { SetStateAction } from 'react';
 import { Button } from '@mui/material';

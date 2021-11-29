@@ -4,7 +4,7 @@ import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/materi
 import { useSetBreadCrumbs } from '../context/context';
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { mailApi } from '../lib/call_api';
-import styles from '../styles/contact.module.scss';
+import styles from '../styles/module/pages/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
@@ -43,8 +43,7 @@ const Contact = () => {
   ];
   useSetBreadCrumbs(items);
   return (
-    <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={items} />
+    <Layout pageTitle={pageTitle} items={items}>
       <h2 className='page_title'>{pageTitle}</h2>
       <Box component='form' className={styles.contact_form} onSubmit={handleSubmit(onSubmit)}>
         <FormControl className={styles.form_control_box} error={'name' in errors} variant='filled'>
@@ -101,9 +100,6 @@ const Contact = () => {
           SEND
         </Button>
       </Box>
-      <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={items} />
-      </div>
     </Layout>
   );
 };

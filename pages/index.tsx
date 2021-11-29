@@ -8,7 +8,7 @@ import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
 import { getAllPosts } from '../lib/content';
 import { PostProps } from './posts/[id]';
-import styles from '../styles/index.module.scss';
+import styles from '../styles/module/pages/index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { filterByTags, TagList } from '../components/TagList';
 import { BreadCrumbContext } from '../context/context';
@@ -55,8 +55,7 @@ const Index = (props: BlogGalleryProps) => {
   }, [tag]);
 
   return (
-    <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={items} />
+    <Layout pageTitle={pageTitle} items={items}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.index_wrapper}>
         <div className='contents_area'>
@@ -66,9 +65,6 @@ const Index = (props: BlogGalleryProps) => {
         <div className='side_area'>
           <TagList tags={tags} posts={posts} />
         </div>
-      </div>
-      <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={items} />
       </div>
     </Layout>
   );

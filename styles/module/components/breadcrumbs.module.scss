@@ -1,10 +1,10 @@
-@use "import";
+@use "../../config/import";
 //ぱんくずリスト
 .breadcrumbs_list {
   display: flex;
   align-items: center;
-  margin-bottom: 96px;
-  font-size: 18px;
+  margin: 96px 32px;
+  @include import.font-size(md);
   //ぱんくずリストの各アイテム
   .breadcrumbs_item {
     //現在地（リンクなし）

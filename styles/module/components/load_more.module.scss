@@ -1,6 +1,8 @@
-@use "import";
+@use "../../config/import";
 .load_more_button {
-  font: 800 16px Spartan;
+  font-weight: 800;
+  @include import.font-size(sm);
+  font-family:Spartan, sans-serif;
   margin: 48px auto 64px;
   text-align: center;
   display: flex;
@@ -10,9 +12,9 @@
   width: 160px;
   height: 60px;
   background-color: import.$button-color;
-  box-shadow: 4px 4px 0px #00000029;
+  box-shadow: 4px 4px 0 #00000029;
   border-radius: 11px;
   &:hover {
     background-color:  import.$button-active-color;
   }
-  };
+};

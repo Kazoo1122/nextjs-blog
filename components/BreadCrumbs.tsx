@@ -1,6 +1,6 @@
 import { FaChevronRight } from 'react-icons/fa';
 import { IoHomeSharp } from 'react-icons/io5';
-import styles from '../styles/breadcrumbs.module.scss';
+import styles from '../styles/module/components/breadcrumbs.module.scss';
 import Link from 'next/dist/client/link';
 
 export type BreadCrumbItem = {

@@ -1,7 +1,7 @@
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { Layout } from '../components/Layout';
 import { useSetBreadCrumbs } from '../context/context';
-import styles from '../styles/profile.module.scss';
+import styles from '../styles/module/pages/profile.module.scss';
 import { GiGuitarHead } from 'react-icons/gi';
 import { BiRun } from 'react-icons/bi';
 
@@ -13,8 +13,7 @@ const Profile = () => {
   ];
   useSetBreadCrumbs(items);
   return (
-    <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={items} />
+    <Layout pageTitle={pageTitle} items={items}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.profile_wrapper}>
         <div className='contents_area'>
@@ -54,9 +53,6 @@ const Profile = () => {
             </ol>
           </div>
         </div>
-      </div>
-      <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={items} />
       </div>
     </Layout>
   );

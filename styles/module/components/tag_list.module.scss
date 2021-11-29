@@ -1,4 +1,4 @@
-@use "import";
+@use "../../config/import";
 //タグ一覧のエリア
 .tag_list_area {
   padding: 36px 24px;
@@ -8,11 +8,11 @@
   //タグ一覧のタイトル
   .tag_list_title {
     text-align: left;
-    font-size: 24px;
+    @include import.font-size(lg);
     margin-bottom: 24px;
     //マーカー部分
     span {
-      background: import.$marker;
+      @include import.marker();
     }
   }
   //タグの格納ボックス

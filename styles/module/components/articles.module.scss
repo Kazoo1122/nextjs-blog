@@ -1,4 +1,4 @@
-@use "import";
+@use "../../config/import";
 //記事一覧エリア
 .articles_area {
   border-top: solid 1px;
@@ -28,8 +28,8 @@
     margin-bottom: 16px;
     .articles_title_text {
       text-align: left;
-      font-size: 24px;
-      background: import.$marker;
+      @include import.font-size(lg);
+      @include import.marker();
       &:hover {
         color: import.$menu-color;
       }
@@ -60,7 +60,7 @@
 
   //コンテンツエリア
   .body_area {
-    font-size: 16px;
+    @include import.font-size(sm);
     margin-bottom: 48px;
     line-height: 200%;
     &:hover {

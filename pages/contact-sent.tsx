@@ -2,7 +2,7 @@ import { BreadCrumbs } from '../components/BreadCrumbs';
 import { Layout } from '../components/Layout';
 import { useGetBreadCrumbs } from '../context/context';
 import { useRouter } from 'next/dist/client/router';
-import styles from '../styles/contact-sent.module.scss';
+import styles from '../styles/module/pages/contact-sent.module.scss';
 import Link from 'next/link';
 
 const ContactSent = () => {
@@ -13,8 +13,7 @@ const ContactSent = () => {
   const restItems = useGetBreadCrumbs();
   const items = [...restItems, { title: pageTitle, path: '/contact-sent' }];
   return (
-    <Layout pageTitle={pageTitle}>
-      <BreadCrumbs items={items} />
+    <Layout pageTitle={pageTitle} items={items}>
       <h2 className='page_title'>{pageTitle}</h2>
 
       <p className={styles.result}>
@@ -27,9 +26,6 @@ const ContactSent = () => {
       <Link href='mailto:kazoo1122@experienced.work'>
         <a className={styles.mail}>{result === 'failed' ? 'kazoo1122@experienced.work' : ''}</a>
       </Link>
-      <div className='bottom_breadcrumbs_area'>
-        <BreadCrumbs items={items} />
-      </div>
     </Layout>
   );
 };
