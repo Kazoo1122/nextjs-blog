@@ -11,26 +11,20 @@ body {
 //各ページのタイトル部分
 .page_title {
   color: import.$strong-color;
-  font-size:  36px;
   font-weight: 800;
   font-family: Spartan, sans-serif;
-  margin-bottom: 96px;
+
 }
 
 //各ページのタグ設定
 .tags {
   text-align: center;
-  height: 28px;
-  line-height: 28px;
   background: import.$button-color;
-  border-radius: 10px;
   margin-right: 6px;
-  padding: 0 12px;
   &:hover {
     background-color: import.$button-active-color;
   }
   a {
-    @include import.font-size(sm);
     color: #fff;
     margin: 0 auto;
   }
@@ -38,7 +32,6 @@ body {
 
 .date_text {
   text-align: right;
-  @include import.font-size(sm);
   font-family: Roboto sans-serif;
   color: import.$gray-color;
 }
@@ -65,7 +58,8 @@ a {
   }
 }
 
-//スマホ以上
+/*breakpoint============================================================*/
+//~639px スマホ(小〜中)
 @include import.media-breakpoint(xs){
   //各ページのコンテンツエリア
   .contents_area {
@@ -75,9 +69,40 @@ a {
   .side_area {
     display: none;
   }
+  .page_title{
+    margin-bottom: 64px;//breadcrumbsと合わせる
+    font-size:  30px;
+  }
+
+  .tags{
+    height: 24px;
+    line-height: 24px;
+    border-radius: 8px;
+    padding: 0 8px;
+    a{
+      font-size: 14px;
+    }
+  }
+
+  .date_text {
+    font-size: 14px;
+  }
 }
 
-//PC以上
+/*breakpoint============================================================*/
+//640px~ スマホ(大)orタブレット(小)
+@include import.media-breakpoint(sm){
+
+}
+
+/*breakpoint============================================================*/
+//768px~　PC(小)orタブレット(中)
+@include import.media-breakpoint(md){
+
+}
+
+/*breakpoint============================================================*/
+//1024px~ タブレット(大)orPC(中)
 @include import.media-breakpoint(lg){
 
   //各ページのコンテンツエリア
@@ -89,11 +114,34 @@ a {
     display: block;
     width: 22vw;
   }
-
+  .page_title{
+    margin-bottom: 96px;//breadcrumbsと合わせる
+    font-size:  36px;
+  }
 }
 
+/*breakpoint============================================================*/
+//1280px~ PC(大)
+@include import.media-breakpoint(xl){
+  .date_text {
+    font-size: 16px;
+  }
+  .tags{
+    height: 28px;
+    line-height: 28px;
+    border-radius: 10px;
+    padding: 0 12px;
+    a{
+      @include import.font-size(sm);
+    }
+  }
+}
 
+/*breakpoint============================================================*/
+//1536px~ PC(特大)
+@include import.media-breakpoint(xl) {
 
+}
 
 
 

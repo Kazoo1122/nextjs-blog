@@ -34,10 +34,19 @@ const Profile = () => {
 
           <div className={styles.container_box}>
             <h4 className={styles.skill_title}>SKILL</h4>
-            <h5>LANGRAGE</h5>
-            <p>JavaScript , TypeScript , Python , SQL , VBA , VBS</p>
-            <h5>TOOL</h5>
-            <p>RPA ( WinActor , PowerAutomate , Robopat ) , Adobe XD , Premiere Pro</p>
+            <h5>LANGUAGES</h5>
+            <p>
+              JavaScript, TypeScript, Google Apps Script, <br />
+              Python, SQL(MySQL), VBA(Excel, Access), VBS
+            </p>
+            <h5>OTHERS</h5>
+            <p>
+              React, Next.js, Linux( Ubuntu ),
+              <br />
+              RPA ( WinActor, PowerAutomate, Robopat ),
+              <br />
+              Adobe XD, Premiere Pro
+            </p>
           </div>
           <div className={styles.container_box}>
             <h4>FAVORITE</h4>

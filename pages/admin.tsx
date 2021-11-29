@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import { useSetBreadCrumbs } from '../context/context';
 import { Layout } from '../components/Layout';
-import { BreadCrumbs } from '../components/BreadCrumbs';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/router';
@@ -302,7 +301,6 @@ const Admin = (props: PastArticlesProps) => {
 export const getStaticProps: GetStaticProps<PastArticlesProps> = async () => {
   const { getDbData } = dbApi();
   const posts = await getAllPosts();
-  // const sql = 'SELECT id, tag_name FROM tags';
   const tags = (await getDbData(DATABASE_QUERY.ALL_TAGS_ID_AND_NAME)) as TagProps[];
   return {
     props: {

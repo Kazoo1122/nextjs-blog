@@ -8,9 +8,7 @@ const formatDate = (d: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const hour = zeroFill(date.getHours(), false);
-  const minute = zeroFill(date.getMinutes(), false);
-  return `${year}年${month}月${day}日 ${hour}:${minute}`;
+  return `${year}年${month}月${day}日`;
 };
 
 /**

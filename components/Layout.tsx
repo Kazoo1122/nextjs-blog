@@ -93,9 +93,11 @@ const Layout = (props: MetaProps) => {
         ) : (
           <Navigation isLgSize={isLgSize} isOpen={isOpen} />
         )}
-        <BreadCrumbs items={items} />
-        <main className={styles.main_area}>{children}</main>
-        <BreadCrumbs items={items} />
+        <main className={styles.main_area}>
+          <BreadCrumbs items={items} />
+          {children}
+          <BreadCrumbs items={items} />
+        </main>
         <footer className={styles.footer_area}>
           <Link href='/'>
             <a> &copy; 2021 {siteTitle} </a>
@@ -122,10 +124,10 @@ const Navigation = ({ isLgSize, isOpen }: navProps) => {
           <Link href='/'>BLOG</Link>
         </li>
         <li>
-          <Link href='/profile'>PROFILE</Link>
+          <Link href={'/profile'}>PROFILE</Link>
         </li>
         <li>
-          <Link href='/contact'>CONTACT</Link>
+          <Link href={'/contact'}>CONTACT</Link>
         </li>
       </ul>
     </nav>

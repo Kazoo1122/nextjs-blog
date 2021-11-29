@@ -67,7 +67,7 @@
 
 
 /*breakpoint============================================================*/
-//スマホ用
+//~639px スマホ(小〜中)
 @include import.media-breakpoint(xs) {
   .header_area {
     height: 80px;
@@ -135,11 +135,19 @@
     margin: 12px 12px;
   }
 }
+
 /*breakpoint============================================================*/
-//PC小画面orタブレット
+//640px~ スマホ(大)orタブレット(小)
+@include import.media-breakpoint(sm) {
+}
+
+
+/*breakpoint============================================================*/
+//768px~　PC(小)orタブレット(中)
 @include import.media-breakpoint(md){
   .header_area {
     height: 96px;
+    padding: 0 24px;
   }
   .title_text {
     font-size: 22px;
@@ -160,7 +168,7 @@
   }
   //メインのコンテンツを表示するエリア(childrenが格納されるところ)
   .main_area {
-    margin: 32px 16px;
+    margin: 32px 24px;
   }
 
   .slide_menu_area{
@@ -176,7 +184,7 @@
 
 
 /*breakpoint============================================================*/
-//PC用（中画面）
+//1024px~ タブレット(大)orPC(中)
 @include import.media-breakpoint(lg){
   .header_area {
     height: 128px;
@@ -218,7 +226,7 @@
 }
 
 /*breakpoint============================================================*/
-//PC用（全画面）
+//1280px~ PC(大)
 @include import.media-breakpoint(xl){
 
   .title_text {
@@ -244,4 +252,10 @@
 
 :export {
   lg: map-get(import.$breakpoints, lg);
+}
+
+/*breakpoint============================================================*/
+//1536px~ PC(特大)
+@include import.media-breakpoint(xl) {
+
 }

@@ -2,5 +2,5 @@ $highlight-color: #ffee56 !default;
 
 //マーカーの設定
 @mixin marker(){
-  background: linear-gradient(transparent 60%, $highlight-color 60%);
+  background-image: linear-gradient(transparent 60%, $highlight-color 60%);
 }
