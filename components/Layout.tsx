@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/module/components/layout.module.scss';
-import { BreadCrumbItem, BreadCrumbs } from './BreadCrumbs';
+import { BreadCrumbs } from './BreadCrumbs';
 import { useMediaQuery } from '@mui/material';
 
 /**
@@ -89,7 +89,7 @@ const Layout = (props: MetaProps) => {
         {isLgSize ? (
           <img
             className={styles.dot_background_image}
-            src='images/dot_background_wh.png'
+            src='/images/dot_background_wh.png'
             alt='background'
           />
         ) : (

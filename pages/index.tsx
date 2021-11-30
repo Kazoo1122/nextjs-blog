@@ -12,7 +12,7 @@ import styles from '../styles/module/pages/index.module.scss';
 import { LoadMore } from '../components/LoadMore';
 import { filterByTags, TagList } from '../components/TagList';
 import { BreadCrumbContext } from '../context/context';
-import { BreadCrumbItem, BreadCrumbs } from '../components/BreadCrumbs';
+import { BreadCrumbItem } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
 import { dbApi } from '../lib/call_api';
 import { DATABASE_QUERY } from './api/db/query';

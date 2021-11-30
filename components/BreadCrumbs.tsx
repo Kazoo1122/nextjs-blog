@@ -14,10 +14,6 @@ type RouterObj = {
   query: { tag: string };
 };
 
-export type BreadCrumbProps = {
-  items: BreadCrumbItem[];
-};
-
 const BreadCrumbs = () => {
   const items = useGetBreadCrumbs();
   return (

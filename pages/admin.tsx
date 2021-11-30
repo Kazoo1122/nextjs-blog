@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import {
   Box,
@@ -12,11 +12,10 @@ import {
   InputLabel,
   OutlinedInput,
 } from '@mui/material';
-import { useSetBreadCrumbs } from '../context/context';
+import { BreadCrumbContext } from '../context/context';
 import { Layout } from '../components/Layout';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
 import { getAllPosts } from '../lib/content';
 import { PostProps } from './posts/[id]';
@@ -44,15 +43,9 @@ export type TagProps = {
 };
 
 const Admin = (props: PastArticlesProps) => {
-  const pageTitle = 'ADMIN';
   const { postDbData } = dbApi();
 
-  //ぱんくずリスト関連
-  const items = [
-    { title: 'HOME', path: '/' },
-    { title: pageTitle, path: '/admin' },
-  ];
-  useSetBreadCrumbs(items);
+  // ぱんくずリスト関連
 
   //記事登録・編集フォーム関連
   const { tags } = props;
@@ -62,7 +55,7 @@ const Admin = (props: PastArticlesProps) => {
     setValue,
     getValues,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
   } = useForm<PostValues>({
     criteriaMode: 'all',
     defaultValues: {
@@ -73,17 +66,15 @@ const Admin = (props: PastArticlesProps) => {
       thumbnail_name: 'null',
     },
   });
-
-  const router = useRouter();
+  const [result, setResult] = useState('');
+  const [lastID, setLastID] = useState(0);
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
     await postDbData(data).then(async (res) => {
       const result = res.status === 201 ? 'success' : 'failed';
       const toJSON = await res.json();
       const lastID = toJSON.id;
-      await router.push({
-        pathname: '/posting',
-        query: { result: result, id: lastID },
-      });
+      setResult(result);
+      setLastID(lastID);
     });
   };
   const handleCheck = (
@@ -149,9 +140,32 @@ const Admin = (props: PastArticlesProps) => {
 
   //認証関連
   const [session, loading] = useSession();
+  const [pageTitle, setPageTitle] = useState('ADMIN');
+  const [items, setItems] = useState([{ title: '', path: '' }]);
+  useEffect(() => {
+    if (!session) {
+      setPageTitle('SIGN IN');
+    } else if (!isSubmitted) {
+      setPageTitle('POSTS MANAGEMENT');
+    } else {
+      setPageTitle(`Posting ${result}`);
+    }
+  }, [session, isSubmitted]);
 
+  useEffect(() => {
+    setItems([
+      { title: 'HOME', path: '/' },
+      { title: pageTitle, path: '/admin' },
+    ]);
+  }, [pageTitle]);
+
+  const context = useContext(BreadCrumbContext);
+  useEffect(() => {
+    context.setItems(items);
+  }, [items]);
   return (
     <Layout pageTitle={pageTitle}>
+      <h2 className='page_title'>{pageTitle}</h2>
       {loading ? (
         <>
           <p>
@@ -162,16 +176,14 @@ const Admin = (props: PastArticlesProps) => {
       ) : (
         !session && (
           <>
-            <h2 className='page_title'>Not signed in</h2>
             <Button variant='contained' color='secondary' onClick={() => signIn()}>
               Sign in
             </Button>
           </>
         )
       )}
-      {session && (
+      {session && !isSubmitted && (
         <>
-          <h2 className='page_title'>POSTS MANAGEMENT</h2>
           <Box
             component='form'
             className={styles.admin_form}
@@ -291,6 +303,13 @@ const Admin = (props: PastArticlesProps) => {
           <Button variant='outlined' color='secondary' onClick={() => signOut()}>
             Sign out
           </Button>
+        </>
+      )}
+      {session && isSubmitted && (
+        <>
+          <p className={styles.result}>
+            {result === 'success' ? `投稿完了！記事IDは「${lastID}」です。` : '投稿失敗。。。'}
+          </p>
         </>
       )}
     </Layout>
