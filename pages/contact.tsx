@@ -43,7 +43,7 @@ const Contact = () => {
   ];
   useSetBreadCrumbs(items);
   return (
-    <Layout pageTitle={pageTitle} items={items}>
+    <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
       <Box component='form' className={styles.contact_form} onSubmit={handleSubmit(onSubmit)}>
         <FormControl className={styles.form_control_box} error={'name' in errors} variant='filled'>

@@ -1,8 +1,7 @@
 import { Layout } from '../../components/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getPostsDetail } from '../../lib/content';
-import { useGetBreadCrumbs } from '../../context/context';
-import { BreadCrumbs } from '../../components/BreadCrumbs';
+import { useGetBreadCrumbs, useSetBreadCrumbs } from '../../context/context';
 import styles from '../../styles/module/pages/post.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -36,13 +35,12 @@ export type PostProps = {
 const Post = (post: PostProps) => {
   const pageTitle = post.title;
   const restItems = useGetBreadCrumbs();
-  console.log(restItems, 'restItems');
   const items = [...restItems, { title: pageTitle, path: `/posts/${post.id}` }];
-  console.log(items, 'items');
+  useSetBreadCrumbs(items);
   const router = useRouter();
   if (router.isFallback) {
     return (
-      <Layout pageTitle={pageTitle} items={items}>
+      <Layout pageTitle={pageTitle}>
         <h2 className='page_title'>{pageTitle}</h2>
         <p>
           <CircularProgress />
@@ -52,7 +50,7 @@ const Post = (post: PostProps) => {
     );
   }
   return (
-    <Layout pageTitle={pageTitle} items={items}>
+    <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.post_wrapper}>
         <div className='contents_area'>

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import styles from '../styles/module/components/layout.module.scss';
 import { BreadCrumbItem, BreadCrumbs } from './BreadCrumbs';
-import useMedia from 'use-media';
+import { useMediaQuery } from '@mui/material';
 
 /**
  * メタデータを格納した型 Headコンポーネント内で使用
@@ -13,11 +13,10 @@ type MetaProps = {
   pageUrl?: string;
   pageDescription?: string;
   children: React.ReactNode;
-  items: BreadCrumbItem[];
 };
 
 const Layout = (props: MetaProps) => {
-  const { pageTitle, pageUrl, pageDescription, children, items } = props;
+  const { pageTitle, pageUrl, pageDescription, children } = props;
   const siteTitle = 'レジ打ちからエンジニアになりました';
   const defaultDescription =
     'ショップ店員から色んな経験を経て中途のITエンジニアになった人のブログです';
@@ -27,11 +26,15 @@ const Layout = (props: MetaProps) => {
     : defaultDescription;
   const ogType = pageTitle ? 'article' : 'blog';
   const { lg } = styles;
-  const isLgSize = useMedia({ minWidth: lg });
+  const isLgSize = useMediaQuery(`(min-width: ${lg})`);
   const [isOpen, setOpen] = React.useState(false);
   const menuRef = React.useRef<HTMLImageElement>(null);
   React.useEffect(() => {
-    isOpen && menuRef.current?.focus();
+    let isMounted = true;
+    if (isMounted) isOpen && menuRef.current?.focus();
+    return () => {
+      isMounted = false;
+    };
   }, [isOpen]);
 
   return (
@@ -83,7 +86,6 @@ const Layout = (props: MetaProps) => {
             />
           )}
         </header>
-        {/*<div className={styles.dot_background_image} />*/}
         {isLgSize ? (
           <img
             className={styles.dot_background_image}
@@ -94,9 +96,9 @@ const Layout = (props: MetaProps) => {
           <Navigation isLgSize={isLgSize} isOpen={isOpen} />
         )}
         <main className={styles.main_area}>
-          <BreadCrumbs items={items} />
+          <BreadCrumbs />
           {children}
-          <BreadCrumbs items={items} />
+          <BreadCrumbs />
         </main>
         <footer className={styles.footer_area}>
           <Link href='/'>

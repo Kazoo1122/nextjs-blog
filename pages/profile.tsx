@@ -13,7 +13,7 @@ const Profile = () => {
   ];
   useSetBreadCrumbs(items);
   return (
-    <Layout pageTitle={pageTitle} items={items}>
+    <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.profile_wrapper}>
         <div className='contents_area'>

@@ -35,8 +35,7 @@
     "stylelint-config-standard": "^24.0.0",
     "stylelint-order": "^5.0.0",
     "stylelint-scss": "^4.0.0",
-    "unified": "^10.1.0",
-    "use-media": "^1.4.0"
+    "unified": "^10.1.0"
   },
   "devDependencies": {
     "@types/multer": "^1.4.7",

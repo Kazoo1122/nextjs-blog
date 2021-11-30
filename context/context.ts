@@ -11,8 +11,11 @@ export const BreadCrumbContext = createContext({} as BreadCrumbContextType);
 export const useSetBreadCrumbs = (items: BreadCrumbItem[]) => {
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
-    context.setItems([]);
-    context.setItems(items);
+    let isMounted = true;
+    if (isMounted) context.setItems(items);
+    return () => {
+      isMounted = false;
+    };
   }, []);
 };
 

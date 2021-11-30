@@ -1,6 +1,6 @@
 import { BreadCrumbs } from '../components/BreadCrumbs';
 import { Layout } from '../components/Layout';
-import { useGetBreadCrumbs } from '../context/context';
+import { useGetBreadCrumbs, useSetBreadCrumbs } from '../context/context';
 import { useRouter } from 'next/dist/client/router';
 import styles from '../styles/module/pages/contact-sent.module.scss';
 import Link from 'next/link';
@@ -12,8 +12,9 @@ const ContactSent = () => {
     result === 'success' ? 'Thank you for your message!' : 'Sorry, sending message failed.';
   const restItems = useGetBreadCrumbs();
   const items = [...restItems, { title: pageTitle, path: '/contact-sent' }];
+  useSetBreadCrumbs(items);
   return (
-    <Layout pageTitle={pageTitle} items={items}>
+    <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
 
       <p className={styles.result}>

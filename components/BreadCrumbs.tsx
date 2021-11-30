@@ -2,6 +2,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { IoHomeSharp } from 'react-icons/io5';
 import styles from '../styles/module/components/breadcrumbs.module.scss';
 import Link from 'next/dist/client/link';
+import { useGetBreadCrumbs } from '../context/context';
 
 export type BreadCrumbItem = {
   title: string;
@@ -17,7 +18,8 @@ export type BreadCrumbProps = {
   items: BreadCrumbItem[];
 };
 
-const BreadCrumbs = ({ items }: BreadCrumbProps) => {
+const BreadCrumbs = () => {
+  const items = useGetBreadCrumbs();
   return (
     <ol className={styles.breadcrumbs_list}>
       <li className={styles.breadcrumbs_item}>

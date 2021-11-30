@@ -74,13 +74,12 @@ const Admin = (props: PastArticlesProps) => {
     },
   });
 
+  const router = useRouter();
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
     await postDbData(data).then(async (res) => {
-      console.log(res.status, 'post end.');
       const result = res.status === 201 ? 'success' : 'failed';
       const toJSON = await res.json();
       const lastID = toJSON.id;
-      console.log(lastID, 'lastID');
       await router.push({
         pathname: '/posting',
         query: { result: result, id: lastID },
@@ -150,18 +149,26 @@ const Admin = (props: PastArticlesProps) => {
 
   //認証関連
   const [session, loading] = useSession();
-  const router = useRouter();
-  if (loading) {
-    return (
-      <p>
-        <CircularProgress />
-        Now loading...
-      </p>
-    );
-  }
 
   return (
-    <Layout pageTitle={pageTitle} items={items}>
+    <Layout pageTitle={pageTitle}>
+      {loading ? (
+        <>
+          <p>
+            <CircularProgress />
+            Now loading...
+          </p>
+        </>
+      ) : (
+        !session && (
+          <>
+            <h2 className='page_title'>Not signed in</h2>
+            <Button variant='contained' color='secondary' onClick={() => signIn()}>
+              Sign in
+            </Button>
+          </>
+        )
+      )}
       {session && (
         <>
           <h2 className='page_title'>POSTS MANAGEMENT</h2>
@@ -283,14 +290,6 @@ const Admin = (props: PastArticlesProps) => {
 
           <Button variant='outlined' color='secondary' onClick={() => signOut()}>
             Sign out
-          </Button>
-        </>
-      )}
-      {!session && (
-        <>
-          <h2 className='page_title'>Not signed in</h2>
-          <Button variant='contained' color='secondary' onClick={() => signIn()}>
-            Sign in
           </Button>
         </>
       )}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from '../styles/module/components/articles.module.scss';
 import { PostProps } from '../pages/posts/[id]';
-import useMedia from 'use-media';
+import { useMediaQuery } from '@mui/material';
 
 type ArticleProps = {
   articles: PostProps[];
@@ -13,7 +13,7 @@ const Articles = (props: ArticleProps) => {
   const { articles } = props;
   const idUrl = '/posts/[id]';
   const { sm } = styles;
-  const isSmSize = useMedia({ minWidth: sm });
+  const isSmSize = useMediaQuery(`(min-width: ${sm})`);
   return (
     <>
       {articles.map((post: PostProps) => (

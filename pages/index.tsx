@@ -55,7 +55,7 @@ const Index = (props: BlogGalleryProps) => {
   }, [tag]);
 
   return (
-    <Layout pageTitle={pageTitle} items={items}>
+    <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.index_wrapper}>
         <div className='contents_area'>
