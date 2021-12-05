@@ -2,7 +2,7 @@ import { Layout } from '../components/Layout';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import { useSetBreadCrumbs } from '../context/context';
-import { mailApi } from '../lib/call_api';
+import { mailAPI } from '../lib/call_api';
 import styles from '../styles/module/pages/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ const Contact = () => {
   });
   const [result, setResult] = useState('');
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    await mailApi(data).then((res) => {
+    await mailAPI(data).then((res) => {
       const result = res.status === 200 ? 'success' : 'failed';
       setResult(result);
     });

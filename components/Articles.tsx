@@ -8,8 +8,9 @@ type ArticleProps = {
   articles: PostProps[];
 };
 
+export const CHAR_LIMIT = 128;
+
 const Articles = (props: ArticleProps) => {
-  const CHAR_LIMIT = 128;
   const { articles } = props;
   const idUrl = '/posts/[id]';
   const { sm } = styles;

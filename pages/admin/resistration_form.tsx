@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import {
   Box,
@@ -12,17 +12,15 @@ import {
   InputLabel,
   OutlinedInput,
 } from '@mui/material';
-import { BreadCrumbContext } from '../context/context';
-import { Layout } from '../components/Layout';
+import { BreadCrumbContext } from '../../context/context';
+import { Layout } from '../../components/Layout';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { GetStaticProps } from 'next';
-import { getAllPosts } from '../lib/content';
-import { PostProps } from './posts/[id]';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
-import styles from '../styles/module/pages/admin.module.scss';
-import { dbApi } from '../lib/call_api';
-import { DATABASE_QUERY } from './api/db/query';
+import styles from '../../styles/module/pages/admin.module.scss';
+import { dbAPI } from '../../lib/call_api';
+import { DATABASE_QUERY } from '../api/db/query';
 
 export type PostValues = {
   title: string;
@@ -32,18 +30,13 @@ export type PostValues = {
   thumbnail_name: string;
 };
 
-type PastArticlesProps = {
-  posts: PostProps[];
-  tags: TagProps[];
-};
-
 export type TagProps = {
   id: number;
   tag_name: string;
 };
 
-const Admin = (props: PastArticlesProps) => {
-  const { postDbData } = dbApi();
+const RegistrationForm = (props: { tags: TagProps[] }) => {
+  const { postDbData } = dbAPI();
 
   // ぱんくずリスト関連
 
@@ -79,7 +72,7 @@ const Admin = (props: PastArticlesProps) => {
   };
   const handleCheck = (
     tag: { tag_name: string; id: number },
-    event: React.SyntheticEvent<Element, Event>
+    event: SyntheticEvent<Element, Event>
   ) => {
     let values = getValues('tags') || [];
     values = values.filter((value) => value.tag_name); //空要素削除
@@ -146,7 +139,7 @@ const Admin = (props: PastArticlesProps) => {
     if (!session) {
       setPageTitle('SIGN IN');
     } else if (!isSubmitted) {
-      setPageTitle('POSTS MANAGEMENT');
+      setPageTitle('NEW POST');
     } else {
       setPageTitle(`Posting ${result}`);
     }
@@ -316,16 +309,14 @@ const Admin = (props: PastArticlesProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<PastArticlesProps> = async () => {
-  const { getDbData } = dbApi();
-  const posts = await getAllPosts();
+export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async () => {
+  const { getDbData } = dbAPI();
   const tags = (await getDbData(DATABASE_QUERY.ALL_TAGS_ID_AND_NAME)) as TagProps[];
   return {
     props: {
-      posts: posts,
       tags: JSON.parse(JSON.stringify(tags)),
     },
   };
 };
 
-export default Admin;
+export default RegistrationForm;

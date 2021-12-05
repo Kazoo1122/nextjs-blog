@@ -1,10 +1,10 @@
 import { FormValues } from '../pages/contact';
-import { PostValues } from '../pages/admin';
+import { PostValues } from '../pages/admin/resistration_form';
 import { DatabaseQuery } from '../pages/api/db/query';
 
 const token = process.env.NEXT_PUBLIC_JWT as string;
 
-export const mailApi = async (data: FormValues) => {
+export const mailAPI = async (data: FormValues) => {
   const httpHeaders = {
     Authorization: token,
     Accept: 'application/json',
@@ -22,7 +22,7 @@ export const mailApi = async (data: FormValues) => {
   });
 };
 
-export const dbApi = () => {
+export const dbAPI = () => {
   const getDbData = async (query: DatabaseQuery, id?: string) => {
     const httpHeaders = {
       Authorization: token,

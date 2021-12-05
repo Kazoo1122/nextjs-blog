@@ -2,7 +2,7 @@ import mysql from 'serverless-mysql';
 import handler from '../../../lib/handler';
 import fs from 'fs';
 import path from 'path';
-import { TagProps } from '../../admin';
+import { TagProps } from '../../admin/resistration_form';
 import { THUMBNAIL_IMG_DIR_PATH } from '../../../lib/content';
 import { OkPacket, packetCallback } from 'mysql';
 
