@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
 import { dbAPI } from '../../lib/call_api';
-import { DATABASE_QUERY } from '../api/db/query';
+import { DATABASE_QUERY } from '../index';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -60,7 +60,7 @@ const Post = (post: PostProps) => {
                 ? post.attachedTag.map((tag) => (
                     <span className='tags' key={tag.toString()}>
                       <Link href={{ pathname: '/', query: { tag: tag } }}>
-                        <a>{tag}</a>
+                        <a className='tag_text'>{tag}</a>
                       </Link>
                     </span>
                   ))
@@ -79,7 +79,7 @@ const Post = (post: PostProps) => {
           </article>
         </div>
       </div>
-      <div className='bottom_breadcrumbs_area'></div>
+      <div className='bottom_breadcrumbs_area' />
     </Layout>
   );
 };
@@ -91,7 +91,7 @@ const Post = (post: PostProps) => {
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
-  const post = await getPostsDetail(id);
+  const post = await getPostsDetail(Number(id));
   return {
     props: {
       ...post,

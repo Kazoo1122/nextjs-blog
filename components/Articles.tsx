@@ -41,7 +41,7 @@ const Articles = (props: ArticleProps) => {
                 {post.attachedTag.map((tag) => (
                   <span key={tag.toString()} className='tags'>
                     <Link href={{ pathname: '/', query: { tag: tag } }}>
-                      <a>{tag}</a>
+                      <a className='tag_text'>{tag}</a>
                     </Link>
                   </span>
                 ))}

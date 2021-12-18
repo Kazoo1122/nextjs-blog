@@ -1,6 +1,6 @@
 import { FormValues } from '../pages/contact';
 import { PostValues } from '../pages/admin/resistration_form';
-import { DatabaseQuery } from '../pages/api/db/query';
+import { DatabaseQuery } from '../pages';
 
 const token = process.env.NEXT_PUBLIC_JWT as string;
 
@@ -23,20 +23,25 @@ export const mailAPI = async (data: FormValues) => {
 };
 
 export const dbAPI = () => {
-  const getDbData = async (query: DatabaseQuery, id?: string) => {
+  const getDbData = async (query: DatabaseQuery, params?: number[]) => {
     const httpHeaders = {
       Authorization: token,
       Accept: 'application/json',
     };
     const headers = new Headers(httpHeaders);
-    const url = process.env.server + `/api/db/query?params=${query}&params=${id ?? 'none'}`;
+    let url = process.env.server + `/api/articles?query=${query}`;
+    if (params) {
+      params.map((param) => {
+        url = url + `&params=${param}`;
+      });
+    }
     const res = await fetch(url, {
       method: 'GET',
       headers: headers,
     });
     return await res.json();
   };
-
+  /*
   const postDbData = async (data: PostValues) => {
     const httpHeaders = {
       Authorization: token,
@@ -44,7 +49,7 @@ export const dbAPI = () => {
       'Content-type': 'application/json',
     };
     const headers = new Headers(httpHeaders);
-    const url = process.env.server + '/api/db/query';
+    const url = process.env.server + '/aaa/articles';
     const body = JSON.stringify(data);
     return await fetch(url, {
       method: 'POST',
@@ -52,6 +57,6 @@ export const dbAPI = () => {
       body: body,
     });
   };
-
-  return { getDbData, postDbData };
+*/
+  return { getDbData };
 };

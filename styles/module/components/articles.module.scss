@@ -67,6 +67,15 @@
 
 }
 
+//管理画面用
+.edit_area{
+  margin: 24px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 8px;
+}
+
 /*breakpoint============================================================*/
 //~639px スマホ(小〜中)
 @include import.media-breakpoint(xs){

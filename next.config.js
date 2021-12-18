@@ -3,6 +3,6 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = {
   reactStrictMode: true,
   env: {
-    server: isProd ? 'https://experienced.work' : 'http://localhost:3000',
+    server: isProd ? 'https://experienced.work' : 'http://localhost:8000',
   },
 };

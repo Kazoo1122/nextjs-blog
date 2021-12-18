@@ -24,17 +24,32 @@ body {
   &:hover {
     background-color: import.$button-active-color;
   }
-  a {
-    color: #fff;
-    margin: 0 auto;
-  }
 }
-
+.tag_text {
+  color: #fff;
+  margin: 0 auto;
+}
 .date_text {
   text-align: right;
   font-family: Roboto sans-serif;
   color: import.$gray-color;
 }
+
+.button {
+  font-weight: 800;
+  @include import.font-size(sm);
+  font-family:Spartan, sans-serif;
+  text-align: center;
+  color: white;
+  background-color: import.$button-color;
+  box-shadow: 4px 4px 0 #00000029;
+  border-radius: 11px;
+  line-height: 250%;
+  &:hover {
+    background-color:  import.$button-active-color;
+  }
+};
+
 a {
   color: inherit;
   text-decoration: none;

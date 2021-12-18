@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { dbAPI } from '../../../lib/call_api';
-import { getAllPosts } from '../../../lib/content';
-import { DATABASE_QUERY } from '../../api/db/query';
+import { getPosts } from '../../../lib/content';
+import { DATABASE_QUERY } from '../../index';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import { Button, CircularProgress } from '@mui/material';
 import { Layout } from '../../../components/Layout';
@@ -65,13 +65,13 @@ const PostsManagement = (props: PastArticlesProps) => {
               </div>
               <div className={styles.summary_area}>
                 <div className={styles.articles_title_area}>
-                  <p className={styles.articles_title_text}>{post.title}</p>
+                  <span className={styles.articles_title_text}>{post.title}</span>
                 </div>
                 <div className={styles.attribute_area}>
                   <div className={styles.tags_area}>
                     {post.attachedTag.map((tag) => (
                       <span key={tag.toString()} className='tags'>
-                        {tag}
+                        <div className='tag_text'>{tag}</div>
                       </span>
                     ))}
                   </div>
@@ -90,8 +90,12 @@ const PostsManagement = (props: PastArticlesProps) => {
                 </p>
               </div>
               <div className={styles.edit_area}>
-                <a>Edit</a>
-                <a>Delete</a>
+                <Button variant='contained' className='button'>
+                  Edit
+                </Button>
+                <Button variant='contained' className='button'>
+                  Delete
+                </Button>
               </div>
             </article>
           ))}
@@ -114,7 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const pageNumber = parseInt(page, 10);
   const end = COUNT_PER_PAGE * pageNumber;
   const start = end - COUNT_PER_PAGE;
-  const posts = await getAllPosts();
+  const posts = await getPosts();
   return {
     props: {
       posts: posts.slice(start, end),

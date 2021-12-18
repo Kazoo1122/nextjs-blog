@@ -20,7 +20,7 @@ import { GetStaticProps } from 'next';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styles from '../../styles/module/pages/admin.module.scss';
 import { dbAPI } from '../../lib/call_api';
-import { DATABASE_QUERY } from '../api/db/query';
+import { DATABASE_QUERY } from '../index';
 
 export type PostValues = {
   title: string;
