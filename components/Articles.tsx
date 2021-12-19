@@ -20,13 +20,19 @@ const Articles = (props: ArticleProps) => {
       {articles.map((post: PostProps) => (
         <article key={post.id} className={styles.articles_area}>
           {isSmSize ? (
-            <div className={styles.thumbnail_area}>
-              <Link href={idUrl} as={`/posts/${post.id}`}>
-                <a>
-                  <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
-                </a>
-              </Link>
-            </div>
+            <Link href={idUrl} as={`/posts/${post.id}`}>
+              <a>
+                <div className={styles.thumbnail_area}>
+                  <Image
+                    src={post.thumbnail}
+                    layout={'fill'}
+                    objectFit={'cover'}
+                    alt='thumbnail'
+                    priority={true}
+                  />
+                </div>
+              </a>
+            </Link>
           ) : (
             ''
           )}
