@@ -3,45 +3,33 @@ import useSWRInfinite from 'swr/infinite';
 import React, { useContext, useEffect } from 'react';
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
-import { getPosts, THUMBNAIL_IMG_DIR_PATH } from '../lib/content';
 import { PostProps } from './posts/[id]';
 import styles from '../styles/module/pages/index.module.scss';
-import { filterByTags, TagList } from '../components/TagList';
+import { TagList } from '../components/TagList';
 import { BreadCrumbContext } from '../context/context';
 import { BreadCrumbItem } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
-import { dbAPI } from '../lib/call_api';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import axios from 'axios';
-import { formatDate, sortWithDate } from '../lib/date';
-import { markdownToPlain } from '../lib/md_convert';
-import path from 'path';
 
 /**
  * ブログ記事一覧用
  */
 export type BlogGalleryProps = {
-  // posts: PostProps[];
-  tags: TagNames[];
+  tags: TagProps[];
 };
 
-type TagNames = {
+type TagProps = {
   tag_name: string;
+  count: number;
 };
 
-export const DATABASE_QUERY = {
-  ARTICLES: 0,
-  TAGS_FOR_ARTICLES: 1,
-  ONE_ARTICLE: 2,
-  TAGS_FOR_ONE_ARTICLE: 3,
-  ALL_TAGS_ID_AND_NAME: 4,
-  ALL_TAGS: 5,
-  ALL_ARTICLES_ID: 6,
-} as const;
-export type DatabaseQuery = typeof DATABASE_QUERY[keyof typeof DATABASE_QUERY];
-
-const token = process.env.NEXT_PUBLIC_JWT as string;
-
+export const getApi = async (url: string) => {
+  const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+  return await axios.get(url, { headers: { Authorization: TOKEN } }).then((res) => {
+    return res.data ? res.data : [];
+  });
+};
 export const COUNT_PER_POSTS = 5;
 
 const Index = (props: BlogGalleryProps) => {
@@ -66,56 +54,63 @@ const Index = (props: BlogGalleryProps) => {
 
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {
     if (previousPageData && !previousPageData.length) return null;
-    console.log(pageIndex, 'getKeys pageIndex');
-    return (
-      process.env.server + `/api/articles?query=0&params=${pageIndex}&params=${COUNT_PER_POSTS}`
-    );
-    // return [pageIndex];
+    const offset = pageIndex * COUNT_PER_POSTS;
+    console.log(offset, 'getKeys pageIndex');
+    let url = process.env.server + `/api/posts-list?offset=${offset}&limit=${COUNT_PER_POSTS}`;
+    url = tag === undefined ? url : url + `&tag=${tag}`;
+    return url;
   };
 
   const fetcher = async (url: string) => {
-    console.log(url, 'url');
-    return await axios.get(url, { headers: { Authorization: token } }).then((res) => res.data);
+    return await getApi(url);
   };
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
   console.log(data, 'data');
   console.log(size, 'size');
   const loadMorePosts = () => {
+    console.log(size, 'size');
     return setSize(size + 1);
   };
   const posts = data ? [].concat(...data) : [];
   console.log(posts, 'posts');
-  const filteredPosts = tag === undefined ? posts : filterByTags(posts, tag);
-
   const isLoadingInitialData = !data && !error;
   console.log(isLoadingInitialData, 'isLoadingInitialData');
   const isLoadingMore =
     isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
-  // const isEmpty = data?.[0]?.length === 0;
-  // const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < COUNT_PER_POSTS);
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < COUNT_PER_POSTS);
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
       <div className={styles.index_wrapper}>
         <div className='contents_area'>
-          <Articles articles={filteredPosts} />
-          {/*{isReachingEnd ? (*/}
-          <div className={styles.button_area}>
-            <Button
-              variant='contained'
-              className='button'
-              onClick={loadMorePosts}
-              // disabled={isLoadingMore}
-            >
-              <div className={styles.load_more}>
-                {!isLoadingMore ? 'LORD MORE' : 'Now Loading...'}
-              </div>
-            </Button>
-          </div>
-          {/*) : (*/}
-          {/*  ''*/}
-          {/*)}*/}
+          <Articles articles={posts} />
+          {isReachingEnd ? (
+            <>
+              <div className={styles.no_more}>no more post.</div>
+            </>
+          ) : (
+            <div className={styles.button_area}>
+              <Button
+                variant='contained'
+                className='button'
+                onClick={loadMorePosts}
+                disabled={isLoadingMore}
+              >
+                <div className={styles.load_more}>
+                  {!isLoadingMore ? (
+                    'LORD MORE'
+                  ) : (
+                    <>
+                      <CircularProgress />
+                      <span>Loading...</span>
+                    </>
+                  )}
+                </div>
+              </Button>
+            </div>
+          )}
         </div>
         <div className='side_area'>
           <TagList tags={tags} />
@@ -129,12 +124,10 @@ const Index = (props: BlogGalleryProps) => {
  * 値の読み込みを行う
  */
 export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
-  const { getDbData } = dbAPI();
-  // const posts = await getPosts();
-  const tags = await getDbData(DATABASE_QUERY.ALL_TAGS);
+  const url = process.env.server + `/api/tags-list`;
+  const tags = await getApi(url);
   return {
     props: {
-      // posts: posts,
       tags: JSON.parse(JSON.stringify(tags)),
     },
   };

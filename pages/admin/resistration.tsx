@@ -19,8 +19,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { GetStaticProps } from 'next';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styles from '../../styles/module/pages/admin.module.scss';
-import { dbAPI } from '../../lib/call_api';
-import { DATABASE_QUERY } from '../index';
+import axios from 'axios';
 
 export type PostValues = {
   title: string;
@@ -35,11 +34,9 @@ export type TagProps = {
   tag_name: string;
 };
 
+const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+
 const RegistrationForm = (props: { tags: TagProps[] }) => {
-  const { postDbData } = dbAPI();
-
-  // ぱんくずリスト関連
-
   //記事登録・編集フォーム関連
   const { tags } = props;
   const {
@@ -62,10 +59,15 @@ const RegistrationForm = (props: { tags: TagProps[] }) => {
   const [result, setResult] = useState('');
   const [lastID, setLastID] = useState(0);
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
-    await postDbData(data).then(async (res) => {
+    const headers = {
+      Authorization: TOKEN,
+      'Content-Type': 'application/json',
+    };
+    const url = process.env.server + '/api/send-post';
+    const body = JSON.stringify(data);
+    await axios.post(url, body, { headers: headers }).then(async (res: any) => {
       const result = res.status === 201 ? 'success' : 'failed';
-      const toJSON = await res.json();
-      const lastID = toJSON.id;
+      const lastID = res.data.id;
       setResult(result);
       setLastID(lastID);
     });
@@ -310,8 +312,10 @@ const RegistrationForm = (props: { tags: TagProps[] }) => {
 };
 
 export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async () => {
-  const { getDbData } = dbAPI();
-  const tags = (await getDbData(DATABASE_QUERY.ALL_TAGS_ID_AND_NAME)) as TagProps[];
+  const url = process.env.server + `/api/tags-selection`;
+  const tags = (await axios
+    .get(url, { headers: { Authorization: TOKEN } })
+    .then((res) => res.data)) as TagProps[];
   return {
     props: {
       tags: JSON.parse(JSON.stringify(tags)),

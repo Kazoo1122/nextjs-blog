@@ -1,13 +1,11 @@
 import { Layout } from '../../components/Layout';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getPostsDetail } from '../../lib/content';
 import { useGetBreadCrumbs, useSetBreadCrumbs } from '../../context/context';
 import styles from '../../styles/module/pages/post.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
-import { dbAPI } from '../../lib/call_api';
-import { DATABASE_QUERY } from '../index';
+import { getApi } from '../index';
 
 /**
  * idのみが格納された型 getStaticPathsで使用する
@@ -24,8 +22,8 @@ export type PostProps = {
   title: string;
   content: string;
   thumbnail: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   attachedTag: Array<string>;
 };
 
@@ -91,7 +89,8 @@ const Post = (post: PostProps) => {
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
-  const post = await getPostsDetail(Number(id));
+  const url = process.env.server + `/api/post-detail?params=${id}`;
+  const post = await getApi(url);
   return {
     props: {
       ...post,
@@ -104,8 +103,8 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  * @returns paths 中身はparams{id}の一覧
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const { getDbData } = dbAPI();
-  const posts = (await getDbData(DATABASE_QUERY.ALL_ARTICLES_ID)) as any;
+  const url = process.env.server + `/api/post-ids`;
+  const posts = await getApi(url);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
   });

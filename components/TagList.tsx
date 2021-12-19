@@ -15,7 +15,7 @@ const TagList = (props: BlogGalleryProps) => {
           <span key={tag.tag_name} className='tags'>
             <Link href={{ pathname: '/', query: { tag: tag.tag_name } }} passHref>
               <a className='tag_text'>
-                {tag.tag_name} {/*( {filterByTags(posts, tag.tag_name).length} )*/}
+                {tag.tag_name} ( {tag.count} )
               </a>
             </Link>
           </span>

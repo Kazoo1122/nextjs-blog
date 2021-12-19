@@ -1,7 +1,4 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { dbAPI } from '../../../lib/call_api';
-import { getPosts } from '../../../lib/content';
-import { DATABASE_QUERY } from '../../index';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import { Button, CircularProgress } from '@mui/material';
 import { Layout } from '../../../components/Layout';
@@ -12,6 +9,7 @@ import Image from 'next/image';
 import { CHAR_LIMIT } from '../../../components/Articles';
 import { Pagination } from '@mui/material';
 import { useRouter } from 'next/dist/client/router';
+import { getApi } from '../../index';
 
 type PastArticlesProps = {
   posts: PostProps[];
@@ -118,7 +116,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const pageNumber = parseInt(page, 10);
   const end = COUNT_PER_PAGE * pageNumber;
   const start = end - COUNT_PER_PAGE;
-  const posts = await getPosts();
+  const url = process.env.server + `/api/posts-list?offset=0&limit=0`;
+  const posts = await getApi(url);
   return {
     props: {
       posts: posts.slice(start, end),
@@ -129,8 +128,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { getDbData } = dbAPI();
-  const posts = (await getDbData(DATABASE_QUERY.ALL_ARTICLES_ID)) as any;
+  const url = process.env.server + `/api/post-ids`;
+  const posts = await getApi(url);
   const pages = range(Math.ceil(posts.length / COUNT_PER_PAGE));
   const paths = pages.map((page) => ({
     params: { page: `${page}` },
