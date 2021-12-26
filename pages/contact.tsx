@@ -2,11 +2,11 @@ import { Layout } from '../components/Layout';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import { useSetBreadCrumbs } from '../context/context';
-import { mailAPI } from '../lib/call_api';
 import styles from '../styles/module/pages/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export type FormValues = {
   name: string;
@@ -26,7 +26,13 @@ const Contact = () => {
   });
   const [result, setResult] = useState('');
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    await mailAPI(data).then((res) => {
+    const url = process.env.server + '/api/mail';
+    const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+    const headers = {
+      Authorization: TOKEN,
+      'Content-Type': 'application/json',
+    };
+    await axios.post(url, data, { headers: headers }).then((res) => {
       const result = res.status === 200 ? 'success' : 'failed';
       setResult(result);
     });

@@ -1,4 +1,3 @@
-import { BreadCrumbs } from '../components/BreadCrumbs';
 import { Layout } from '../components/Layout';
 import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/profile.module.scss';

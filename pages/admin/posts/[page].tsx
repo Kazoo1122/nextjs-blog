@@ -1,15 +1,19 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/client';
-import { Button, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress } from '@mui/material';
 import { Layout } from '../../../components/Layout';
 import { PostProps } from '../../posts/[id]';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import styles from '../../../styles/module/components/articles.module.scss';
 import Image from 'next/image';
 import { CHAR_LIMIT } from '../../../components/Articles';
 import { Pagination } from '@mui/material';
 import { useRouter } from 'next/dist/client/router';
 import { getApi } from '../../index';
+import { BreadCrumbContext } from '../../../context/context';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import axios from 'axios';
 
 type PastArticlesProps = {
   posts: PostProps[];
@@ -31,9 +35,61 @@ const PostsManagement = (props: PastArticlesProps) => {
       setPageTitle('PAST POSTS');
     }
   }, [session]);
+  const [items, setItems] = useState([{ title: '', path: '' }]);
+  useEffect(() => {
+    const titles = [
+      { title: 'HOME', path: '/' },
+      { title: 'ADMIN', path: '/admin/top' },
+      { title: 'PAST POSTS', path: '/admin/posts/[page]' },
+    ];
+    setItems(titles);
+  }, [pageTitle]);
+
+  const context = useContext(BreadCrumbContext);
+  useEffect(() => {
+    context.setItems(items);
+  }, [items]);
   const router = useRouter();
   const pageChange = (event: ChangeEvent<unknown>, page: number) => {
     return router.push(`/admin/posts/${page}`);
+  };
+  const editPost = async (id: string) => {
+    await router.push({
+      pathname: '/admin/registration',
+      query: { type: 'EDIT', id: id },
+    });
+  };
+  const [deletedPost, setDeletedPost] = useState({} as PostProps);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = (post: PostProps) => {
+    setDeletedPost(post);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+  const deletePost = async () => {
+    setIsDeleting(true);
+    const url = process.env.server + `/api/delete_post?id=${deletedPost.id}`;
+    const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+    const headers = {
+      Authorization: TOKEN,
+    };
+    await axios.delete(url, { headers: headers }).then((res) => {
+      if (res.status === 200) {
+        router.reload();
+      }
+    });
   };
   return (
     <Layout pageTitle={pageTitle}>
@@ -88,16 +144,53 @@ const PostsManagement = (props: PastArticlesProps) => {
                 </p>
               </div>
               <div className={styles.edit_area}>
-                <Button variant='contained' className='button'>
+                <Button variant='contained' className='button' onClick={() => editPost(post.id!)}>
                   Edit
                 </Button>
-                <Button variant='contained' className='button'>
+                <Button variant='contained' className='button' onClick={() => handleOpen(post!)}>
                   Delete
                 </Button>
               </div>
             </article>
           ))}
-          <Pagination count={pages} page={page} onChange={pageChange} />
+
+          <Modal
+            open={open}
+            aria-labelledby='modal-modal-title'
+            aria-describedby='modal-modal-description'
+          >
+            <Box sx={style}>
+              <Typography id='modal-modal-title' variant='h6' component='h2'>
+                確認
+              </Typography>
+              <Typography id='modal-modal-description' sx={{ mt: 2, mb: 4 }}>
+                記事を削除しますか？
+                <br />
+                記事ID：{deletedPost.id}
+                <br />
+                タイトル：{deletedPost.title}
+              </Typography>
+              <Button
+                variant='contained'
+                color='error'
+                onClick={deletePost}
+                sx={{ mr: 2 }}
+                disabled={isDeleting}
+              >
+                Delete
+              </Button>
+              <Button
+                variant='outlined'
+                color='primary'
+                onClick={handleClose}
+                disabled={isDeleting}
+              >
+                Cancel
+              </Button>
+            </Box>
+          </Modal>
+
+          <Pagination count={pages} page={page} onChange={pageChange} sx={{ my: 4 }} />
           <Button variant='outlined' color='secondary' onClick={() => signOut()}>
             Sign out
           </Button>

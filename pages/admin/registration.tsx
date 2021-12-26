@@ -20,6 +20,7 @@ import { GetStaticProps } from 'next';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styles from '../../styles/module/pages/admin.module.scss';
 import axios from 'axios';
+import { useRouter } from 'next/dist/client/router';
 
 export type PostValues = {
   title: string;
@@ -133,25 +134,30 @@ const RegistrationForm = (props: { tags: TagProps[] }) => {
     }
   };
 
+  const router = useRouter();
+  const query = router.query;
   //認証関連
   const [session, loading] = useSession();
   const [pageTitle, setPageTitle] = useState('ADMIN');
-  const [items, setItems] = useState([{ title: '', path: '' }]);
   useEffect(() => {
     if (!session) {
       setPageTitle('SIGN IN');
     } else if (!isSubmitted) {
-      setPageTitle('NEW POST');
+      setPageTitle(query.type + ' POST');
     } else {
       setPageTitle(`Posting ${result}`);
     }
   }, [session, isSubmitted]);
 
+  const [items, setItems] = useState([{ title: '', path: '' }]);
   useEffect(() => {
-    setItems([
+    const titles = [
       { title: 'HOME', path: '/' },
-      { title: pageTitle, path: '/admin' },
-    ]);
+      { title: 'ADMIN', path: '/admin/top' },
+    ];
+    if (query.type === 'EDIT') titles.push({ title: 'PAST POSTS', path: '/admin/posts/[page]' });
+    titles.push({ title: pageTitle, path: '/admin/registration' });
+    setItems(titles);
   }, [pageTitle]);
 
   const context = useContext(BreadCrumbContext);
