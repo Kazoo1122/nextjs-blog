@@ -35,7 +35,7 @@ const Profile = () => {
             <h4 className={styles.skill_title}>SKILL</h4>
             <h5>LANGUAGES</h5>
             <p>
-              JavaScript, TypeScript, Google Apps Script, <br />
+              JavaScript, TypeScript, Google Apps Script, PHP, <br />
               Python, SQL(MySQL), VBA(Excel, Access), VBS
             </p>
             <h5>OTHERS</h5>
@@ -52,7 +52,7 @@ const Profile = () => {
             <ol>
               <li>
                 <GiGuitarHead size={30} className={styles.hobby_icon} />
-                Guitar ( I ❤️ Jimi Hendrix!! )
+                Guitar
               </li>
               <li>
                 <BiRun size={30} className={styles.hobby_icon} />

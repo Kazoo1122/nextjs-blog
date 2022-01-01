@@ -14,13 +14,16 @@ const AdminTop = () => {
 
   const router = useRouter();
   const addNewPost = async () => {
-    await router.push({
-      pathname: '/admin/registration',
-      query: { type: 'NEW' },
-    });
+    await router.push(
+      {
+        pathname: '/admin/post/[id]',
+        query: { type: 'NEW' },
+      },
+      '/admin/post/new'
+    );
   };
   const editPastPosts = async () => {
-    await router.push('/admin/posts/[page]', '/admin/posts/1');
+    await router.push('/admin/articles/[page]', '/admin/articles/1');
   };
   useSetBreadCrumbs(items);
   return (
@@ -29,7 +32,7 @@ const AdminTop = () => {
         <h2 className='page_title'>{pageTitle}</h2>
         {loading ? (
           <>
-            <p>
+            <p style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
               <CircularProgress />
               Now loading...
             </p>

@@ -40,7 +40,7 @@ const PostsManagement = (props: PastArticlesProps) => {
     const titles = [
       { title: 'HOME', path: '/' },
       { title: 'ADMIN', path: '/admin/top' },
-      { title: 'PAST POSTS', path: '/admin/posts/[page]' },
+      { title: 'PAST POSTS', path: '' },
     ];
     setItems(titles);
   }, [pageTitle]);
@@ -54,9 +54,10 @@ const PostsManagement = (props: PastArticlesProps) => {
     return router.push(`/admin/posts/${page}`);
   };
   const editPost = async (id: string) => {
+    const currentPath = router.asPath.replace('/admin/articles/', '');
     await router.push({
-      pathname: '/admin/registration',
-      query: { type: 'EDIT', id: id },
+      pathname: `/admin/post/${id}`,
+      query: { type: 'EDIT', before: currentPath },
     });
   };
   const [deletedPost, setDeletedPost] = useState({} as PostProps);
@@ -96,7 +97,7 @@ const PostsManagement = (props: PastArticlesProps) => {
       <h2 className='page_title'>{pageTitle}</h2>
       {loading ? (
         <>
-          <p>
+          <p style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <CircularProgress />
             Now loading...
           </p>
@@ -144,10 +145,20 @@ const PostsManagement = (props: PastArticlesProps) => {
                 </p>
               </div>
               <div className={styles.edit_area}>
-                <Button variant='contained' className='button' onClick={() => editPost(post.id!)}>
+                <Button
+                  variant='contained'
+                  className='button'
+                  color='success'
+                  onClick={() => editPost(post.id!)}
+                >
                   Edit
                 </Button>
-                <Button variant='contained' className='button' onClick={() => handleOpen(post!)}>
+                <Button
+                  variant='contained'
+                  className='button'
+                  color='error'
+                  onClick={() => handleOpen(post!)}
+                >
                   Delete
                 </Button>
               </div>
