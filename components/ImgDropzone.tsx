@@ -20,7 +20,7 @@ const ImgDropzone = (props: any) => {
 
       <aside>
         <h4>Files</h4>
-        <div>{data.thumbnail ? 'before:' + data.thumbnail : ''}</div>
+        {data ? <div>{data.thumbnail ? 'before:' + data.thumbnail : ''}</div> : ''}
         {!isClear ? (
           <>
             <ul>

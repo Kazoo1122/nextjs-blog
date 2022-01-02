@@ -14,6 +14,7 @@ import { BreadCrumbContext } from '../../../context/context';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import path from 'path';
 
 type PastArticlesProps = {
   posts: PostProps[];
@@ -116,7 +117,12 @@ const PostsManagement = (props: PastArticlesProps) => {
           {posts.map((post: PostProps) => (
             <article key={post.id} className={styles.articles_area}>
               <div className={styles.thumbnail_area}>
-                <Image src={post.thumbnail} layout={'fill'} objectFit={'cover'} alt='thumbnail' />
+                <Image
+                  src={path.join(process.env.server as string, post.thumbnail)}
+                  layout={'fill'}
+                  objectFit={'cover'}
+                  alt='thumbnail'
+                />
               </div>
               <div className={styles.summary_area}>
                 <div className={styles.articles_title_area}>

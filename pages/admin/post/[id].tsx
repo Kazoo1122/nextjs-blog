@@ -47,12 +47,18 @@ const headers = {
 };
 
 const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
-  const { postData, tags } = props;
+  const { tags } = props;
+  const postData = props.postData ?? '';
   //クエリ文字列から取得
   const router = useRouter();
   const post_type = router.query.type ?? '';
   const before_path = router.query.before ?? '';
   const post_id = router.query.id ?? '';
+
+  let title = '';
+  if (post_type === 'EDIT') {
+    title = postData.title ?? '';
+  }
 
   const {
     register,
@@ -64,7 +70,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   } = useForm<PostValues>({
     criteriaMode: 'all',
     defaultValues: {
-      title: postData.title ?? '',
+      title: title,
       tags: [],
       content: '',
       thumbnail_data: '',
@@ -99,6 +105,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
       newValues = values?.filter((value) => value.tag_name !== tag.tag_name);
     }
     setValue('tags', newValues);
+    console.log(getValues('tags'), 'tags');
     return newValues;
   };
 
@@ -170,21 +177,23 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     context.setItems(items);
   }, [items]);
 
-  //過去記事の編集の場合、以前選択したタグを選択状態にしておく
-  const attachedTag = tags.filter((tag) => postData.attachedTag.includes(tag.tag_name));
-  useEffect(() => {
-    if (process.browser) {
-      attachedTag.map(async (tag) => {
-        const selector = `label[id='${tag.tag_name}'] > span > input[type='checkbox']`;
-        const element = document.querySelector<HTMLInputElement>(selector);
-        if (element === null) return;
-        if (!element.checked) element.click();
-      });
-    }
-  }, [session]);
+  if (post_type === 'EDIT' && postData.attachedTag) {
+    //過去記事の編集の場合、以前選択したタグを選択状態にしておく
+    const attachedTag = tags.filter((tag) => postData.attachedTag.includes(tag.tag_name));
+    useEffect(() => {
+      if (process.browser) {
+        attachedTag.map(async (tag) => {
+          const selector = `label[id='${tag.tag_name}'] > span > input[type='checkbox']`;
+          const element = document.querySelector<HTMLInputElement>(selector);
+          if (element === null) return;
+          if (!element.checked) element.click();
+        });
+      }
+    }, [session]);
+  }
 
-  const [isClearText, setClearText] = useState(false);
-  const [isClearImg, setClearImg] = useState(false);
+  const [isClearText, setClearText] = useState(true);
+  const [isClearImg, setClearImg] = useState(true);
   const clearText = () => {
     setValue('content', '');
     setClearText(true);
@@ -278,7 +287,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
             <div className={styles.file_read_area}>
               <div>
                 <AiFillFileMarkdown aria-hidden='true' style={{ fontSize: '32px' }} />
-                <MdDropzone props={onDropText} isClear={isClearText} />
+                <MdDropzone onDrop={onDropText} isClear={isClearText} />
                 <Button variant='contained' color='warning' onClick={clearText}>
                   Clear
                 </Button>
@@ -308,6 +317,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
               variant='outlined'
               type='submit'
               className={styles.submit_button}
+              disabled={post_type === 'NEW' && isClearText}
             >
               SEND
             </Button>

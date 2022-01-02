@@ -2,9 +2,9 @@ import styles from '../styles/module/pages/admin.module.scss';
 import { useDropzone } from 'react-dropzone';
 
 const MdDropzone = (props: any) => {
-  const { onDropText, isClear } = props;
+  const { onDrop, isClear } = props;
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
-    onDrop: onDropText,
+    onDrop: onDrop,
     accept: '.md',
   });
 
