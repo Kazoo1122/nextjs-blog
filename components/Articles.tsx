@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from '../styles/module/components/articles.module.scss';
 import { PostProps } from '../pages/posts/[id]';
 import { useMediaQuery } from '@mui/material';
+import path from 'path';
 
 type ArticleProps = {
   articles: PostProps[];
@@ -24,7 +25,7 @@ const Articles = (props: ArticleProps) => {
               <a>
                 <div className={styles.thumbnail_area}>
                   <Image
-                    src={post.thumbnail}
+                    src={path.join(process.env.server as string, post.thumbnail)}
                     layout={'fill'}
                     objectFit={'cover'}
                     alt='thumbnail'
