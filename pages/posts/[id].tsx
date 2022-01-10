@@ -35,12 +35,14 @@ const Post = (post: PostProps) => {
   const restItems = useGetBreadCrumbs();
   const items = [...restItems, { title: pageTitle, path: `/posts/${post.id}` }];
   useSetBreadCrumbs(items);
+
+  //記事が無かった時に取得している間読み込み画面表示
   const router = useRouter();
   if (router.isFallback) {
     return (
       <Layout pageTitle={pageTitle}>
         <h2 className='page_title'>{pageTitle}</h2>
-        <p>
+        <p style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
           <CircularProgress />
           Now loading...
         </p>

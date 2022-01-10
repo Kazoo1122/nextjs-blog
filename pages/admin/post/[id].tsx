@@ -30,8 +30,8 @@ export type PostValues = {
   title: string;
   tags: TagProps[];
   content: string;
-  thumbnail_data: string;
-  thumbnail_name: string;
+  thumbnail_data: string | null;
+  thumbnail_name: string | null;
   is_null_thumbnail: boolean;
 };
 
@@ -73,8 +73,8 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
       title: title,
       tags: [],
       content: '',
-      thumbnail_data: '',
-      thumbnail_name: 'null',
+      thumbnail_data: null,
+      thumbnail_name: null,
       is_null_thumbnail: false,
     },
   });
@@ -199,8 +199,8 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     setClearText(true);
   };
   const clearImg = () => {
-    setValue('thumbnail_data', '');
-    setValue('thumbnail_name', '');
+    setValue('thumbnail_data', null);
+    setValue('thumbnail_name', null);
     setClearImg(true);
   };
 
@@ -208,7 +208,6 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   const handleChange = (event: { target: HTMLInputElement }) => {
     setChecked(event.target.checked);
     setValue('is_null_thumbnail', event.target.checked);
-    console.log(getValues('is_null_thumbnail'), 'isNull');
   };
 
   return (

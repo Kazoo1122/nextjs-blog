@@ -1,0 +1,27 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "prismjs",
+      {
+        "languages": [
+          "markup",
+          "css",
+          "scss",
+          "javascript",
+          "typescript",
+          "jsx",
+          "tsx",
+          "php",
+          "c",
+          "cpp",
+          "python",
+          "diff"
+        ],
+        "plugins": ["line-numbers", "show-language", "diff-highlight"],
+        "theme": "okaidia",
+        "css": true
+      }
+    ]
+  ]
+}

@@ -1,9 +1,10 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '../styles/module/components/layout.module.scss';
 import { BreadCrumbs } from './BreadCrumbs';
 import { useMediaQuery } from '@mui/material';
+import Prism from 'prismjs';
 
 /**
  * メタデータを格納した型 Headコンポーネント内で使用
@@ -37,6 +38,11 @@ const Layout = (props: MetaProps) => {
     };
   }, [isOpen]);
 
+  //シンタックスハイライトの有効化
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
   return (
     <div className='page'>
       <Head>
@@ -62,49 +68,51 @@ const Layout = (props: MetaProps) => {
         <meta name='twitter:site' content='@kazoo_1122' />
       </Head>
 
-      <div className={styles.layout_wrapper}>
-        <header className={styles.header_area}>
-          <div className={styles.title_area}>
-            <Link href='/'>
-              <a>
-                <h1 className={styles.title_text}>レジ打ちからエンジニアになりました</h1>
-                <p className={styles.subtitle_text}>〜中途エンジニアの開発日誌〜</p>
-              </a>
-            </Link>
-          </div>
+      <div className='line-numbers'>
+        <div className={styles.layout_wrapper}>
+          <header className={styles.header_area}>
+            <div className={styles.title_area}>
+              <Link href='/'>
+                <a>
+                  <h1 className={styles.title_text}>レジ打ちからエンジニアになりました</h1>
+                  <p className={styles.subtitle_text}>〜中途エンジニアの開発日誌〜</p>
+                </a>
+              </Link>
+            </div>
+            {isLgSize ? (
+              <Navigation isLgSize={isLgSize} isOpen={isOpen} />
+            ) : (
+              <img
+                className={styles.hamburger_btn}
+                src='/images/hamburger.png'
+                alt='hamburger'
+                onClick={() => setOpen(!isOpen)}
+                ref={menuRef}
+                onBlur={() => setOpen(false)}
+                tabIndex={0}
+              />
+            )}
+          </header>
           {isLgSize ? (
-            <Navigation isLgSize={isLgSize} isOpen={isOpen} />
-          ) : (
             <img
-              className={styles.hamburger_btn}
-              src='/images/hamburger.png'
-              alt='hamburger'
-              onClick={() => setOpen(!isOpen)}
-              ref={menuRef}
-              onBlur={() => setOpen(false)}
-              tabIndex={0}
+              className={styles.dot_background_image}
+              src='/images/dot_background_wh.png'
+              alt='background'
             />
+          ) : (
+            <Navigation isLgSize={isLgSize} isOpen={isOpen} />
           )}
-        </header>
-        {isLgSize ? (
-          <img
-            className={styles.dot_background_image}
-            src='/images/dot_background_wh.png'
-            alt='background'
-          />
-        ) : (
-          <Navigation isLgSize={isLgSize} isOpen={isOpen} />
-        )}
-        <main className={styles.main_area}>
-          <BreadCrumbs />
-          {children}
-          <BreadCrumbs />
-        </main>
-        <footer className={styles.footer_area}>
-          <Link href='/'>
-            <a> &copy; 2021 {siteTitle} </a>
-          </Link>
-        </footer>
+          <main className={styles.main_area}>
+            <BreadCrumbs />
+            {children}
+            <BreadCrumbs />
+          </main>
+          <footer className={styles.footer_area}>
+            <Link href='/'>
+              <a> &copy; 2021 {siteTitle} </a>
+            </Link>
+          </footer>
+        </div>
       </div>
     </div>
   );

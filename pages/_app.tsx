@@ -1,10 +1,16 @@
 import '../styles/global/destyle.css';
 import '../styles/global/globals.scss';
-import '../node_modules/github-markdown-css/github-markdown-light.css';
+import 'github-markdown-css/github-markdown-light.css';
+
 import { AppProps } from 'next/app';
 import { BreadCrumbProvider } from '../context/provider';
 import { Provider } from 'next-auth/client';
-import React from 'react';
+import Router from 'next/router';
+import { GA_TRACKING_ID, pageview } from '../lib/gtag';
+
+if (GA_TRACKING_ID) {
+  Router.events.on('routeChangeComplete', (url) => pageview(url));
+}
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
