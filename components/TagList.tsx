@@ -1,9 +1,12 @@
 import styles from '../styles/module/components/tag_list.module.scss';
 import Link from 'next/link';
-import { PostProps } from '../pages/posts/[id]';
-import { BlogGalleryProps } from '../pages';
+import { TagProps } from '../pages';
 
-const TagList = (props: BlogGalleryProps) => {
+/**
+ * タグ一覧のコンポーネント
+ * @param props
+ */
+const TagList = (props: { tags: TagProps[] }) => {
   const { tags } = props;
   return (
     <div className={styles.tag_list_area}>
@@ -24,12 +27,5 @@ const TagList = (props: BlogGalleryProps) => {
     </div>
   );
 };
-
-export function filterByTags(posts: PostProps[], tag: string) {
-  return posts.filter((post) => {
-    const attachedTag = post.attachedTag;
-    return attachedTag.includes(tag);
-  });
-}
 
 export { TagList };

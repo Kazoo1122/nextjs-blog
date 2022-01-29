@@ -1,6 +1,10 @@
 import styles from '../styles/module/pages/admin.module.scss';
 import { useDropzone } from 'react-dropzone';
 
+/**
+ * 記事投稿画面で使用しているマークダウン書式アップロード用ドロップゾーン
+ * @param props
+ */
 const MdDropzone = (props: any) => {
   const { onDrop, isClear } = props;
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({

@@ -14,6 +14,9 @@ export type FormValues = {
   message: string;
 };
 
+/**
+ * お問い合わせ用フォームのコンポーネント
+ */
 const Contact = () => {
   const {
     register,

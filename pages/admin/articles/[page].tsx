@@ -25,6 +25,10 @@ type PastArticlesProps = {
 
 const COUNT_PER_PAGE = 10;
 
+/**
+ * 管理用の過去記事一覧ページのコンポーネント
+ * @param props
+ */
 const PostsManagement = (props: PastArticlesProps) => {
   const { posts, page, pages } = props;
   const [session, loading] = useSession();
@@ -54,6 +58,8 @@ const PostsManagement = (props: PastArticlesProps) => {
   const pageChange = (event: ChangeEvent<unknown>, page: number) => {
     return router.push(`/admin/posts/${page}`);
   };
+
+  // 記事編集ページへ移行
   const editPost = async (id: string) => {
     const currentPath = router.asPath.replace('/admin/articles/', '');
     await router.push({
@@ -61,6 +67,8 @@ const PostsManagement = (props: PastArticlesProps) => {
       query: { type: 'EDIT', before: currentPath },
     });
   };
+
+  // 記事削除用　削除確認ダイアログを表示する
   const [deletedPost, setDeletedPost] = useState({} as PostProps);
   const [isDeleting, setIsDeleting] = useState(false);
   const [open, setOpen] = useState(false);
@@ -93,6 +101,7 @@ const PostsManagement = (props: PastArticlesProps) => {
       }
     });
   };
+
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
@@ -217,12 +226,13 @@ const PostsManagement = (props: PastArticlesProps) => {
   );
 };
 
-type PageProps = {
+type PageNumProps = {
   page: string;
 };
 
+// 記事一覧とページネーションで使用する値を返す
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { page } = params as PageProps;
+  const { page } = params as PageNumProps;
   const pageNumber = parseInt(page, 10);
   const end = COUNT_PER_PAGE * pageNumber;
   const start = end - COUNT_PER_PAGE;
@@ -250,9 +260,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-/**
- * ユーティリティ: 1 から指定された整数までを格納した Array を返す
- */
+// 1 から指定された整数までを格納した Array を返す
 const range = (stop: number) => {
   return Array.from({ length: stop }, (_, i) => i + 1);
 };

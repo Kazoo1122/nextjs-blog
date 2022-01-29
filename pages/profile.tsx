@@ -2,8 +2,11 @@ import { Layout } from '../components/Layout';
 import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/profile.module.scss';
 import { GiGuitarHead } from 'react-icons/gi';
-import { BiRun } from 'react-icons/bi';
+import { BiRun, BiBookOpen } from 'react-icons/bi';
 
+/**
+ * プロフィールページのコンポーネント
+ */
 const Profile = () => {
   const pageTitle = 'PROFILE';
   const items = [
@@ -39,13 +42,7 @@ const Profile = () => {
               Python, SQL(MySQL), VBA(Excel, Access), VBS
             </p>
             <h5>OTHERS</h5>
-            <p>
-              React, Next.js, Linux( Ubuntu ),
-              <br />
-              RPA ( WinActor, PowerAutomate, Robopat ),
-              <br />
-              Adobe XD, Premiere Pro
-            </p>
+            <p>React, Next.js, RPA</p>
           </div>
           <div className={styles.container_box}>
             <h4>FAVORITE</h4>
@@ -57,6 +54,10 @@ const Profile = () => {
               <li>
                 <BiRun size={30} className={styles.hobby_icon} />
                 Running
+              </li>
+              <li>
+                <BiBookOpen size={30} className={styles.hobby_icon} />
+                Study(Mathematics)
               </li>
             </ol>
           </div>

@@ -4,6 +4,10 @@ import { Button, CircularProgress } from '@mui/material';
 import { useRouter } from 'next/dist/client/router';
 import { signIn, signOut, useSession } from 'next-auth/client';
 
+/**
+ * 管理画面トップ
+ * @constructor
+ */
 const AdminTop = () => {
   const pageTitle = 'ADMIN';
   const items = [

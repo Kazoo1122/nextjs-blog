@@ -6,9 +6,7 @@ import { BreadCrumbs } from './BreadCrumbs';
 import { useMediaQuery } from '@mui/material';
 import Prism from 'prismjs';
 
-/**
- * メタデータを格納した型 Headコンポーネント内で使用
- */
+// メタデータを格納した型 Headコンポーネント内で使用
 type MetaProps = {
   pageTitle: string;
   pageUrl?: string;
@@ -16,6 +14,10 @@ type MetaProps = {
   children: React.ReactNode;
 };
 
+/**
+ * 全体の共通レイアウト用のコンポーネント
+ * @param props
+ */
 const Layout = (props: MetaProps) => {
   const { pageTitle, pageUrl, pageDescription, children } = props;
   const siteTitle = 'レジ打ちからエンジニアになりました';
@@ -122,6 +124,8 @@ type navProps = {
   isLgSize: boolean;
   isOpen: boolean;
 };
+
+// 上部ナビケーションのコンポーネント スマホ画面であればスライドする
 const Navigation = ({ isLgSize, isOpen }: navProps) => {
   return (
     <nav

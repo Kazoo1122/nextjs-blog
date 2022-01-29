@@ -8,7 +8,7 @@ class MyDocument extends Document {
       <Html lang='ja'>
         <Head>
           {/*
-           * Google Fontsの利用
+           * Google Fonts
            * - Spartan (Regular Medium ExtraBold)
            * - RocknRoll One
            * - Yusei Magic

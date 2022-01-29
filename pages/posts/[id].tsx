@@ -7,16 +7,12 @@ import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
 import { getApi } from '../index';
 
-/**
- * idのみが格納された型 getStaticPathsで使用する
- */
+// idのみが格納された型 getStaticPathsで使用する
 export type PostUrl = {
   id: string;
 };
 
-/**
- * 記事データが全て入った型(idのみ任意)
- */
+// 記事データが全て入った型(idのみ任意)
 export type PostProps = {
   id?: string;
   title: string;
@@ -28,7 +24,7 @@ export type PostProps = {
 };
 
 /**
- * 記事詳細をレンダリングする
+ * 記事詳細をレンダリングするコンポーネント
  */
 const Post = (post: PostProps) => {
   const pageTitle = post.title;

@@ -21,7 +21,7 @@ import styles from '../../../styles/module/pages/admin.module.scss';
 import axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
 import { PostProps, PostUrl } from '../../posts/[id]';
-import { getApi } from '../../index';
+import { getApi, TagProps } from '../../index';
 import { MdDropzone } from '../../../components/MdDropzone';
 import { ImgDropzone } from '../../../components/ImgDropzone';
 import { BsImage } from 'react-icons/bs';
@@ -35,20 +35,20 @@ export type PostValues = {
   is_null_thumbnail: boolean;
 };
 
-export type TagProps = {
-  id: number;
-  tag_name: string;
-};
-
 const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
 const headers = {
   Authorization: TOKEN,
   'Content-Type': 'application/json',
 };
 
+/**
+ * 記事投稿画面のコンポーネント
+ * @param props
+ */
 const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   const { tags } = props;
   const postData = props.postData ?? '';
+
   //クエリ文字列から取得
   const router = useRouter();
   const post_type = router.query.type ?? '';
@@ -91,8 +91,9 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     });
   };
 
+  // タグのチェックボックスが選択されたら記事につけるタグリストを更新する
   const handleCheck = (
-    tag: { tag_name: string; id: number },
+    tag: { tag_name: string; id?: number },
     event: SyntheticEvent<Element, Event>
   ) => {
     let values = getValues('tags') || [];
@@ -105,10 +106,10 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
       newValues = values?.filter((value) => value.tag_name !== tag.tag_name);
     }
     setValue('tags', newValues);
-    console.log(getValues('tags'), 'tags');
     return newValues;
   };
 
+  // ドロップゾーンにマークダウン書式がドロップされたら読み取る
   const onDropText = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -126,6 +127,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     [setValue]
   );
 
+  // ドロップゾーンにサムネ画像がドロップされたら読み取る
   const onDropImg = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
@@ -192,6 +194,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     }, [session]);
   }
 
+  // マークダウンと画像のリセット
   const [isClearText, setClearText] = useState(true);
   const [isClearImg, setClearImg] = useState(true);
   const clearText = () => {
@@ -204,6 +207,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     setClearImg(true);
   };
 
+  // 記事編集時にサムネ画像をなくすかの選択チェックボックス
   const [checked, setChecked] = useState(false);
   const handleChange = (event: { target: HTMLInputElement }) => {
     setChecked(event.target.checked);
@@ -354,10 +358,11 @@ export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
   };
 };
 
+// 過去記事とタグ一覧を用意する
 export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async ({ params }) => {
   const { id } = params as PostUrl;
   let url = process.env.server + `/api/post-detail?params=${id}`;
-  const postData = id === 'new' ? [] : ((await getApi(url)) as PostProps);
+  const postData = id === 'new' ? [] : ((await getApi(url)) as PostProps); // 新規なら空を、編集なら対象記事を返す
   url = process.env.server + `/api/tags-selection`;
   const tags = (await getApi(url)) as TagProps[];
   return {

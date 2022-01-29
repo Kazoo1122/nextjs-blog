@@ -1,6 +1,10 @@
 import styles from '../styles/module/pages/admin.module.scss';
 import { useDropzone } from 'react-dropzone';
 
+/**
+ * 記事投稿画面で使用している画像アップロード用ドロップゾーン
+ * @param props
+ */
 const ImgDropzone = (props: any) => {
   const { onDrop, data, isClear } = props;
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
@@ -8,7 +12,6 @@ const ImgDropzone = (props: any) => {
     accept: 'image/jpeg, image/png',
     maxFiles: 1,
   });
-
   return (
     <div
       {...getRootProps({

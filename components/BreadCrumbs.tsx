@@ -4,16 +4,21 @@ import styles from '../styles/module/components/breadcrumbs.module.scss';
 import Link from 'next/dist/client/link';
 import { useGetBreadCrumbs } from '../context/context';
 
+// パンくずリストの各アイテム
 export type BreadCrumbItem = {
   title: string;
   path?: string | RouterObj;
 };
 
+// 現在地以外はリンクを持つための型
 type RouterObj = {
   pathname: string;
   query: { tag: string };
 };
 
+/**
+ * ぱんくずリストのコンポーネント
+ */
 const BreadCrumbs = () => {
   const items = useGetBreadCrumbs();
   return (

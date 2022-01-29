@@ -12,27 +12,25 @@ import { useRouter } from 'next/dist/client/router';
 import { Button, CircularProgress } from '@mui/material';
 import axios from 'axios';
 
-/**
- * ブログ記事一覧用
- */
-export type BlogGalleryProps = {
-  tags: TagProps[];
-};
-
-type TagProps = {
+export type TagProps = {
+  id?: number;
   tag_name: string;
-  count: number;
+  count?: number;
 };
 
+// APIへGETリクエストを投げる際に使用
 export const getApi = async (url: string) => {
   const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
   return await axios.get(url, { headers: { Authorization: TOKEN } }).then((res) => {
     return res.data ? res.data : [];
   });
 };
+
+// 一回あたりの記事表示件数
 export const COUNT_PER_POSTS = 5;
 
-const Index = (props: BlogGalleryProps) => {
+// トップページのコンポーネント
+const Index = (props: { tags: TagProps[] }) => {
   const router = useRouter();
   const tag = router.query.tag as string;
   const { tags } = props;
@@ -52,30 +50,29 @@ const Index = (props: BlogGalleryProps) => {
     context.setItems(items);
   }, [tag]);
 
+  // データフェッチのためのキーを取得する useSWRInfiniteで使用
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {
     if (previousPageData && !previousPageData.length) return null;
     const offset = pageIndex * COUNT_PER_POSTS;
-    console.log(offset, 'getKeys pageIndex');
     let url = process.env.server + `/api/posts-list?offset=${offset}&limit=${COUNT_PER_POSTS}`;
     url = tag === undefined ? url : url + `&tag=${tag}`;
     return url;
   };
 
+  // 実際にデータフェッチする関数 useSWRInfiniteで使用
   const fetcher = async (url: string) => {
     return await getApi(url);
   };
 
+  // 無限読み込みのための関数
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
-  console.log(data, 'data');
-  console.log(size, 'size');
+
   const loadMorePosts = () => {
-    console.log(size, 'size');
     return setSize(size + 1);
   };
+
   const posts = data ? [].concat(...data) : [];
-  console.log(posts, 'posts');
   const isLoadingInitialData = !data && !error;
-  console.log(isLoadingInitialData, 'isLoadingInitialData');
   const isLoadingMore =
     isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
   const isEmpty = data?.[0]?.length === 0;
@@ -120,10 +117,8 @@ const Index = (props: BlogGalleryProps) => {
   );
 };
 
-/**
- * 値の読み込みを行う
- */
-export const getStaticProps: GetStaticProps<BlogGalleryProps> = async () => {
+// タグ一覧のデータを取得
+export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async () => {
   const url = process.env.server + `/api/tags-list`;
   const tags = await getApi(url);
   return {

@@ -9,8 +9,13 @@ type ArticleProps = {
   articles: PostProps[];
 };
 
+// 本文見出し文字数
 export const CHAR_LIMIT = 128;
 
+/**
+ * 一覧ページのブログ記事コンポーネント
+ * @param props
+ */
 const Articles = (props: ArticleProps) => {
   const { articles } = props;
   const idUrl = '/posts/[id]';
