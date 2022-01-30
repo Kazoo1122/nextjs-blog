@@ -30,11 +30,11 @@ const Articles = (props: ArticleProps) => {
               <a>
                 <div className={styles.thumbnail_area}>
                   <Image
-                    src={path.join(process.env.server as string, post.thumbnail)}
+                    src={process.env.server + post.thumbnail}
                     layout={'fill'}
                     objectFit={'cover'}
                     alt='thumbnail'
-                    unoptimized={true}
+                    priority={true}
                   />
                 </div>
               </a>
