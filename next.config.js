@@ -2,6 +2,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const server = isProd ? 'https://experienced.work' : 'http://localhost:8000';
 
 module.exports = {
+  trailingSlash: true,
   reactStrictMode: true,
   env: {
     server: server,

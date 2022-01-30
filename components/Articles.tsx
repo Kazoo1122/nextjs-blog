@@ -34,7 +34,7 @@ const Articles = (props: ArticleProps) => {
                     layout={'fill'}
                     objectFit={'cover'}
                     alt='thumbnail'
-                    priority={true}
+                    unoptimized={true}
                   />
                 </div>
               </a>
