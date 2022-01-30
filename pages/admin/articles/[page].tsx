@@ -53,14 +53,14 @@ const PostsManagement = (props: PastArticlesProps) => {
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
     context.setItems(items);
-  }, [items]);
+  }, [items, context]);
   const router = useRouter();
   const pageChange = (event: ChangeEvent<unknown>, page: number) => {
     return router.push(`/admin/posts/${page}`);
   };
 
   // 記事編集ページへ移行
-  const editPost = async (id: string) => {
+  const editPost = async (id?: string) => {
     const currentPath = router.asPath.replace('/admin/articles/', '');
     await router.push({
       pathname: `/admin/post/${id}`,
@@ -68,7 +68,7 @@ const PostsManagement = (props: PastArticlesProps) => {
     });
   };
 
-  // 記事削除用　削除確認ダイアログを表示する
+  // 記事削除用 削除確認ダイアログを表示する
   const [deletedPost, setDeletedPost] = useState({} as PostProps);
   const [isDeleting, setIsDeleting] = useState(false);
   const [open, setOpen] = useState(false);
@@ -78,7 +78,7 @@ const PostsManagement = (props: PastArticlesProps) => {
   };
   const handleClose = () => setOpen(false);
   const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute' as const,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -164,7 +164,7 @@ const PostsManagement = (props: PastArticlesProps) => {
                   variant='contained'
                   className='button'
                   color='success'
-                  onClick={() => editPost(post.id!)}
+                  onClick={() => editPost(post.id)}
                 >
                   Edit
                 </Button>
@@ -172,7 +172,7 @@ const PostsManagement = (props: PastArticlesProps) => {
                   variant='contained'
                   className='button'
                   color='error'
-                  onClick={() => handleOpen(post!)}
+                  onClick={() => handleOpen(post)}
                 >
                   Delete
                 </Button>

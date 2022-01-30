@@ -160,7 +160,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     } else {
       setPageTitle(`Posting ${result}`);
     }
-  }, [session, isSubmitted]);
+  }, [session, isSubmitted, post_type, result]);
 
   const [items, setItems] = useState([{ title: '', path: '' }]);
   useEffect(() => {
@@ -172,27 +172,25 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
       titles.push({ title: 'PAST POSTS', path: '/admin/articles/' + before_path });
     titles.push({ title: pageTitle, path: '' });
     setItems(titles);
-  }, [pageTitle]);
+  }, [pageTitle, before_path, post_type]);
 
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
     context.setItems(items);
-  }, [items]);
+  }, [items, context]);
 
-  if (post_type === 'EDIT' && postData.attachedTag) {
-    //過去記事の編集の場合、以前選択したタグを選択状態にしておく
-    const attachedTag = tags.filter((tag) => postData.attachedTag.includes(tag.tag_name));
-    useEffect(() => {
-      if (process.browser) {
-        attachedTag.map(async (tag) => {
-          const selector = `label[id='${tag.tag_name}'] > span > input[type='checkbox']`;
-          const element = document.querySelector<HTMLInputElement>(selector);
-          if (element === null) return;
-          if (!element.checked) element.click();
-        });
-      }
-    }, [session]);
-  }
+  useEffect(() => {
+    if (process.browser && post_type === 'EDIT' && postData.attachedTag) {
+      //過去記事の編集の場合、以前選択したタグを選択状態にしておく
+      const attachedTag = tags.filter((tag) => postData.attachedTag.includes(tag.tag_name));
+      attachedTag.map(async (tag) => {
+        const selector = `label[id='${tag.tag_name}'] > span > input[type='checkbox']`;
+        const element = document.querySelector<HTMLInputElement>(selector);
+        if (element === null) return;
+        if (!element.checked) element.click();
+      });
+    }
+  }, [session, postData.attachedTag, post_type, tags]);
 
   // マークダウンと画像のリセット
   const [isClearText, setClearText] = useState(true);

@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next';
 import useSWRInfinite from 'swr/infinite';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
 import { PostProps } from './posts/[id]';
@@ -36,7 +36,7 @@ const Index = (props: { tags: TagProps[] }) => {
   const { tags } = props;
 
   const pageTitle = tag === undefined ? 'BLOG' : 'Tags:' + tag;
-  const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
+  const items: BreadCrumbItem[] = useMemo(() => [{ title: 'HOME', path: '/' }], []);
   if (tag !== undefined) {
     items.push({
       title: pageTitle,
@@ -48,7 +48,7 @@ const Index = (props: { tags: TagProps[] }) => {
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
     context.setItems(items);
-  }, [tag]);
+  }, [tag, context, items]);
 
   // データフェッチのためのキーを取得する useSWRInfiniteで使用
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {

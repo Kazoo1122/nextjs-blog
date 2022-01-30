@@ -48,7 +48,7 @@ const Contact = () => {
         result === 'success' ? 'Thank you for your message!' : 'Sorry, sending message failed.'
       );
     }
-  }, [isSubmitted]);
+  }, [isSubmitted, result]);
 
   const items = [
     { title: 'HOME', path: '/' },
