@@ -98,7 +98,7 @@
     transition-property: height;
     transition-duration: 0.8s;
     transition-delay: 0s;
-    transition-timing-function: ease-out;
+    transition-timing-function: ease-in;
 
     ul {
       display: block;
@@ -149,7 +149,7 @@
     padding: 0 24px;
   }
   .title_text {
-    font-size: 18px;
+    font-size: 16px;
     width: 400px;
   }
   //サブタイトルテキスト
