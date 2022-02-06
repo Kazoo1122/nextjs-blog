@@ -24,6 +24,8 @@ const Profile = () => {
           <div className={styles.container_box}>
             <h3 className={styles.my_name_text}>
               <span>大平 和正 - Kazumasa Ohira -</span>
+            </h3>
+            <div className={styles.account_area}>
               <Link href={'https://github.com/Kazoo1122/'}>
                 <a>
                   <FaGithub size={36} className={styles.profile_icon} />
@@ -34,7 +36,7 @@ const Profile = () => {
                   <FaTwitter size={36} color={'#00acee'} className={styles.profile_icon} />
                 </a>
               </Link>
-            </h3>
+            </div>
             <p>
               30代の遅咲き（？）エンジニア。
               <br />

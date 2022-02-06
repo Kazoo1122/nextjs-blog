@@ -3,15 +3,17 @@
 .profile_wrapper {
   .my_name_text {
     @include import.font-size(lg);
-    margin-bottom: 48px;
-    line-height: 32px;
+    margin-bottom: 12px;
     span {
       @include import.marker();
     }
-    .profile_icon {
-      margin-left: 32px;
-      line-height: 32px;
-    }
+  }
+  .account_area{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    column-gap: 16px;
+    margin-bottom: 24px;
   }
   h4 {
     font: 800 36px Spartan;
