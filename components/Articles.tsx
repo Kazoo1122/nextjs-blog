@@ -3,7 +3,6 @@ import Image from 'next/image';
 import styles from '../styles/module/components/articles.module.scss';
 import { PostProps } from '../pages/posts/[id]';
 import { useMediaQuery } from '@mui/material';
-import path from 'path';
 
 type ArticleProps = {
   articles: PostProps[];

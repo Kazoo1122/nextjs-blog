@@ -3,6 +3,8 @@ import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/profile.module.scss';
 import { GiGuitarHead } from 'react-icons/gi';
 import { BiRun, BiBookOpen } from 'react-icons/bi';
+import { FaGithub, FaTwitter } from 'react-icons/fa';
+import Link from 'next/link';
 
 /**
  * プロフィールページのコンポーネント
@@ -22,6 +24,16 @@ const Profile = () => {
           <div className={styles.container_box}>
             <h3 className={styles.my_name_text}>
               <span>大平 和正 - Kazumasa Ohira -</span>
+              <Link href={'https://github.com/Kazoo1122/'}>
+                <a>
+                  <FaGithub size={36} className={styles.profile_icon} />
+                </a>
+              </Link>
+              <Link href={'https://twitter.com/kazoo_1122'}>
+                <a>
+                  <FaTwitter size={36} color={'#00acee'} className={styles.profile_icon} />
+                </a>
+              </Link>
             </h3>
             <p>
               30代の遅咲き（？）エンジニア。

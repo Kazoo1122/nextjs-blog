@@ -4,8 +4,13 @@
   .my_name_text {
     @include import.font-size(lg);
     margin-bottom: 48px;
+    line-height: 32px;
     span {
       @include import.marker();
+    }
+    .profile_icon {
+      margin-left: 32px;
+      line-height: 32px;
     }
   }
   h4 {
@@ -22,7 +27,7 @@
   .container_box {
     padding-top: 48px;
     padding-bottom: 48px;
-    width: 70vw;
+    width: 100%;
     border-top: import.$menu-color solid 1px;
   }
   p {
@@ -34,6 +39,7 @@
     display: flex;
     align-items: center;
   }
+
 
   .hobby_icon {
     margin-right: 18px;

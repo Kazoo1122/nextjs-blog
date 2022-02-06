@@ -11,6 +11,7 @@ import { BreadCrumbItem } from '../components/BreadCrumbs';
 import { useRouter } from 'next/dist/client/router';
 import { Button, CircularProgress } from '@mui/material';
 import axios from 'axios';
+import { useStyles } from './_app';
 
 export type TagProps = {
   id?: number;
@@ -31,6 +32,7 @@ export const COUNT_PER_POSTS = 5;
 
 // トップページのコンポーネント
 const Index = (props: { tags: TagProps[] }) => {
+  const classes = useStyles();
   const router = useRouter();
   const tag = router.query.tag as string;
   const { tags } = props;
@@ -77,6 +79,7 @@ const Index = (props: { tags: TagProps[] }) => {
     isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < COUNT_PER_POSTS);
+
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
@@ -91,9 +94,17 @@ const Index = (props: { tags: TagProps[] }) => {
             <div className={styles.button_area}>
               <Button
                 variant='contained'
-                className='button'
+                className={classes.button}
                 onClick={loadMorePosts}
                 disabled={isLoadingMore}
+                sx={{
+                  marginTop: '32px',
+                  fontWeight: '800',
+                  fontSize: '16px',
+                  fontFamily: 'Spartan, sans-serif',
+                  borderRadius: '18px',
+                  lineHeight: '250%',
+                }}
               >
                 <div className={styles.load_more}>
                   {!isLoadingMore ? (

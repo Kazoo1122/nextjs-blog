@@ -1,4 +1,23 @@
 @use "../../config/import";
+
+.contact_list {
+  margin-bottom: 48px;
+  li {
+    margin-bottom: 18px;
+    .contact_icon{
+      line-height: 32px;
+      margin-right: 12px;
+    }
+    span {
+      line-height: 32px;
+      color: import.$menu-color;
+      &:hover{
+        color: import.$strong-color;
+      }
+    }
+  }
+}
+
 .contact_form {
   padding-top: 64px;
   display: flex;
@@ -12,10 +31,6 @@
 
 .error{
   color: import.$error-color;
-}
-
-.submit_button{
-  margin-top:32px;
 }
 
 /*breakpoint============================================================*/

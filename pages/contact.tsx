@@ -4,9 +4,12 @@ import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/materi
 import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
+import { FaGithub, FaTwitter } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useStyles } from './_app';
 
 export type FormValues = {
   name: string;
@@ -18,6 +21,7 @@ export type FormValues = {
  * お問い合わせ用フォームのコンポーネント
  */
 const Contact = () => {
+  const classes = useStyles();
   const {
     register,
     handleSubmit,
@@ -55,9 +59,36 @@ const Contact = () => {
     { title: pageTitle, path: '/contact' },
   ];
   useSetBreadCrumbs(items);
+
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
+      <ul className={styles.contact_list}>
+        <li>
+          <Link href={'mailto:kazoo1122@experienced.work'}>
+            <a>
+              <MdEmail size={36} color={'#4d6cdb'} className={styles.contact_icon} />
+              <span>Email&nbsp;(kazoo1122@experienced.work)</span>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'https://github.com/Kazoo1122/'}>
+            <a>
+              <FaGithub size={36} className={styles.contact_icon} />
+              <span>Git Hub&nbsp;(Kazoo1122)</span>
+            </a>
+          </Link>
+        </li>
+        <li>
+          <Link href={'https://twitter.com/kazoo_1122'}>
+            <a>
+              <FaTwitter size={36} color={'#00acee'} className={styles.contact_icon} />
+              <span>Twitter&nbsp;(@kazoo_1122)</span>
+            </a>
+          </Link>
+        </li>
+      </ul>
       {!isSubmitted ? (
         <Box component='form' className={styles.contact_form} onSubmit={handleSubmit(onSubmit)}>
           <FormControl
@@ -112,12 +143,20 @@ const Contact = () => {
             {!('message' in errors) ? <br /> : ''}
           </FormControl>
           <Button
-            color='info'
+            className={classes.button}
+            color='primary'
             size='large'
-            variant='outlined'
+            variant='contained'
             type='submit'
             disabled={!isValid || isSubmitting}
-            className={styles.submit_button}
+            sx={{
+              marginTop: '32px',
+              fontWeight: '800',
+              fontSize: '16px',
+              fontFamily: 'Spartan, sans-serif',
+              borderRadius: '18px',
+              lineHeight: '250%',
+            }}
           >
             SEND
           </Button>
@@ -129,11 +168,8 @@ const Contact = () => {
               ? 'メッセージありがとうございます！'
               : '申し訳ありません。送信失敗したためメッセージが届いていません。' +
                 '\n' +
-                '恐れ入りますが下記までメールをお願いします。'}
+                '恐れ入りますがメールやTwitterなど別の手段でのご連絡をお願いします。'}
           </p>
-          <Link href='mailto:kazoo1122@experienced.work'>
-            <a className={styles.mail}>{result === 'failed' ? 'kazoo1122@experienced.work' : ''}</a>
-          </Link>
         </>
       )}
     </Layout>
