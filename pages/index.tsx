@@ -86,11 +86,7 @@ const Index = (props: { tags: TagProps[] }) => {
       <div className={styles.index_wrapper}>
         <div className='contents_area'>
           <Articles articles={posts} />
-          {isReachingEnd ? (
-            <>
-              <div className={styles.no_more}>no more post.</div>
-            </>
-          ) : (
+          {!isReachingEnd ? (
             <div className={styles.button_area}>
               <Button
                 variant='contained'
@@ -118,6 +114,8 @@ const Index = (props: { tags: TagProps[] }) => {
                 </div>
               </Button>
             </div>
+          ) : (
+            ''
           )}
         </div>
         <div className='side_area'>
