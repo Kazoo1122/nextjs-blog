@@ -80,9 +80,9 @@ const Profile = (props: { tags: TagProps[] }) => {
             </ol>
           </div>
         </div>
-      </div>
-      <div className='side_area'>
-        <TagList tags={tags} />
+        <div className='side_area'>
+          <TagList tags={tags} />
+        </div>
       </div>
     </Layout>
   );
