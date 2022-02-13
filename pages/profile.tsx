@@ -41,7 +41,7 @@ const Profile = (props: { tags: TagProps[] }) => {
                 </a>
               </Link>
             </div>
-            <p>
+            <p className={styles.profile_content}>
               30代の遅咲き（？）エンジニア。
               <br />
               ものぐさな性分から最近になって勉強にハマる。
@@ -55,25 +55,25 @@ const Profile = (props: { tags: TagProps[] }) => {
           <div className={styles.container_box}>
             <h4 className={styles.profile_title}>SKILL</h4>
             <h5 className={styles.profile_subtitle}>LANGUAGES</h5>
-            <p>
+            <p className={styles.profile_content}>
               JavaScript, TypeScript, Google Apps Script, PHP, <br />
               Python, SQL(MySQL), VBA(Excel, Access), VBS
             </p>
             <h5 className={styles.profile_subtitle}>OTHERS</h5>
-            <p>React, Next.js, RPA</p>
+            <p className={styles.profile_content}>React, Next.js, RPA</p>
           </div>
           <div className={styles.container_box}>
             <h4 className={styles.profile_title}>FAVORITE</h4>
             <ol>
-              <li>
+              <li className={styles.profile_list_item}>
                 <GiGuitarHead size={30} className={styles.hobby_icon} />
                 Guitar
               </li>
-              <li>
+              <li className={styles.profile_list_item}>
                 <BiRun size={30} className={styles.hobby_icon} />
                 Running
               </li>
-              <li>
+              <li className={styles.profile_list_item}>
                 <BiBookOpen size={30} className={styles.hobby_icon} />
                 Study(Mathematics)
               </li>
