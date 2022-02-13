@@ -5,7 +5,9 @@ import styles from '../../styles/module/pages/post.module.scss';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CircularProgress } from '@mui/material';
-import { getApi } from '../index';
+import { getApi, TagProps } from '../index';
+import { TagList } from '../../components/TagList';
+import React from 'react';
 
 // idのみが格納された型 getStaticPathsで使用する
 export type PostUrl = {
@@ -21,6 +23,7 @@ export type PostProps = {
   created_at: string;
   updated_at: string;
   attachedTag: Array<string>;
+  tags: TagProps[];
 };
 
 /**
@@ -74,6 +77,9 @@ const Post = (post: PostProps) => {
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </article>
         </div>
+        <div className='side_area'>
+          <TagList tags={post.tags} />
+        </div>
       </div>
       <div className='bottom_breadcrumbs_area' />
     </Layout>
@@ -87,11 +93,14 @@ const Post = (post: PostProps) => {
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
-  const url = process.env.server + `/api/post-detail?params=${id}`;
+  let url = process.env.server + `/api/post-detail?params=${id}`;
   const post = await getApi(url);
+  url = process.env.server + `/api/tags-list`;
+  const tags = await getApi(url);
   return {
     props: {
       ...post,
+      tags,
     },
   };
 };
