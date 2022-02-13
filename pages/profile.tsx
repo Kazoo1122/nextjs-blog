@@ -5,21 +5,25 @@ import { GiGuitarHead } from 'react-icons/gi';
 import { BiRun, BiBookOpen } from 'react-icons/bi';
 import { FaGithub, FaTwitter } from 'react-icons/fa';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
+import { getApi, TagProps } from './index';
+import { TagList } from '../components/TagList';
 
 /**
  * プロフィールページのコンポーネント
  */
-const Profile = () => {
+const Profile = (props: { tags: TagProps[] }) => {
   const pageTitle = 'PROFILE';
   const items = [
     { title: 'HOME', path: '/' },
     { title: pageTitle, path: '/profile' },
   ];
+  const { tags } = props;
   useSetBreadCrumbs(items);
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
-      <div className={styles.profile_wrapper}>
+      <div className='wrapper'>
         <div className='contents_area'>
           <div className={styles.container_box}>
             <h3 className={styles.my_name_text}>
@@ -49,17 +53,17 @@ const Profile = () => {
           </div>
 
           <div className={styles.container_box}>
-            <h4 className={styles.skill_title}>SKILL</h4>
-            <h5>LANGUAGES</h5>
+            <h4 className={styles.profile_title}>SKILL</h4>
+            <h5 className={styles.profile_subtitle}>LANGUAGES</h5>
             <p>
               JavaScript, TypeScript, Google Apps Script, PHP, <br />
               Python, SQL(MySQL), VBA(Excel, Access), VBS
             </p>
-            <h5>OTHERS</h5>
+            <h5 className={styles.profile_subtitle}>OTHERS</h5>
             <p>React, Next.js, RPA</p>
           </div>
           <div className={styles.container_box}>
-            <h4>FAVORITE</h4>
+            <h4 className={styles.profile_title}>FAVORITE</h4>
             <ol>
               <li>
                 <GiGuitarHead size={30} className={styles.hobby_icon} />
@@ -77,7 +81,22 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <div className='side_area'>
+        <TagList tags={tags} />
+      </div>
     </Layout>
   );
 };
+
+// タグ一覧のデータを取得
+export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async () => {
+  const url = process.env.server + `/api/tags-list`;
+  const tags = await getApi(url);
+  return {
+    props: {
+      tags: JSON.parse(JSON.stringify(tags)),
+    },
+  };
+};
+
 export default Profile;

@@ -1,51 +1,49 @@
 @use "../../config/import";
 
-.profile_wrapper {
-  .my_name_text {
-    @include import.font-size(lg);
-    margin-bottom: 12px;
-    span {
-      @include import.marker();
-    }
+.my_name_text {
+  @include import.font-size(lg);
+  margin-bottom: 12px;
+  span {
+    @include import.marker();
   }
-  .account_area{
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    column-gap: 16px;
-    margin-bottom: 24px;
-  }
-  h4 {
-    font: 800 36px Spartan;
-    color: import.$strong-color;
-    margin-bottom: 64px;
-  }
-  h5 {
-    font: 800 24px Spartan;
-    color: import.$strong-color;
-    margin-bottom: 12px;
-  }
+}
+.account_area{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  column-gap: 16px;
+  margin-bottom: 24px;
+}
+.profile_title {
+  font: 800 36px Spartan;
+  color: import.$strong-color;
+  margin-bottom: 64px;
+}
+.profile_subtitle {
+  font: 800 24px Spartan;
+  color: import.$strong-color;
+  margin-bottom: 12px;
+}
 
-  .container_box {
-    padding-top: 48px;
-    padding-bottom: 48px;
-    width: 100%;
-    border-top: import.$menu-color solid 1px;
-  }
-  p {
-    line-height: 250%;
-    margin-bottom: 48px;
-  }
-  li {
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-  }
+.container_box {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  width: 100%;
+  border-top: import.$menu-color solid 1px;
+}
+p {
+  line-height: 250%;
+  margin-bottom: 48px;
+}
+li {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+}
 
 
-  .hobby_icon {
-    margin-right: 18px;
-  }
+.hobby_icon {
+  margin-right: 18px;
 }
 /*breakpoint============================================================*/
 //~639px スマホ(小〜中)

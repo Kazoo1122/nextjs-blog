@@ -51,7 +51,7 @@ const Post = (post: PostProps) => {
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
-      <div className={styles.post_wrapper}>
+      <div className='wrapper'>
         <div className='contents_area'>
           <div className={styles.attribute_area}>
             <div className={styles.tags_area}>

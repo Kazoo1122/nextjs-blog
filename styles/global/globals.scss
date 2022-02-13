@@ -16,6 +16,13 @@ body {
 
 }
 
+// メインコンテンツ＋サイドメニューのラッパー
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
 //各ページのタグ設定
 .tags {
   text-align: center;

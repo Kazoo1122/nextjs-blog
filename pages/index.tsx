@@ -83,7 +83,7 @@ const Index = (props: { tags: TagProps[] }) => {
   return (
     <Layout pageTitle={pageTitle}>
       <h2 className='page_title'>{pageTitle}</h2>
-      <div className={styles.index_wrapper}>
+      <div className='wrapper'>
         <div className='contents_area'>
           <Articles articles={posts} />
           {!isReachingEnd ? (
