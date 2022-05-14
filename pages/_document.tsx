@@ -29,7 +29,7 @@ class MyDocument extends Document {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              
+
               gtag('config', '${GA_TRACKING_ID}', {
                 page_path: window.location.pathname,
               });
@@ -37,6 +37,7 @@ class MyDocument extends Document {
               }}
             />
           )}
+          <link rel='apple-touch-icon' sizes='180x180' href='/images/apple_touch_icon.png' />
         </Head>
         <body>
           <Main />

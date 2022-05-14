@@ -1,7 +1,6 @@
 import { Layout } from '../components/Layout';
 import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/profile.module.scss';
-import { GiGuitarHead } from 'react-icons/gi';
 import { BiRun, BiBookOpen } from 'react-icons/bi';
 import { FaGithub, FaTwitter } from 'react-icons/fa';
 import Link from 'next/link';
