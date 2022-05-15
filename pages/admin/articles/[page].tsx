@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetServerSideProps } from 'next';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import { Box, Button, CircularProgress } from '@mui/material';
 import { Layout } from '../../../components/Layout';
@@ -231,7 +231,7 @@ type PageNumProps = {
 };
 
 // 記事一覧とページネーションで使用する値を返す
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { page } = params as PageNumProps;
   const pageNumber = parseInt(page, 10);
   const end = COUNT_PER_PAGE * pageNumber;
@@ -247,7 +247,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getPaths: GetStaticPaths = async () => {
   const url = process.env.server + `/api/post-ids`;
   const posts = await getApi(url);
   const pages = range(Math.ceil(posts.length / COUNT_PER_PAGE));
