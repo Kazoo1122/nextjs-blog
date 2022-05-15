@@ -136,6 +136,10 @@
 /*breakpoint============================================================*/
 //640px~ スマホ(大)orタブレット(小)
 @include import.media-breakpoint(sm) {
+  //メインのコンテンツを表示するエリア(childrenが格納されるところ)
+  .main_area {
+    margin: 32px 24px;
+  }
 }
 
 /*breakpoint============================================================*/
@@ -164,10 +168,6 @@
   .dot_background_image {
     height: 196px;
     opacity: 0.9;
-  }
-  //メインのコンテンツを表示するエリア(childrenが格納されるところ)
-  .main_area {
-    margin: 32px 24px;
   }
 
   .slide_menu_area {
