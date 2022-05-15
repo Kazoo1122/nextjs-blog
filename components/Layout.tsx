@@ -5,6 +5,7 @@ import styles from '../styles/module/components/layout.module.scss';
 import { BreadCrumbs } from './BreadCrumbs';
 import { useMediaQuery } from '@mui/material';
 import Prism from 'prismjs';
+import { AdSense } from './AdSense';
 
 // メタデータを格納した型 Headコンポーネント内で使用
 type MetaProps = {
@@ -84,6 +85,7 @@ const Layout = (props: MetaProps) => {
             {isLgSize ? (
               <Navigation isLgSize={isLgSize} isOpen={isOpen} />
             ) : (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 className={styles.hamburger_btn}
                 src='/images/hamburger.png'
@@ -96,6 +98,7 @@ const Layout = (props: MetaProps) => {
             )}
           </header>
           {isLgSize ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               className={styles.dot_background_image}
               src='/images/dot_background_wh.png'
@@ -105,9 +108,11 @@ const Layout = (props: MetaProps) => {
             <Navigation isLgSize={isLgSize} isOpen={isOpen} />
           )}
           <main className={styles.main_area}>
+            <AdSense />
             <BreadCrumbs />
             {children}
             <BreadCrumbs />
+            <AdSense />
           </main>
           <footer className={styles.footer_area}>
             <Link href='/'>

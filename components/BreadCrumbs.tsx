@@ -26,6 +26,7 @@ const BreadCrumbs = () => {
       <li className={styles.breadcrumbs_item}>
         <IoHomeSharp aria-hidden='true' className={styles.home_icon} />
       </li>
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any*/}
       {items.map(({ title, path }: any, index: number) => (
         <li className={styles.breadcrumbs_item} key={index}>
           {items.length - 1 !== index ? (

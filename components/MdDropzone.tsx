@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
  * 記事投稿画面で使用しているマークダウン書式アップロード用ドロップゾーン
  * @param props
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MdDropzone = (props: any) => {
   const { onDrop, isClear } = props;
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({

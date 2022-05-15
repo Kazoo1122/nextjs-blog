@@ -1,13 +1,14 @@
 import { GetStaticProps } from 'next';
 import useSWRInfinite from 'swr/infinite';
 import React, { useContext, useEffect, useMemo } from 'react';
+import styles from '../styles/module/pages/index.module.scss';
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
-import { PostProps } from './posts/[id]';
-import styles from '../styles/module/pages/index.module.scss';
 import { TagList } from '../components/TagList';
-import { BreadCrumbContext } from '../context/context';
+import { AdSense } from '../components/AdSense';
 import { BreadCrumbItem } from '../components/BreadCrumbs';
+import { BreadCrumbContext } from '../context/context';
+import { PostProps } from './posts/[id]';
 import { useRouter } from 'next/dist/client/router';
 import { Button, CircularProgress } from '@mui/material';
 import axios from 'axios';
@@ -120,6 +121,7 @@ const Index = (props: { tags: TagProps[] }) => {
         </div>
         <div className='side_area'>
           <TagList tags={tags} />
+          <AdSense />
         </div>
       </div>
     </Layout>
