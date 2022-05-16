@@ -121,7 +121,6 @@ const Index = (props: { tags: TagProps[] }) => {
         </div>
         <div className='side_area'>
           <TagList tags={tags} />
-          <AdSense />
         </div>
       </div>
     </Layout>
