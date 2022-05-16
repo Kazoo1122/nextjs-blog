@@ -5,7 +5,6 @@ import styles from '../styles/module/pages/index.module.scss';
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
 import { TagList } from '../components/TagList';
-import { AdSense } from '../components/AdSense';
 import { BreadCrumbItem } from '../components/BreadCrumbs';
 import { BreadCrumbContext } from '../context/context';
 import { PostProps } from './posts/[id]';

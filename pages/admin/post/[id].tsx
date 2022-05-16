@@ -270,7 +270,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
                 name='tags'
                 control={control}
                 render={({ field }) => (
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                     {tags.map((tag, i) => (
                       <FormControlLabel
                         {...field}
