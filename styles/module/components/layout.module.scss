@@ -97,7 +97,7 @@
     top: 80px;
     transition-property: all;
     transition-duration: 1.2s;
-    transition-timing-function: ease-out;
+    transition-timing-function: ease;
 
     ul {
       display: block;
@@ -128,7 +128,7 @@
   .open {
     height: 100%;
     transition-property: all;
-    transition-duration: 1.2s;
+    transition-duration: 0.6s;
     transition-timing-function: ease-out;
   }
   //メインのコンテンツを表示するエリア(childrenが格納されるところ)
