@@ -12,14 +12,14 @@ export const BreadCrumbContext = createContext({} as BreadCrumbContextType);
 
 // セッターのカスタムフック
 export const useSetBreadCrumbs = (items: BreadCrumbItem[]) => {
-  const flagRef = useRef(false);
+  const flagRef = useRef(true);
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
     if (flagRef.current) context.setItems(items);
     return () => {
-      flagRef.current = true;
+      flagRef.current = false;
     };
-  }, [context, items]);
+  }, []);
 };
 
 // ゲッターのカスタムフック
