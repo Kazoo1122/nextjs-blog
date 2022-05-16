@@ -108,11 +108,11 @@ const Layout = (props: MetaProps) => {
             <Navigation isLgSize={isLgSize} isOpen={isOpen} />
           )}
           <main className={styles.main_area}>
-            <AdSense />
             <BreadCrumbs />
+            <AdSense />
             {children}
-            <BreadCrumbs />
             <AdSense />
+            <BreadCrumbs />
           </main>
           <footer className={styles.footer_area}>
             <Link href='/'>
