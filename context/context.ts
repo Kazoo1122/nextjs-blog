@@ -19,7 +19,7 @@ export const useSetBreadCrumbs = (items: BreadCrumbItem[]) => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [context, items]);
 };
 
 // ゲッターのカスタムフック
