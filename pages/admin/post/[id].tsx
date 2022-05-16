@@ -83,6 +83,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
     const url = process.env.server + `/api/send-post?type=${post_type}&id=${post_id}`;
     const body = JSON.stringify(data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await axios.post(url, body, { headers: headers }).then(async (res: any) => {
       const result = res.status === 201 ? 'success' : 'failed';
       const lastID = res.data.id;
@@ -269,7 +270,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
                 name='tags'
                 control={control}
                 render={({ field }) => (
-                  <>
+                  <div style={{ display: 'flex' }}>
                     {tags.map((tag, i) => (
                       <FormControlLabel
                         {...field}
@@ -280,7 +281,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
                         control={<Checkbox />}
                       />
                     ))}
-                  </>
+                  </div>
                 )}
               />
             </FormGroup>

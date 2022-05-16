@@ -14,7 +14,6 @@ import { BreadCrumbContext } from '../../../context/context';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
-import path from 'path';
 
 type PastArticlesProps = {
   posts: PostProps[];
