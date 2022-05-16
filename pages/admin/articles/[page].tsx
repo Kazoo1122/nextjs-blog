@@ -127,10 +127,11 @@ const PostsManagement = (props: PastArticlesProps) => {
             <article key={post.id} className={styles.articles_area}>
               <div className={styles.thumbnail_area}>
                 <Image
-                  src={path.join(process.env.server as string, post.thumbnail)}
+                  src={process.env.server + post.thumbnail}
                   layout={'fill'}
                   objectFit={'cover'}
                   alt='thumbnail'
+                  priority={true}
                 />
               </div>
               <div className={styles.summary_area}>
