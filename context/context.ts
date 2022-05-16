@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useRef } from 'react';
 import { BreadCrumbItem } from '../components/BreadCrumbs';
 
 // パンくずリストをコンテキストに保存するために用意
@@ -12,12 +12,12 @@ export const BreadCrumbContext = createContext({} as BreadCrumbContextType);
 
 // セッターのカスタムフック
 export const useSetBreadCrumbs = (items: BreadCrumbItem[]) => {
+  const flagRef = useRef(false);
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) context.setItems(items);
+    if (flagRef.current) context.setItems(items);
     return () => {
-      isMounted = false;
+      flagRef.current = true;
     };
   }, [context, items]);
 };
