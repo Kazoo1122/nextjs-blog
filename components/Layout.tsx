@@ -109,7 +109,6 @@ const Layout = (props: MetaProps) => {
           )}
           <main className={styles.main_area}>
             <BreadCrumbs />
-            <AdSense />
             {children}
             <AdSense />
             <BreadCrumbs />
