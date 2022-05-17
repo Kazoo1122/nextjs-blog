@@ -44,7 +44,6 @@ const Index = (props: { tags: TagProps[] }) => {
   useEffect(
     () => {
       const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
-      console.log(tag);
       if (tag !== undefined) {
         items.push({
           title: pageTitle,
