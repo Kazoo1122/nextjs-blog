@@ -21,7 +21,6 @@ type RouterObj = {
  */
 const BreadCrumbs = () => {
   const items = useGetBreadCrumbs();
-  console.log(items);
   return (
     <ol className={styles.breadcrumbs_list}>
       <li className={styles.breadcrumbs_item}>

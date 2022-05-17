@@ -13,13 +13,17 @@ export const BreadCrumbContext = createContext({} as BreadCrumbContextType);
 // セッターのカスタムフック
 export const useSetBreadCrumbs = (items: BreadCrumbItem[]) => {
   const context = useContext(BreadCrumbContext);
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) context.setItems(items);
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  useEffect(
+    () => {
+      let isMounted = true;
+      if (isMounted) context.setItems(items);
+      return () => {
+        isMounted = false;
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 };
 
 // ゲッターのカスタムフック
