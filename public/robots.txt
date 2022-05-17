@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://dev-learning.net
+
+# Sitemaps
+Sitemap: https://dev-learning.net/sitemap.xml
