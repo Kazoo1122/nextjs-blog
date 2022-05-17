@@ -54,7 +54,7 @@ const Index = (props: { tags: TagProps[] }) => {
       context.setItems(items);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [tag]
   );
 
   // データフェッチのためのキーを取得する useSWRInfiniteで使用
