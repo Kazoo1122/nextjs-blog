@@ -38,23 +38,24 @@ const Index = (props: { tags: TagProps[] }) => {
   const { tags } = props;
 
   const pageTitle = tag === undefined ? 'BLOG' : 'Tags:' + tag;
+
+  const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
+  console.log(tag);
+  if (tag !== undefined) {
+    items.push({
+      title: pageTitle,
+      path: { pathname: '/', query: { tag: tag } },
+    });
+  }
   //contextのセッター(useSetBreadCrumbs)はcontext.tsに用意しているが、
   // indexページはtagの値が変更されたら発火するようにしたいため、直接useContextを使用している
   const context = useContext(BreadCrumbContext);
   useEffect(
     () => {
-      const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
-      console.log(tag);
-      if (tag !== undefined) {
-        items.push({
-          title: pageTitle,
-          path: { pathname: '/', query: { tag: tag } },
-        });
-      }
       context.setItems(items);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [tag]
+    []
   );
 
   // データフェッチのためのキーを取得する useSWRInfiniteで使用
