@@ -41,16 +41,20 @@ const Index = (props: { tags: TagProps[] }) => {
   //contextのセッター(useSetBreadCrumbs)はcontext.tsに用意しているが、
   // indexページはtagの値が変更されたら発火するようにしたいため、直接useContextを使用している
   const context = useContext(BreadCrumbContext);
-  useEffect(() => {
-    const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
-    if (tag !== undefined) {
-      items.push({
-        title: pageTitle,
-        path: { pathname: '/', query: { tag: tag } },
-      });
-    }
-    context.setItems(items);
-  }, []);
+  useEffect(
+    () => {
+      const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
+      if (tag !== undefined) {
+        items.push({
+          title: pageTitle,
+          path: { pathname: '/', query: { tag: tag } },
+        });
+      }
+      context.setItems(items);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   // データフェッチのためのキーを取得する useSWRInfiniteで使用
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {
