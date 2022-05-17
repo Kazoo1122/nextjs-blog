@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next';
 import useSWRInfinite from 'swr/infinite';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from '../styles/module/pages/index.module.scss';
 import { Layout } from '../components/Layout';
 import { Articles } from '../components/Articles';
@@ -38,19 +38,19 @@ const Index = (props: { tags: TagProps[] }) => {
   const { tags } = props;
 
   const pageTitle = tag === undefined ? 'BLOG' : 'Tags:' + tag;
-  const items: BreadCrumbItem[] = useMemo(() => [{ title: 'HOME', path: '/' }], []);
-  if (tag !== undefined) {
-    items.push({
-      title: pageTitle,
-      path: { pathname: '/', query: { tag: tag } },
-    });
-  }
   //contextのセッター(useSetBreadCrumbs)はcontext.tsに用意しているが、
   // indexページはtagの値が変更されたら発火するようにしたいため、直接useContextを使用している
   const context = useContext(BreadCrumbContext);
   useEffect(() => {
+    const items: BreadCrumbItem[] = [{ title: 'HOME', path: '/' }];
+    if (tag !== undefined) {
+      items.push({
+        title: pageTitle,
+        path: { pathname: '/', query: { tag: tag } },
+      });
+    }
     context.setItems(items);
-  }, [tag, context, items]);
+  }, [tag, context, pageTitle]);
 
   // データフェッチのためのキーを取得する useSWRInfiniteで使用
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {
