@@ -50,7 +50,7 @@ const Index = (props: { tags: TagProps[] }) => {
       });
     }
     context.setItems(items);
-  }, [tag, context, pageTitle]);
+  }, []);
 
   // データフェッチのためのキーを取得する useSWRInfiniteで使用
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {
