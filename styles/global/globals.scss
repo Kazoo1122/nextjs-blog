@@ -60,8 +60,8 @@ a {
   p {
     font-family: 'Hiragino Maru Gothic ProN W4', sans-serif;
     @include import.font-size(md);
-    line-height: 1.2;
-    margin-bottom: 24px;
+    line-height: 1.6;
+    margin-bottom: 48px !important;
   }
   strong {
     font-family: 'Hiragino Maru Gothic ProN W6', sans-serif;
