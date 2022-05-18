@@ -38,6 +38,11 @@ class MyDocument extends Document {
           <link rel='mask-icon' href='/images/favicon/safari-pinned-tab.svg' color='#5bbad5' />
           <meta name='msapplication-TileColor' content='#da532c' />
           <meta name='theme-color' content='#ffffff' />
+          <script
+            async
+            src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5349483131357615'
+            crossOrigin='anonymous'
+          ></script>
 
           {/* gtag / Google Analyticsの利用*/}
           {GA_TRACKING_ID && (
