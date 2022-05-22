@@ -5,7 +5,7 @@ import { useEffect } from 'react';
  */
 const AdSense = () => {
   useEffect(() => {
-    if (!window) {
+    if (!window.adsbygoogle) {
       return;
     } // SSR 処理中は skip
     window.adsbygoogle = window.adsbygoogle || [];
