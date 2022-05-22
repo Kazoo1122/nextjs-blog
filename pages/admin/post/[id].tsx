@@ -16,7 +16,7 @@ import { BreadCrumbContext } from '../../../context/context';
 import { Layout } from '../../../components/Layout';
 import { AiFillFileMarkdown, AiOutlineWarning } from 'react-icons/ai';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { GetStaticPaths, GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import styles from '../../../styles/module/pages/admin.module.scss';
 import axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
@@ -358,7 +358,7 @@ export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
 };
 
 // 過去記事とタグ一覧を用意する
-export const getServerSideProps: GetServerSideProps<{ tags: TagProps[] }> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async ({ params }) => {
   const { id } = params as PostUrl;
   let url = process.env.server + `/api/post-detail?params=${id}`;
   const postData = id === 'new' ? [] : ((await getApi(url)) as PostProps); // 新規なら空を、編集なら対象記事を返す
