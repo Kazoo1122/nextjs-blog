@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import useSWRInfinite from 'swr/infinite';
 import React, { useContext, useEffect } from 'react';
 import styles from '../styles/module/pages/index.module.scss';
@@ -131,7 +131,7 @@ const Index = (props: { tags: TagProps[] }) => {
 };
 
 // タグ一覧のデータを取得
-export const getServerSideProps: GetServerSideProps<{ tags: TagProps[] }> = async () => {
+export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async () => {
   const url = process.env.server + `/api/tags-list`;
   const tags = await getApi(url);
   return {
