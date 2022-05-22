@@ -5,7 +5,6 @@ import styles from '../styles/module/components/layout.module.scss';
 import { BreadCrumbs } from './BreadCrumbs';
 import { useMediaQuery } from '@mui/material';
 import Prism from 'prismjs';
-import { AdSense } from './AdSense';
 
 // メタデータを格納した型 Headコンポーネント内で使用
 type MetaProps = {
@@ -112,7 +111,6 @@ const Layout = (props: MetaProps) => {
             {children}
             <BreadCrumbs />
           </main>
-          <AdSense />
           <footer className={styles.footer_area}>
             <Link href='/'>
               <a> &copy; 2021 {siteTitle} </a>
