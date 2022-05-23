@@ -82,6 +82,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   const [lastID, setLastID] = useState(0);
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
     const url = process.env.server + `/api/send-post?type=${post_type}&id=${post_id}`;
+    data.title = "'" + data.title + "'";
     const body = JSON.stringify(data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await axios.post(url, body, { headers: headers }).then(async (res: any) => {
