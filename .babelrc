@@ -16,7 +16,8 @@
           "c",
           "cpp",
           "python",
-          "diff"
+          "diff",
+          "bash"
         ],
         "plugins": ["line-numbers", "show-language", "diff-highlight"],
         "theme": "okaidia",
