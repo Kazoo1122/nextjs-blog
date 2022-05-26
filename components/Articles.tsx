@@ -9,7 +9,7 @@ type ArticleProps = {
 };
 
 // 本文見出し文字数
-export const CHAR_LIMIT = 32;
+export const CHAR_LIMIT = 64;
 
 /**
  * 一覧ページのブログ記事コンポーネント
