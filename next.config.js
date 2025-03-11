@@ -1,5 +1,5 @@
 const isProd = process.env.NODE_ENV === 'production';
-const server = isProd ? 'https://experienced.work' : 'http://localhost:8000';
+const server = isProd ? 'https://www.interest-tree.com' : 'http://localhost:6348';
 
 module.exports = {
   trailingSlash: true,
@@ -8,9 +8,9 @@ module.exports = {
     server: server,
   },
   images: {
-    domains: ['experienced.work', 'dev-learning.net', 'localhost'],
+    domains: ['www.interest-tree.com', 'localhost'],
     authorization: {
-      token: process.env.NEXT_PUBLIC_JWT,
+      token: process.env.JWT,
     },
   },
 };

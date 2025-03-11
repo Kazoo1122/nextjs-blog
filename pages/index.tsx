@@ -21,7 +21,7 @@ export type TagProps = {
 
 // APIへGETリクエストを投げる際に使用
 export const getApi = async (url: string) => {
-  const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+  const TOKEN = process.env.JWT as string;
   return await axios.get(url, { headers: { Authorization: TOKEN } }).then((res) => {
     return res.data ? res.data : [];
   });

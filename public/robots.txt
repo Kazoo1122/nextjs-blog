@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://dev-learning.net
+Host: https://www.interest-tree.com
 
 # Sitemaps
-Sitemap: https://dev-learning.net/sitemap.xml
+Sitemap: https://www.interest-tree.com/sitemap.xml

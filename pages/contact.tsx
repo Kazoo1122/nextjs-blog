@@ -34,7 +34,7 @@ const Contact = () => {
   const [result, setResult] = useState('');
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const url = process.env.server + '/api/mail';
-    const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+    const TOKEN = process.env.JWT as string;
     const headers = {
       Authorization: TOKEN,
       'Content-Type': 'application/json',

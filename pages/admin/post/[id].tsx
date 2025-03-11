@@ -35,7 +35,7 @@ export type PostValues = {
   is_null_thumbnail: boolean;
 };
 
-const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+const TOKEN = process.env.JWT as string;
 const headers = {
   Authorization: TOKEN,
   'Content-Type': 'application/json',

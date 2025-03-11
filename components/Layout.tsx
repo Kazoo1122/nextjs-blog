@@ -20,9 +20,9 @@ type MetaProps = {
  */
 const Layout = (props: MetaProps) => {
   const { pageTitle, pageUrl, pageDescription, children } = props;
-  const siteTitle = 'レジ打ちからエンジニアになりました';
+  const siteTitle = 'Interest Tree';
   const defaultDescription =
-    'ショップ店員から色んな経験を経て中途のITエンジニアになった人のブログです';
+    '興味の樹を育てるプログラマのブログ';
   const title = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
   const description = pageDescription
     ? `${pageDescription} | ${defaultDescription}`
@@ -57,7 +57,7 @@ const Layout = (props: MetaProps) => {
         <meta name='description' content={description} />
 
         {/* ogp */}
-        <meta property='og:site_name' content='レジ打ちからエンジニアになりました' />
+        <meta property='og:site_name' content={siteTitle} />
         <meta property='og:url' content={pageUrl} />
         <meta property='og:type' content={ogType} />
         <meta property='og:title' content={title} />
@@ -76,8 +76,8 @@ const Layout = (props: MetaProps) => {
             <div className={styles.title_area}>
               <Link href='/'>
                 <a>
-                  <h1 className={styles.title_text}>レジ打ちからエンジニアになりました</h1>
-                  <p className={styles.subtitle_text}>〜中途エンジニアの開発日誌〜</p>
+                  <h1 className={styles.title_text}>{siteTitle}</h1>
+                  <p className={styles.subtitle_text}>〜{defaultDescription}〜</p>
                 </a>
               </Link>
             </div>
@@ -113,7 +113,7 @@ const Layout = (props: MetaProps) => {
           </main>
           <footer className={styles.footer_area}>
             <Link href='/'>
-              <a> &copy; 2021 {siteTitle} </a>
+              <a> &copy; 2025 {siteTitle} </a>
             </Link>
           </footer>
         </div>

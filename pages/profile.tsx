@@ -26,7 +26,7 @@ const Profile = (props: { tags: TagProps[] }) => {
         <div className='contents_area'>
           <div className={styles.container_box}>
             <h3 className={styles.my_name_text}>
-              <span>大平 和正 - Kazumasa Ohira -</span>
+              <span>Kazumasa Ohira</span>
             </h3>
             <div className={styles.account_area}>
               <Link href={'https://github.com/Kazoo1122/'}>
@@ -41,13 +41,7 @@ const Profile = (props: { tags: TagProps[] }) => {
               </Link>
             </div>
             <p className={styles.profile_content}>
-              30代の遅咲き（？）エンジニア。
-              <br />
-              ものぐさな性分から最近になって勉強にハマる。
-              <br />
-              新卒で小売業界に飛び込むも、紆余曲折を経てエンジニアへ転身。
-              <br />
-              大好きなTVゲームは封印し、スキルアップに勤しむ日々を送る。
+              最近は勉強をサボり気味なプログラマ。趣味はベースを練習中。
             </p>
           </div>
 
@@ -55,26 +49,10 @@ const Profile = (props: { tags: TagProps[] }) => {
             <h4 className={styles.profile_title}>SKILL</h4>
             <h5 className={styles.profile_subtitle}>LANGUAGES</h5>
             <p className={styles.profile_content}>
-              JavaScript, TypeScript, Google Apps Script, PHP, <br />
-              Python, SQL, VBA(Excel, Access), VBS
+              JavaScript, TypeScript, PHP, Python
             </p>
             <h5 className={styles.profile_subtitle}>FRAMEWORKS</h5>
-            <p className={styles.profile_content}>Laravel, React, Next.js</p>
-            <h5 className={styles.profile_subtitle}>OTHERS</h5>
-            <p className={styles.profile_content}>AWS, RPA(Robo-Pat, WinActor), XD, Premiere Pro</p>
-          </div>
-          <div className={styles.container_box}>
-            <h4 className={styles.profile_title}>FAVORITE</h4>
-            <ol>
-              <li className={styles.profile_list_item}>
-                <BiBookOpen size={30} className={styles.hobby_icon} />
-                Study(Mathematics)
-              </li>
-              <li className={styles.profile_list_item}>
-                <BiRun size={30} className={styles.hobby_icon} />
-                Running
-              </li>
-            </ol>
+            <p className={styles.profile_content}>React, Angular, Vue.js, Laravel</p>
           </div>
         </div>
         <div className='side_area'>

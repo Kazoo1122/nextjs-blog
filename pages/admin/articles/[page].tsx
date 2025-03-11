@@ -90,7 +90,7 @@ const PostsManagement = (props: PastArticlesProps) => {
   const deletePost = async () => {
     setIsDeleting(true);
     const url = process.env.server + `/api/delete_post?id=${deletedPost.id}`;
-    const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
+    const TOKEN = process.env.JWT as string;
     const headers = {
       Authorization: TOKEN,
     };
