@@ -48,9 +48,7 @@ const Profile = (props: { tags: TagProps[] }) => {
           <div className={styles.container_box}>
             <h4 className={styles.profile_title}>SKILL</h4>
             <h5 className={styles.profile_subtitle}>LANGUAGES</h5>
-            <p className={styles.profile_content}>
-              JavaScript, TypeScript, PHP, Python
-            </p>
+            <p className={styles.profile_content}>JavaScript, TypeScript, PHP, Python</p>
             <h5 className={styles.profile_subtitle}>FRAMEWORKS</h5>
             <p className={styles.profile_content}>React, Angular, Vue.js, Laravel</p>
           </div>

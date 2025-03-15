@@ -21,8 +21,7 @@ type MetaProps = {
 const Layout = (props: MetaProps) => {
   const { pageTitle, pageUrl, pageDescription, children } = props;
   const siteTitle = 'Interest Tree';
-  const defaultDescription =
-    '興味の樹を育てるプログラマのブログ';
+  const defaultDescription = '興味の樹を育てるプログラマのブログ';
   const title = pageTitle ? `${pageTitle} | ${siteTitle}` : siteTitle;
   const description = pageDescription
     ? `${pageDescription} | ${defaultDescription}`
