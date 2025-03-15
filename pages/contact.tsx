@@ -65,7 +65,7 @@ const Contact = () => {
       <h2 className='page_title'>{pageTitle}</h2>
       <ul className={styles.contact_list}>
         <li>
-          <Link href={'mailto:kazoo1122@experienced.work'}>
+          <Link href={'mailto:kazoo1122@interest-tree.com'}>
             <a>
               <MdEmail size={36} color={'#4d6cdb'} className={styles.contact_icon} />
               <span>Email&nbsp;(kazoo1122@experienced.work)</span>
