@@ -1,5 +1,4 @@
-const isProd = process.env.NODE_ENV === 'production';
-const server = isProd ? 'https://www.interest-tree.com' : 'http://localhost:6348';
+const server = 'http://localhost:6348';
 
 module.exports = {
   trailingSlash: true,
