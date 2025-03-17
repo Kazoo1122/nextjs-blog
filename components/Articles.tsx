@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from '../styles/module/components/articles.module.scss';
 import { PostProps } from '../pages/posts/[id]';
 import { useMediaQuery } from '@mui/material';
@@ -28,10 +27,7 @@ const Articles = (props: ArticleProps) => {
             <Link href={idUrl} as={`/posts/${post.id}`}>
               <a>
                 <div className={styles.thumbnail_area}>
-                  <img
-                    src={post.thumbnail}
-                    alt='thumbnail'
-                  />
+                  <img src={post.thumbnail} alt='thumbnail' />
                 </div>
               </a>
             </Link>
