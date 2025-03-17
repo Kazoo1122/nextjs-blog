@@ -89,7 +89,7 @@ const PostsManagement = (props: PastArticlesProps) => {
   };
   const deletePost = async () => {
     setIsDeleting(true);
-    const url = `${process.env.BACKEND_URL}/blog-api/delete_post?id=${deletedPost.id}`;
+    const url = `/blog-api/delete_post?id=${deletedPost.id}`;
     const TOKEN = process.env.JWT as string;
     const headers = {
       Authorization: TOKEN,
@@ -236,7 +236,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const pageNumber = parseInt(page, 10);
   const end = COUNT_PER_PAGE * pageNumber;
   const start = end - COUNT_PER_PAGE;
-  const url = `${process.env.BACKEND_URL}/blog-api/posts-list?offset=0&limit=0`;
+  const url = `/blog-api/posts-list?offset=0&limit=0`;
   const posts = await getApi(url);
   return {
     props: {

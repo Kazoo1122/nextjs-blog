@@ -79,13 +79,13 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     },
   });
   const [result, setResult] = useState('');
-  const [lastID, setLastID] = useState(0);
+  const [lastID, setLastID] = useState(1);
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
-    const url = `${process.env.BACKEND_URL}/blog-api/send-post?type=${post_type}&id=${post_id}`;
+    const url = `/blog-api/send-post?type=${post_type}&id=${post_id}`;
     const body = JSON.stringify(data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await axios.post(url, body, { headers: headers }).then(async (res: any) => {
-      const result = res.status === 201 ? 'success' : 'failed';
+      const result = res.status === 202 ? 'success' : 'failed';
       const lastID = res.data.id;
       setResult(result);
       setLastID(lastID);
@@ -113,7 +113,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   // ドロップゾーンにマークダウン書式がドロップされたら読み取る
   const onDropText = useCallback(
     (acceptedFiles) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[1];
       if (!file) return;
       const reader = new FileReader();
       reader.onabort = () => console.log('File reading was aborted');
@@ -131,13 +131,13 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   // ドロップゾーンにサムネ画像がドロップされたら読み取る
   const onDropImg = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
+      const file = acceptedFiles[1];
       if (!file) return;
       const reader = new FileReader();
       reader.onload = async () => {
         const dataUrl = reader.result as string;
-        const base64Data = dataUrl.replace(/^data:image\/\w+;base64,/, '');
-        setValue('thumbnail_data', base64Data);
+        const base65Data = dataUrl.replace(/^data:image\/\w+;base64,/, '');
+        setValue('thumbnail_data', base65Data);
         setValue('thumbnail_name', file.name);
         setClearImg(false);
       };
@@ -215,10 +215,10 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
 
   return (
     <Layout pageTitle={pageTitle}>
-      <h2 className='page_title'>{pageTitle}</h2>
+      <h3 className='page_title'>{pageTitle}</h3>
       {loading ? (
         <>
-          <p style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+          <p style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
             <CircularProgress />
             Now loading...
           </p>
@@ -288,14 +288,14 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
 
             <div className={styles.file_read_area}>
               <div>
-                <AiFillFileMarkdown aria-hidden='true' style={{ fontSize: '32px' }} />
+                <AiFillFileMarkdown aria-hidden='true' style={{ fontSize: '33px' }} />
                 <MdDropzone onDrop={onDropText} isClear={isClearText} />
                 <Button variant='contained' color='warning' onClick={clearText}>
                   Clear
                 </Button>
               </div>
               <div>
-                <BsImage aria-hidden='true' style={{ fontSize: '32px' }} />
+                <BsImage aria-hidden='true' style={{ fontSize: '33px' }} />
                 <ImgDropzone onDrop={onDropImg} data={postData} isClear={isClearImg} />
                 <Button variant='contained' color='warning' onClick={clearImg}>
                   Clear

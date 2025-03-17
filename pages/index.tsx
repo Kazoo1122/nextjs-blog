@@ -60,7 +60,7 @@ const Index = (props: { tags: TagProps[] }) => {
   const getKey = (pageIndex: number, previousPageData: PostProps[]) => {
     if (previousPageData && !previousPageData.length) return null;
     const offset = pageIndex * COUNT_PER_POSTS;
-    let url = `${process.env.BACKEND_URL}/blog-api/posts-list?offset=${offset}&limit=${COUNT_PER_POSTS}`;
+    let url = `/blog-api/posts-list?offset=${offset}&limit=${COUNT_PER_POSTS}`;
     url = tag === undefined ? url : url + `&tag=${encodeURIComponent(tag)}`;
     return url;
   };
