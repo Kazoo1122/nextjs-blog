@@ -29,7 +29,7 @@ const Articles = (props: ArticleProps) => {
               <a>
                 <div className={styles.thumbnail_area}>
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${post.thumbnail}`}
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/public/image/${post.thumbnail}`}
                     layout={'fill'}
                     objectFit={'cover'}
                     alt='thumbnail'
