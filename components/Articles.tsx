@@ -28,12 +28,9 @@ const Articles = (props: ArticleProps) => {
             <Link href={idUrl} as={`/posts/${post.id}`}>
               <a>
                 <div className={styles.thumbnail_area}>
-                  <Image
+                  <img
                     src={post.thumbnail}
-                    layout={'fill'}
-                    objectFit={'cover'}
                     alt='thumbnail'
-                    priority={true}
                   />
                 </div>
               </a>
