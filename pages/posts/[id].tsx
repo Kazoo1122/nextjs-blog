@@ -30,7 +30,7 @@ export type PostProps = {
  * 記事詳細をレンダリングするコンポーネント
  */
 const Post = (post: PostProps) => {
-  const pageTitle = post.title.replace("'", '');
+  const pageTitle = post.title ?post.title.replace("'", '') : '';
   const restItems = useGetBreadCrumbs();
   const items = [...restItems, { title: pageTitle, path: `/posts/${post.id}` }];
   useSetBreadCrumbs(items);
