@@ -53,11 +53,12 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   const router = useRouter();
   const post_type = router.query.type ?? '';
   const before_path = router.query.before ?? '';
-  const post_id = router.query.id ?? '';
+  let post_id = '';
 
   let title = '';
   if (post_type === 'EDIT') {
     title = postData.title ?? '';
+    post_id = router.query.id as string ?? '';
   }
 
   const {
