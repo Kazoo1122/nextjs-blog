@@ -4,7 +4,7 @@ module.exports = {
   images: {
     domains: ['www.interest-tree.com', 'localhost'],
     authorization: {
-      token: process.env.JWT,
+      token: process.env.NEXT_PUBLIC_JWT,
     },
   },
 };
