@@ -21,7 +21,7 @@ export type TagProps = {
 
 // APIへGETリクエストを投げる際に使用
 export const getApi = async (url: string) => {
-  const TOKEN = process.env.JWT as string;
+  const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
   return await axios.get(url, { headers: { Authorization: TOKEN } }).then((res) => {
     return res.data ? res.data : [];
   });
@@ -132,7 +132,7 @@ const Index = (props: { tags: TagProps[] }) => {
 
 // タグ一覧のデータを取得
 export const getServerSideProps: GetServerSideProps<{ tags: TagProps[] }> = async () => {
-  const url = `${process.env.BACKEND_URL}/blog-api/tags-list`;
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/tags-list`;
   const tags = await getApi(url);
   return {
     props: {

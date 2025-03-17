@@ -35,7 +35,7 @@ export type PostValues = {
   is_null_thumbnail: boolean;
 };
 
-const TOKEN = process.env.JWT as string;
+const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
 const headers = {
   Authorization: TOKEN,
   'Content-Type': 'application/json',
@@ -346,7 +346,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
 };
 
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const url = `${process.env.BACKEND_URL}/blog-api/post-ids`;
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/post-ids`;
   const posts = await getApi(url);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
@@ -360,9 +360,9 @@ export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
 // 過去記事とタグ一覧を用意する
 export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async ({ params }) => {
   const { id } = params as PostUrl;
-  let url = `${process.env.BACKEND_URL}/blog-api/post-detail?params=${id}`;
+  let url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/post-detail?params=${id}`;
   const postData = id === 'new' ? [] : ((await getApi(url)) as PostProps); // 新規なら空を、編集なら対象記事を返す
-  url = `${process.env.BACKEND_URL}/blog-api/tags-selection`;
+  url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/tags-selection`;
   const tags = (await getApi(url)) as TagProps[];
   return {
     props: {

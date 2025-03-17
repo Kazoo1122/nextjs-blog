@@ -63,7 +63,7 @@ const Profile = (props: { tags: TagProps[] }) => {
 
 // タグ一覧のデータを取得
 export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async () => {
-  const url = `${process.env.BACKEND_URL}/blog-api/tags-list`;
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/tags-list`;
   const tags = await getApi(url);
   return {
     props: {

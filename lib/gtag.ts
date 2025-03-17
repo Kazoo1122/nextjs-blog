@@ -1,4 +1,4 @@
-const GA_TRACKING_ID = process.env.GA_TRACKING_ID as string;
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID as string;
 
 type GaEventProps = {
   action: string;

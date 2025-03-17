@@ -33,8 +33,8 @@ const Contact = () => {
   });
   const [result, setResult] = useState('');
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const url = `${process.env.BACKEND_URL}/blog-api/mail`;
-    const TOKEN = process.env.JWT as string;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/blog-api/mail`;
+    const TOKEN = process.env.NEXT_PUBLIC_JWT as string;
     const headers = {
       Authorization: TOKEN,
       'Content-Type': 'application/json',
