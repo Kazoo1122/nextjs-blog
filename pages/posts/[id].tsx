@@ -93,9 +93,9 @@ const Post = (post: PostProps) => {
  */
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
   const { id } = params as PostUrl; //PostUrlであることを明示しないとTSが判断できないためasを使用
-  let url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/post-detail?params=${id}`;
+  let url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/api/post-detail?params=${id}`;
   const post = await getApi(url);
-  url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/tags-list`;
+  url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/api/tags-list`;
   const tags = await getApi(url);
   return {
     props: {
@@ -110,7 +110,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
  * @returns paths 中身はparams{id}の一覧
  */
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/post-ids`;
+  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/api/post-ids`;
   const posts = await getApi(url);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
