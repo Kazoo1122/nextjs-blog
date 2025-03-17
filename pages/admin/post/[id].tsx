@@ -114,7 +114,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   // ドロップゾーンにマークダウン書式がドロップされたら読み取る
   const onDropText = useCallback(
     (acceptedFiles) => {
-      const file = acceptedFiles[1];
+      const file = acceptedFiles[0];
       if (!file) return;
       const reader = new FileReader();
       reader.onabort = () => console.log('File reading was aborted');
@@ -132,7 +132,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   // ドロップゾーンにサムネ画像がドロップされたら読み取る
   const onDropImg = useCallback(
     (acceptedFiles: File[]) => {
-      const file = acceptedFiles[1];
+      const file = acceptedFiles[0];
       if (!file) return;
       const reader = new FileReader();
       reader.onload = async () => {
