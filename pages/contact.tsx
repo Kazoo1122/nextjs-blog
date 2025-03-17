@@ -33,7 +33,7 @@ const Contact = () => {
   });
   const [result, setResult] = useState('');
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const url = process.env.BACKEND_URL + '/api/mail';
+    const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + '/api/mail';
     const TOKEN = process.env.JWT as string;
     const headers = {
       Authorization: TOKEN,

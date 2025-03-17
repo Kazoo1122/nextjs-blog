@@ -81,7 +81,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
   const [result, setResult] = useState('');
   const [lastID, setLastID] = useState(0);
   const onSubmit: SubmitHandler<PostValues> = async (data) => {
-    const url = process.env.BACKEND_URL + `/api/send-post?type=${post_type}&id=${post_id}`;
+    const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/send-post?type=${post_type}&id=${post_id}`;
     const body = JSON.stringify(data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await axios.post(url, body, { headers: headers }).then(async (res: any) => {
@@ -346,7 +346,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
 };
 
 export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
-  const url = process.env.BACKEND_URL + `/api/post-ids`;
+  const url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/post-ids`;
   const posts = await getApi(url);
   const paths = posts.map((post: PostUrl) => {
     return { params: { id: post.id.toString() } };
@@ -360,9 +360,9 @@ export const getStaticPaths: GetStaticPaths<PostUrl> = async () => {
 // 過去記事とタグ一覧を用意する
 export const getStaticProps: GetStaticProps<{ tags: TagProps[] }> = async ({ params }) => {
   const { id } = params as PostUrl;
-  let url = process.env.BACKEND_URL + `/api/post-detail?params=${id}`;
+  let url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/post-detail?params=${id}`;
   const postData = id === 'new' ? [] : ((await getApi(url)) as PostProps); // 新規なら空を、編集なら対象記事を返す
-  url = process.env.BACKEND_URL + `/api/tags-selection`;
+  url = `${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}` + `/api/tags-selection`;
   const tags = (await getApi(url)) as TagProps[];
   return {
     props: {
