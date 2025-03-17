@@ -6,5 +6,13 @@ module.exports = {
     authorization: {
       token: process.env.NEXT_PUBLIC_JWT,
     },
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.interest-tree.com',
+        port: '6348',
+        search: '',
+      },
+    ],
   },
 };
