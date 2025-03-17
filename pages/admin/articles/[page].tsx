@@ -89,7 +89,7 @@ const PostsManagement = (props: PastArticlesProps) => {
   };
   const deletePost = async () => {
     setIsDeleting(true);
-    const url = `${process.env.BACKEND_URL}/api/delete_post?id=${deletedPost.id}`;
+    const url = `${process.env.BACKEND_URL}/blog-api/delete_post?id=${deletedPost.id}`;
     const TOKEN = process.env.JWT as string;
     const headers = {
       Authorization: TOKEN,
@@ -236,7 +236,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const pageNumber = parseInt(page, 10);
   const end = COUNT_PER_PAGE * pageNumber;
   const start = end - COUNT_PER_PAGE;
-  const url = `${process.env.BACKEND_URL}/api/posts-list?offset=0&limit=0`;
+  const url = `${process.env.BACKEND_URL}/blog-api/posts-list?offset=0&limit=0`;
   const posts = await getApi(url);
   return {
     props: {
@@ -248,7 +248,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 export const getPaths: GetStaticPaths = async () => {
-  const url = `${process.env.BACKEND_URL}/api/post-ids`;
+  const url = `${process.env.BACKEND_URL}/blog-api/post-ids`;
   const posts = await getApi(url);
   const pages = range(Math.ceil(posts.length / COUNT_PER_PAGE));
   const paths = pages.map((page) => ({
