@@ -23,4 +23,4 @@ typescriptを使ってコーディングした初めての個人製作ブログ�
 
 ## 作者
 Kazoo1122  
-Email: [kazoo1122@experience.work](kazoo1122@experience.work)
+Email: [kazoo1122@interest-tree.com](kazoo1122@interest-tree.com)

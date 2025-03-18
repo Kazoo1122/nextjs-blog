@@ -86,7 +86,7 @@ const PostForm = (props: { postData: PostProps; tags: TagProps[] }) => {
     const body = JSON.stringify(data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await axios.post(url, body, { headers: headers }).then(async (res: any) => {
-      const result = res.status === 202 ? 'success' : 'failed';
+      const result = res.status === 201 ? 'success' : 'failed';
       const lastID = res.data.id;
       setResult(result);
       setLastID(lastID);

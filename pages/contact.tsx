@@ -4,7 +4,7 @@ import { Box, Button, FormControl, InputLabel, OutlinedInput } from '@mui/materi
 import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/contact.module.scss';
 import { AiOutlineWarning } from 'react-icons/ai';
-import { FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -68,7 +68,7 @@ const Contact = () => {
           <Link href={'mailto:kazoo1122@interest-tree.com'}>
             <a>
               <MdEmail size={36} color={'#4d6cdb'} className={styles.contact_icon} />
-              <span>Email&nbsp;(kazoo1122@experienced.work)</span>
+              <span>Email&nbsp;(kazoo1122@interest-tree.com)</span>
             </a>
           </Link>
         </li>
@@ -77,14 +77,6 @@ const Contact = () => {
             <a>
               <FaGithub size={36} className={styles.contact_icon} />
               <span>Git Hub&nbsp;(Kazoo1122)</span>
-            </a>
-          </Link>
-        </li>
-        <li>
-          <Link href={'https://twitter.com/kazoo_1122'}>
-            <a>
-              <FaTwitter size={36} color={'#00acee'} className={styles.contact_icon} />
-              <span>Twitter&nbsp;(@kazoo_1122)</span>
             </a>
           </Link>
         </li>
