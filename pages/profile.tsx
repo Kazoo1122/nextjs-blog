@@ -1,8 +1,7 @@
 import { Layout } from '../components/Layout';
 import { useSetBreadCrumbs } from '../context/context';
 import styles from '../styles/module/pages/profile.module.scss';
-import { BiRun, BiBookOpen } from 'react-icons/bi';
-import { FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { getApi, TagProps } from './index';
@@ -34,14 +33,9 @@ const Profile = (props: { tags: TagProps[] }) => {
                   <FaGithub size={36} className={styles.profile_icon} />
                 </a>
               </Link>
-              <Link href={'https://twitter.com/kazoo_1122'}>
-                <a>
-                  <FaTwitter size={36} color={'#00acee'} className={styles.profile_icon} />
-                </a>
-              </Link>
             </div>
             <p className={styles.profile_content}>
-              最近は勉強をサボり気味なプログラマ。趣味はベースを練習中。
+              最近は勉強をサボり気味なプログラマ。趣味としてベースを練習中。
             </p>
           </div>
 
