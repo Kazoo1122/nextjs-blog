@@ -126,7 +126,7 @@ const PostsManagement = (props: PastArticlesProps) => {
             <article key={post.id} className={styles.articles_area}>
               <div className={styles.thumbnail_area}>
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${post.thumbnail}`}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/${post.thumbnail}`}
                   layout={'fill'}
                   objectFit={'cover'}
                   alt='thumbnail'
