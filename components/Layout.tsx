@@ -144,6 +144,9 @@ const Navigation = ({ isLgSize, isOpen }: navProps) => {
         <li>
           <Link href={'/contact'}>CONTACT</Link>
         </li>
+        <li>
+          <Link href={'/dev'}>DEVELOPMENT</Link>
+        </li>
       </ul>
     </nav>
   );
