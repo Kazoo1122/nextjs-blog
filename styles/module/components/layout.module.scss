@@ -64,9 +64,12 @@
     padding: 64px 0;
     bottom: 0;
     flex-direction: column;
-    row-gap: 8px;
-    .dev {
-      opacity: 0.4;
+    row-gap: 16px;
+  }
+  .dev {
+    opacity: 0.2;
+    &:hover {
+      opacity: 0.1;
     }
   }
 }
