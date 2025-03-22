@@ -118,7 +118,7 @@ const Layout = (props: MetaProps) => {
             </p>
             <p>
               <Link href='/dev'>
-                <a> 開発室 </a>
+                <a className={styles.dev}> 開発室 </a>
               </Link>
             </p>
           </footer>
