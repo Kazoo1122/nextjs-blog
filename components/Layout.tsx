@@ -111,9 +111,16 @@ const Layout = (props: MetaProps) => {
             <BreadCrumbs />
           </main>
           <footer className={styles.footer_area}>
-            <Link href='/'>
-              <a> &copy; 2025 {siteTitle} </a>
-            </Link>
+            <p>
+              <Link href='/'>
+                <a> &copy; 2025 {siteTitle} </a>
+              </Link>
+            </p>
+            <p>
+              <Link href='/dev'>
+                <a> 開発室 </a>
+              </Link>
+            </p>
           </footer>
         </div>
       </div>
@@ -143,9 +150,6 @@ const Navigation = ({ isLgSize, isOpen }: navProps) => {
         </li>
         <li>
           <Link href={'/contact'}>CONTACT</Link>
-        </li>
-        <li>
-          <Link href={'/dev'}>DEVELOPMENT</Link>
         </li>
       </ul>
     </nav>
