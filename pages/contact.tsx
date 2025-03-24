@@ -76,7 +76,7 @@ const Contact = () => {
           <Link href={'https://github.com/Kazoo1122/'}>
             <a>
               <FaGithub size={36} className={styles.contact_icon} />
-              <span>Git Hub&nbsp;(Kazoo1122)</span>
+              <span>GitHub&nbsp;(Kazoo1122)</span>
             </a>
           </Link>
         </li>
@@ -160,7 +160,7 @@ const Contact = () => {
               ? 'メッセージありがとうございます！'
               : '申し訳ありません。送信失敗したためメッセージが届いていません。' +
                 '\n' +
-                '恐れ入りますがメールやTwitterなど別の手段でのご連絡をお願いします。'}
+                '恐れ入りますがメールでのご連絡をお願いします。'}
           </p>
         </>
       )}
